@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/11/30 23:14:54 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/02 01:37:45 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,40 @@
 
 namespace ft{
 
-    template <typename T, typename Alloc = std::allocator <T> >
-    class vector{
+	template <typename T, typename Alloc = std::allocator <T>>
+	class vector{
 
-        public:
+		public:
 
-            typedef T value_type;
-            typedef Alloc allocator_type;
-            typedef typename allocator_type::reference reference;
-            typedef typename allocator_type::const_reference const_reference;
-            typedef typename allocator_type::pointer pointer;
-            
-            
+			//? The first template parameter (T)
+			typedef T value_type;
+			//? The second template parameter (Alloc)
+			typedef Alloc allocator_type;
 
-            vector(void){}
-            ~vector(void){}
-            vector& operator= (const vector& v){}
-            int size(){}
-            int max_size(){}
-            int capacity(){}
-            
-        
-    };
+			typedef typename allocator_type::reference reference;
+			typedef typename allocator_type::const_reference const_reference;
+			typedef typename allocator_type::pointer pointer;
+
+			//? ---------------------- Constructors ---------------------- //
+
+			vector(){}
+			explicit vector (const allocator_type& alloc = allocator_type()){}
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()){}
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){}
+			vector (const vector& x){}
+
+			//? ----------------------- Destructor ----------------------- //
+			//* Destroys the container object
+
+			~vector(void){}
+
+			//? ---------------------- Constructors ---------------------- //
+			
+			
+			vector& operator= (const vector& v){}
+	   
+	};
 
 }
 
