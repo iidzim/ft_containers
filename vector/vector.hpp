@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/02 01:37:45 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/03 17:18:37 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,46 @@
 
 namespace ft{
 
-	template <typename T, typename Alloc = std::allocator <T>>
+	template <typename T, typename Alloc = std::allocator <T> >
 	class vector{
 
 		public:
 
-			//? The first template parameter (T)
-			typedef T value_type;
-			//? The second template parameter (Alloc)
-			typedef Alloc allocator_type;
+			typedef	T											value_type;
+			typedef	Alloc										allocator_type;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+    		typedef typename allocator_type::const_pointer		const_pointer;
 
-			typedef typename allocator_type::reference reference;
-			typedef typename allocator_type::const_reference const_reference;
-			typedef typename allocator_type::pointer pointer;
+			//* ---------------------- Constructors ---------------------- //
+			//? Constructs a vector, initializing its contents
 
-			//? ---------------------- Constructors ---------------------- //
-
-			vector(){}
 			explicit vector (const allocator_type& alloc = allocator_type()){}
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()){}
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){}
 			vector (const vector& x){}
 
-			//? ----------------------- Destructor ----------------------- //
-			//* Destroys the container object
+			//* ----------------------- Destructor ----------------------- //
+			//? Destroys the container object
 
 			~vector(void){}
 
-			//? ---------------------- Constructors ---------------------- //
+			//* --------------------- Assign content --------------------- //
+			//? Assigns new contents to the container, replacing its current contents, and modifying its size accordingly.
 			
+			vector& operator= (const vector& x){}
+
+			//! Iterators ------------------------------------------------ //
+
+			//* ------------------------- begin -------------------------- //
 			
-			vector& operator= (const vector& v){}
-	   
+			iterator begin(){}
+			const_iterator begin() const{}
+
+
+
 	};
 
 }
