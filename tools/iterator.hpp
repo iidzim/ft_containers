@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/03 23:28:16 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/03 23:40:47 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ namespace ft{
 		typedef Reference reference;
 
 		iterator(pointer ptr) : _ptr(ptr) {}
+		iterator(const iterator& x) {*this = x}
+		iterator& operator= (const iterator& x) {return (*this)}
+		~iterator(void) {} //? delete the ptr
 		reference operator* () const { return *_ptr; }
 		pointer operator-> () { return _ptr; }
 
@@ -52,7 +55,7 @@ namespace ft{
     	iterator operator- (const iterator& b) { return this->_ptr - b._ptr; };
     	iterator& operator+= (const int& n) { this = this + n; return this; };
     	iterator& operator-= (const int& n) { this = this - n; return this; };
-
+    	const T& operator[] (const int& index) { return this[index]; };
 
 		private:
 			pointer _ptr;
