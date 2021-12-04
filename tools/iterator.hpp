@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/03 23:45:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/04 18:52:37 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ namespace ft{
 		typedef Reference reference;
 
 		iterator(pointer ptr) : _ptr(ptr) {}
-		iterator(const iterator& x) {*this = x}
-		iterator& operator= (const iterator& x) {return (*this)}
-		~iterator(void) {} //? delete the ptr
+		iterator(const iterator& x) {*this = x; }
+		iterator& operator= (const iterator& x) {return (*this); }
+		~iterator(void) {}
 		reference operator* () const { return *_ptr; }
 		pointer operator-> () { return _ptr; }
 
@@ -52,14 +52,17 @@ namespace ft{
 
     	iterator operator+ (const int n) { return _ptr + n; };
     	iterator operator- (const int n) { return _ptr - n; };
-    	iterator operator- (const iterator& b) { return this->_ptr - b._ptr; };
-    	iterator& operator+= (const int& n) { this = this + n; return this; };
-    	iterator& operator-= (const int& n) { this = this - n; return this; };
+    	iterator operator- (const iterator& a) { return this->_ptr - a._ptr; };
+    	iterator& operator+= (const int& n) { this = this + n; return (*this); };
+    	iterator& operator-= (const int& n) { this = this - n; return (*this); };
     	const T& operator[] (const int& index) { return this[index]; };
 
 		private:
 			pointer _ptr;
 	};
+
+	template<typename iterator>
+	iterator operator+ (const int n, const iterator& a) { return (n + a._ptr); }
 }
 
 #endif
