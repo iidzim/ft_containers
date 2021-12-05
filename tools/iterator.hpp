@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/04 19:53:00 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/05 18:33:45 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft{
 
 		iterator(pointer ptr) : _ptr(ptr) {}
 		iterator(const iterator& x) { *this = x; }
-		iterator& operator= (const iterator& x) {return (*this); }
+		iterator& operator= (const iterator& x) {this->_ptr = x._ptr; return (*this); }
 		~iterator(void) {}
 		reference operator* () const { return *_ptr; }
 		pointer operator-> () { return _ptr; }

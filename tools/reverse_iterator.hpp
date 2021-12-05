@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/04 19:59:16 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/05 14:48:27 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ namespace ft{
 
 	template <typename iterator>
 	class reverse_iterator{
-	
+
 		typedef iterator								iterator_type;
 		typedef typename iterator::iterator_category	iterator_category;
 		typedef typename iterator::value_type			value_type;
@@ -28,17 +28,18 @@ namespace ft{
 
 		//? Constructs a reverse iterator that points to no object.
 		reverse_iterator(): _it(NULL) {}
-		
+
 		//? Constructs a reverse iterator from some original iterator it
 		explicit reverse_iterator (iterator_type it) { this->_it = it; }
-		
+
 		//? Constructs a reverse iterator from some other reverse iterator
 		template <class Iter>
 		reverse_iterator (const reverse_iterator<Iter>& rev_it) { this->_it = rev_it.base(); }
-		
+
 		//? Returns a copy of the base iterator.
 		iterator_type base() const {return (_it); }
-	
+
+		//? Operator overloading
 		reference operator* () const { return *(--_it); }
 		reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(_it - n)); }
 		reverse_iterator operator- (difference_type n) const {return (reverse_iterator(_it + n)); }
@@ -75,7 +76,7 @@ namespace ft{
 	template <class Iterator>
 	bool operator<  (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 	{ return lhs < rhs; }
-	
+
 	template <class Iterator>
 	bool operator<= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 	{ return lhs <= rhs; }

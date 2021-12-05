@@ -17,6 +17,8 @@
         "__debug": "cpp",
         "functional": "cpp",
         "locale": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "__functional_03": "cpp",
+        "memory_resource": "cpp"
     }
 }
