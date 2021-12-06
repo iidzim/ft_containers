@@ -6,17 +6,19 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:00:54 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 12:39:56 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 16:01:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_HPP
 # define ITERATOR_TRAITS_HPP
+#include "tools/iterator.hpp"
+#include "tools/reverse_iterator.hpp"
 
 namespace ft{
 
 	template <typename iterator>
-	class iterator_traits{
+	struct iterator_traits{
 	
 		typedef typename iterator::iterator_category	iterator_category;
 		typedef typename iterator::value_type			value_type;
@@ -26,7 +28,7 @@ namespace ft{
 	};
 
 	template <typename T>
-	class iterator_traits<T*>{
+	struct iterator_traits<T*>{
 		
 		typedef random_access_iterator_tag	iterator_category;
 		typedef T							value_type;
@@ -36,8 +38,7 @@ namespace ft{
 	};
 
 	// template <class T> 
-	// class iterator_traits<const T*>{}
+	// class iterator_traits<const T*>{} //?
 }
-
 
 #endif

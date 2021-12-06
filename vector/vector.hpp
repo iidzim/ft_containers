@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 12:51:03 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 17:40:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ namespace ft{
 			typedef typename Alloc::pointer				pointer;
 			typedef typename Alloc::const_pointer		const_pointer;
 			typedef typename ft::iterator<T>			iterator;
+			// typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> iterator;
 			typedef typename ft::iterator<T>			const_iterator;
 			typedef typename ft::reverse_iterator<T>	reverse_iterator;
 			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
@@ -39,7 +40,6 @@ namespace ft{
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
 
-				// this->_arr = NULL;
 				this->_start = this->_end = 0;
 				this->_size = 0;
 				this->_capacity = 0;
@@ -55,15 +55,12 @@ namespace ft{
 				this->_capacity = n;
 				if (this->_size > 0)
 				{
-					// this->_arr = alloc.allocate(n);
-					// alloc.construct(this->_arr, val);
 					this->_start = alloc.allocate(n);
 					this->_end = this->_start + n;
 					for (iterator it = this->_start; it < this->_end; it++)
 						alloc.construct(it, val);
 				}
 				else
-					// this->_arr = NULL;
 					this->_start = this->_end = 0;
 			}
 
@@ -111,23 +108,19 @@ namespace ft{
 
 			//? Returns an iterator pointing to the first element
 			iterator begin(){ return (this->_start); }
-			
 			const_iterator begin() const{ return (this->_start); }
 
 			//? Returns an iterator referring to the past-the-end element in the vector
 			iterator end(){ return (this->_end); }
-
 			const_iterator end() const{ return (this->_end); }
 
 			//? Returns a reverse iterator pointing to the last element
-			reverse_iterator rbegin(){}
-			
-			const_reverse_iterator rbegin() const{}
+			reverse_iterator rbegin(){ return (reverse_iterator(this->_end)); }
+			const_reverse_iterator rbegin() const{ return (reverse_iterator(this->_end)); }
 
-			//? Returns a reverse iterator pointing to the theoretical element preceding the first element			
-			reverse_iterator rend(){}
-			
-			const_reverse_iterator rend() const{}
+			//? Returns a reverse iterator pointing to the theoretical element preceding the first element
+			reverse_iterator rend(){ return (reverse_iterator(this->_begin)); }
+			const_reverse_iterator rend() const{ return (reverse_iterator(this->_begin)); }
 
 			//! Capacity ************************************************** //
 
@@ -158,22 +151,18 @@ namespace ft{
 
 			//? Returns a reference to the element at position n
 			reference operator[] (size_type n){}
-
 			const_reference operator[] (size_type n) const{}
 
 			reference at (size_type n){}
-
 			const_reference at (size_type n) const{}
 
 			//? Returns a reference to the first element
-			reference front(){}
-
-			const_reference front() const{}
+			reference front(){ return (*(this->_start)); }
+			const_reference front() const{ return (*(this->_start)); }
 
 			//? Returns a reference to the last element
-			reference back(){}
-
-			const_reference back() const{}
+			reference back(){ return (*(this->_end)); }
+			const_reference back() const{ return (*(this->_end)); }
 
 			//! Modifiers ************************************************* //
 
