@@ -1,11 +1,13 @@
 ### ft_containers
 
-## ToDo -- vector
+# ToDo -- vector
 
-# Member functions:
+## Member functions:
 
 -> constructors √√√
+
 -> destructor   √
+
 -> operator=    X
 
 -> Iterators
@@ -40,7 +42,7 @@
 -> Allocator
 * get_allocator X
 
-# Non-member function overloads:
+## Non-member function overloads:
 
 -> relational operators √
 -> swap					X

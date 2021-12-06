@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 17:40:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 18:16:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,25 @@ namespace ft{
 			size_type max_size() const { return (4611686018427387903); }
 
 			//? Resizes the container so that it contains n elements.
-			void resize (size_type n, value_type val = value_type()) {}//************
+			void resize (size_type n, value_type val = value_type()){
+
+				if (n < this->_size){
+					// iterator tmp_start, tmp_end;
+					// tmp_start = this->_alloc.allocate(n);
+					// tmp_end = tmp_start + n;
+					// for (int i = 0; i < (tmp_end - tmp_start); i++)
+					// 	*tmp_start = *(this->_start + i);
+					// for (iterator it = this->_start; it < this->_end; it++)
+					// 	this->_alloc.destroy(it);
+					// this->_start = tmp_start;
+					// this->_end = tmp_end;
+					for (iterator it = this->_start + n; it < this->_end; it++)
+						this->_alloc.destroy(it);
+				}
+				else {
+					
+				}
+			}
 
 			//? Return size of allocated storage capacity
 			size_type capacity() const { return (this->_capacity); }
@@ -204,7 +222,6 @@ namespace ft{
 
 
 		private:
-			// T*			_arr;
 			Alloc		_alloc;
 			size_type	_capacity;
 			size_type	_size;
