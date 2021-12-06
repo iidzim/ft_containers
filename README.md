@@ -4,11 +4,11 @@
 
 ## Member functions:
 
--> constructors √√√
+*->* constructors √√√
 
--> destructor   √
+*->* destructor   √
 
--> operator=    X
+*->* operator=    X
 
 -> Iterators
 * begin			√
