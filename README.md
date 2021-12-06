@@ -22,7 +22,7 @@
 * resize		X
 * capacity		√
 * empty			√
-* reverse		X
+* reverse		√
 
 -> Element access
 * operator[]	X
@@ -37,7 +37,7 @@
 * insert		X
 * erase			X
 * swap			X
-* clear			X
+* clear			√
 
 -> Allocator
 * get_allocator X
@@ -46,3 +46,5 @@
 
 -> relational operators √
 -> swap					X
+
+12 functions left

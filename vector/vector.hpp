@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 18:16:17 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 21:49:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../tools/reverse_iterator.hpp"
 // #include <iterator>
 #include <memory>
+#define MAX_SIZE 4611686018427387903
 
 namespace ft{
 
@@ -58,7 +59,7 @@ namespace ft{
 					this->_start = alloc.allocate(n);
 					this->_end = this->_start + n;
 					for (iterator it = this->_start; it < this->_end; it++)
-						alloc.construct(it, val);
+						this->_alloc.construct(it, val);
 				}
 				else
 					this->_start = this->_end = 0;
@@ -75,7 +76,7 @@ namespace ft{
 				this->_start = this->_alloc.allocate(last - first);
 				this->_end = this->_start + (last - first);
 				for (iterator it = this->_start; it < this->_end; it++)
-					this->_alloc.allocate(it, *(first + it));
+					this->_alloc.construct(it, *(first + it));
 			}
 
 			//? Copy constructor
@@ -128,26 +129,38 @@ namespace ft{
 			size_type size() const { return (this->_size); }
 
 			//? Returns the maximum number of elements that the vector can hold.
-			size_type max_size() const { return (4611686018427387903); }
+			size_type max_size() const { return (MAX_SIZE); }
+			// size_type max_size() const { return (this->get_allocator().max_size()); }//*
 
 			//? Resizes the container so that it contains n elements.
 			void resize (size_type n, value_type val = value_type()){
 
-				if (n < this->_size){
-					// iterator tmp_start, tmp_end;
-					// tmp_start = this->_alloc.allocate(n);
-					// tmp_end = tmp_start + n;
-					// for (int i = 0; i < (tmp_end - tmp_start); i++)
-					// 	*tmp_start = *(this->_start + i);
-					// for (iterator it = this->_start; it < this->_end; it++)
-					// 	this->_alloc.destroy(it);
-					// this->_start = tmp_start;
-					// this->_end = tmp_end;
+				if (n < this->_size) {
 					for (iterator it = this->_start + n; it < this->_end; it++)
 						this->_alloc.destroy(it);
+					this->_end = this->_start + n;
+					this->_size = n;
+				}
+				else if (n > this->_size && n < this->_capacity) {
+					//? insert at the end as many elements as needed to reach a size of n
 				}
 				else {
-					
+					iterator tmp_start, tmp_end;
+					tmp_start = this->_alloc.allocate(n);
+					tmp_end = tmp_start + n;
+					for (int i = 0; i < n; i++)
+					{
+						if (i < this->_size)
+							this->_alloc.construct(tmp_start + i, *(this->_start + i));
+						else
+							this->_alloc.construct(tmp_start + i, val);
+					}
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_start = tmp_start;
+					this->_end = tmp_end;
+					this->_capacity = n;
+					this->_size = n;
 				}
 			}
 
@@ -163,7 +176,21 @@ namespace ft{
 			}
 
 			//? Request a change in capacity
-			void reserve (size_type n){}//**************
+			void reserve (size_type n){
+
+				if (n > this->_capacity){
+					iterator tmp_start, tmp_end;
+					tmp_start = this->_alloc.allocate(n);
+					tmp_end = tmp_start + this->_size;
+					for (int i = 0; i < this->_size; i++)
+						*tmp_start = *(this->_start + i);
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_start = tmp_start;
+					this->_end = tmp_end;
+					this->_capacity = n;
+				}
+			}
 
 			//! Element access ******************************************** //
 
@@ -213,13 +240,18 @@ namespace ft{
 			void swap (vector& x){}
 
 			//? Clear content
-			void clear(){}
+			void clear(void){
+				for (iterator it = ths->_start; it < this->_end; it++)
+					this->_alloc.deallocate(it, 1);
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->_alloc.destroy(it);
+				this->_size = 0;
+			}
 
 			//! Allocator ************************************************* //
 
 			//? Returns a copy of the allocator object associated with the vector
 			allocator_type get_allocator() const{}
-
 
 		private:
 			Alloc		_alloc;
