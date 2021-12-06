@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 12:06:19 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:51:03 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_HPP
 #include "../tools/iterator.hpp"
 #include "../tools/reverse_iterator.hpp"
+// #include <iterator>
 #include <memory>
 
 namespace ft{
@@ -23,13 +24,17 @@ namespace ft{
 
 		public:
 
-			typedef	T											value_type;
-			typedef	Alloc										allocator_type;
-			typedef typename allocator_type::reference			reference;
-			typedef typename allocator_type::const_reference	const_reference;
-			typedef typename allocator_type::pointer			pointer;
-			typedef typename allocator_type::const_pointer		const_pointer;
-			typedef size_t										size_type;
+			typedef	T									value_type;
+			typedef	Alloc								allocator_type;
+			typedef size_t								size_type;
+			typedef typename Alloc::reference			reference;
+			typedef typename Alloc::const_reference		const_reference;
+			typedef typename Alloc::pointer				pointer;
+			typedef typename Alloc::const_pointer		const_pointer;
+			typedef typename ft::iterator<T>			iterator;
+			typedef typename ft::iterator<T>			const_iterator;
+			typedef typename ft::reverse_iterator<T>	reverse_iterator;
+			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
@@ -54,8 +59,7 @@ namespace ft{
 					// alloc.construct(this->_arr, val);
 					this->_start = alloc.allocate(n);
 					this->_end = this->_start + n;
-					ft:iterator<T> it;
-					for (it = this->_start; it < this->_end; it++)
+					for (iterator it = this->_start; it < this->_end; it++)
 						alloc.construct(it, val);
 				}
 				else
@@ -72,9 +76,8 @@ namespace ft{
 				this->_alloc = alloc;
 				//* An initial buffer is allocated using the allocator's allocate function
 				this->_start = this->_alloc.allocate(last - first);
-				this->_end = last;
-				ft:iterator<T> it;
-				for (it = first; it < last; it++)
+				this->_end = this->_start + (last - first);
+				for (iterator it = this->_start; it < this->_end; it++)
 					this->_alloc.allocate(it, *(first + it));
 			}
 
@@ -85,9 +88,10 @@ namespace ft{
 
 			//? Destroys the container object
 			~vector(void){
-				this->_alloc.deallocate(this->_arr, this->_capacity);
-				for (int i = 0; i < this->_size; i++)
-					this->_alloc.destroy(this->_arr + i);
+				for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+					this->_alloc.deallocate(it, 1);
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->_alloc.destroy(it);
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
@@ -106,26 +110,24 @@ namespace ft{
 			//! iterators ************************************************ //
 
 			//? Returns an iterator pointing to the first element
-			template<typename iterator>
 			iterator begin(){ return (this->_start); }
 			
-			// const_iterator begin() const{}
+			const_iterator begin() const{ return (this->_start); }
 
 			//? Returns an iterator referring to the past-the-end element in the vector
-			template<typename iterator>
 			iterator end(){ return (this->_end); }
 
-			// const_iterator end() const{}
+			const_iterator end() const{ return (this->_end); }
 
 			//? Returns a reverse iterator pointing to the last element
-			// reverse_iterator rbegin(){}
+			reverse_iterator rbegin(){}
 			
-			// const_reverse_iterator rbegin() const{}
+			const_reverse_iterator rbegin() const{}
 
 			//? Returns a reverse iterator pointing to the theoretical element preceding the first element			
-			// reverse_iterator rend(){}
+			reverse_iterator rend(){}
 			
-			// const_reverse_iterator rend() const{}
+			const_reverse_iterator rend() const{}
 
 			//! Capacity ************************************************** //
 
@@ -188,20 +190,16 @@ namespace ft{
 			void pop_back(){}
 
 			//? Insert elements
-			template<typename iterator>
 			iterator insert (iterator position, const value_type& val){}
 
-			template<typename iterator>
 			void insert (iterator position, size_type n, const value_type& val){}
 
-			template <typename InputIterator, typename iterator> //******************
+			template <typename InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last){}
 
 			//? Erase elements
-			template<typename iterator>
 			iterator erase (iterator position){}
 
-			template<typename iterator>
 			iterator erase (iterator first, iterator last){}
 
 			//? Swap content
