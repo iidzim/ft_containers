@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/05 18:33:45 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 11:46:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 
 namespace ft{
 
-	template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	// template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	template <typename T, typename Pointer = T*, typename Reference = T&>
 	struct iterator {
 
 		//* Category to which the iterator belongs to (input, output, forward, bidirectionnal, rnadom_access)
-		typedef Category  iterator_category;
+		// typedef Category  iterator_category;
 		//* Type of elements pointed by the iterator.
 		typedef T         value_type;
 		//* Type to represent the difference between two iterators.
-		typedef Distance  difference_type;
+		// typedef Distance  difference_type;
 		//* Type to represent a pointer to an element pointed by the iterator.
 		typedef Pointer   pointer;
 		//* Type to represent a reference to an element pointed by the iterator.

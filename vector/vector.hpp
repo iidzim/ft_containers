@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/05 22:36:55 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/06 12:06:19 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ namespace ft{
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
 
-				this->_arr = NULL;
+				// this->_arr = NULL;
+				this->_start = this->_end = 0;
 				this->_size = 0;
 				this->_capacity = 0;
 				this->_alloc = alloc;
@@ -44,20 +45,38 @@ namespace ft{
 			explicit vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type()){
 
+				this->_alloc = alloc;
 				this->_size = n;
 				this->_capacity = n;
 				if (this->_size > 0)
 				{
-					this->_arr = alloc.allocate(n);
-					alloc.construct(this->_arr, val);
+					// this->_arr = alloc.allocate(n);
+					// alloc.construct(this->_arr, val);
+					this->_start = alloc.allocate(n);
+					this->_end = this->_start + n;
+					ft:iterator<T> it;
+					for (it = this->_start; it < this->_end; it++)
+						alloc.construct(it, val);
 				}
 				else
-					this->_arr = NULL;
+					// this->_arr = NULL;
+					this->_start = this->_end = 0;
 			}
 
 			//? Constructs the container with the contents of the range [first, last)
 			template <typename InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){}
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+
+				//* The allocator parameter is copied into a private member of the container
+				//* This private copy can then be used for all subsequent storage management
+				this->_alloc = alloc;
+				//* An initial buffer is allocated using the allocator's allocate function
+				this->_start = this->_alloc.allocate(last - first);
+				this->_end = last;
+				ft:iterator<T> it;
+				for (it = first; it < last; it++)
+					this->_alloc.allocate(it, *(first + it));
+			}
 
 			//? Copy constructor
 			vector (const vector& x){
@@ -71,36 +90,42 @@ namespace ft{
 					this->_alloc.destroy(this->_arr + i);
 			}
 
-			//? Assigns new contents to the container, replacing its current contents, and modifying its size accordingly.
-			// vector& operator= (const vector& x){ //! wrong !!!!!!
-			// 	this->_capacity = x._capacity;
-			// 	this->_size = x._size;
-			// 	for (int i=0; i < this->_size; i++)
-			// 		this->_arr[i] = x._arr[i];
-			// 	return (*this);
-			// }
+			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
+			vector& operator= (const vector& x){ //! wrong ! use insert !!!!!
+
+				// if (this != x) // self assignment
+				// {
+				// 	this->_capacity = x._capacity;
+				// 	this->_size = x._size;
+				// 	for (int i=0; i < this->_size; i++)
+				// 		this->_arr[i] = x._arr[i];
+				// }
+				// return (*this);
+			}
 
 			//! iterators ************************************************ //
 
 			//? Returns an iterator pointing to the first element
-			iterator begin(){}
+			template<typename iterator>
+			iterator begin(){ return (this->_start); }
 			
-			const_iterator begin() const{}
+			// const_iterator begin() const{}
 
 			//? Returns an iterator referring to the past-the-end element in the vector
-			iterator end(){}
+			template<typename iterator>
+			iterator end(){ return (this->_end); }
 
-			const_iterator end() const{}
+			// const_iterator end() const{}
 
 			//? Returns a reverse iterator pointing to the last element
-			reverse_iterator rbegin(){}
+			// reverse_iterator rbegin(){}
 			
-			const_reverse_iterator rbegin() const{}
+			// const_reverse_iterator rbegin() const{}
 
 			//? Returns a reverse iterator pointing to the theoretical element preceding the first element			
-			reverse_iterator rend(){}
+			// reverse_iterator rend(){}
 			
-			const_reverse_iterator rend() const{}
+			// const_reverse_iterator rend() const{}
 
 			//! Capacity ************************************************** //
 
@@ -163,16 +188,20 @@ namespace ft{
 			void pop_back(){}
 
 			//? Insert elements
+			template<typename iterator>
 			iterator insert (iterator position, const value_type& val){}
 
+			template<typename iterator>
 			void insert (iterator position, size_type n, const value_type& val){}
 
-			template <class InputIterator>
-    		void insert (iterator position, InputIterator first, InputIterator last){}
+			template <typename InputIterator, typename iterator> //******************
+			void insert (iterator position, InputIterator first, InputIterator last){}
 
 			//? Erase elements
+			template<typename iterator>
 			iterator erase (iterator position){}
 
+			template<typename iterator>
 			iterator erase (iterator first, iterator last){}
 
 			//? Swap content
@@ -188,10 +217,12 @@ namespace ft{
 
 
 		private:
-			T*			_arr;
+			// T*			_arr;
 			Alloc		_alloc;
 			size_type	_capacity;
 			size_type	_size;
+			iterator	_start;
+			iterator	_end;
 
 	};
 
