@@ -31,11 +31,11 @@
 * back			√
 
 -> Modifiers
-* assign		X
+* assign		√
 * push_back		X
-* pop_back		X
+* pop_back		√
 * insert		X
-* erase			X
+* erase			√
 * swap			X
 * clear			√
 

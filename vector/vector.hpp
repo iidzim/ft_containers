@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/09 18:59:50 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/09 22:23:05 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,9 @@ namespace ft{
 
 				this->_size -= 1;
 				this->_end -= 1;
-				this->_alloc.destroy(this->_end);
+				iterator it = this->_end;
+				this->_end -= 1;
+				this->_alloc.destroy(it);
 			}
 
 			//? Insert elements
@@ -298,22 +300,73 @@ namespace ft{
 
 				if (position < this->_size){
 					this->_size -= 1;
-					this->_alloc.destroy(this->_start + position);
 					for (int i = position; i < this->_size - 1; i++)
 						this->_alloc.construct((this->_start + i), *(this->_start + i + 1));
+					iterator it = this->_end;
+					this->_end -= 1;
+					this->_alloc.destroy(it);
+					return (this->_start + position);
 				}
+				return (NULL);
 			}
 
 			iterator erase (iterator first, iterator last){
 
-				if (position < this->__size)
+				size_type position = last - first;
+				if (position < this->_size)
 				{
-					
+					size_type len = last - first;
+					for (iterator it = first; it + len < this->_end; it++)
+						this->_alloc.construct(it, *(it + len));
+					for (iterator it = last; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_end = last + 1;
+					this->_size -= len;
+					return (this->_start + first);
 				}
+				return (NULL);
 			}
 
 			//? Swap content
-			void swap (vector& x){}
+			void swap (vector& x){
+
+				if (x._size > this->_size){
+					iterator tmp_start, tmp_end;
+					size_type tmp_size = this->_size, tmp_capacity = this->_capacity;
+					Alloc tmp_alloc = this->_alloc;
+					tmp_start = this->_alloc.allocate(tmp_size);
+					tmp_end = tmp_start + tmp_size;
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.allocate((tmp_start + it), *(this->_start + it));
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+
+					this->_alloc = x._alloc;
+					this->_capacity = x._capacity;
+					this->_size = x._size;
+					this->_start = this->_alloc.allocate(this->_size);
+					this->_end = this->_start + this->_size;
+					for (int i = 0; i < this->_size; i++)
+						this->_alloc.construct((this->_start + i) , *(x._start + i));
+
+					for (int i = tmp_size; i < this->_size; i++)
+						this->_alloc.destroy(x._start + i);
+					for (int i = 0; i < tmp_size; i++)
+						this->_alloc.construct((x._start + i), *(tmp_start + i));
+					x._size = tmp_size;
+					x._capacity = tmp_capacity;
+					x._alloc = tmp_alloc;
+					x._end = x._start + x._size;
+
+					for (iterator it = tmp_start; it < tmp_end; it++)
+						this->_alloc.destroy(tmp_start + it);
+					for (iterator it = tmp_start; it < tmp_end; it++)
+						this->_alloc.deallocate((tmp_start + it), 1);
+				}
+				else{
+					//? 
+				}
+			}
 
 			//? Clear content
 			void clear(void){
