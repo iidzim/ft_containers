@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/09 22:23:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/09 22:32:28 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,38 @@ namespace ft{
 			//? Swap content
 			void swap (vector& x){
 
+				// iterator a_start ,a_end, b_start, b_end;
+				// size_type a_size, a_capacity, b_size, b_capacity;
+				// Alloc a_alloc, b_alloc;
+				// if (x._size > this->_size){
+				// 	a_start = this->_start;
+				// 	a_end = this->_end;
+				// 	a_size = this->_size;
+				// 	a_capacity = this->_capacity;
+				// 	a_alloc = this->_alloc;
+					
+				// 	b_start = x._start;
+				// 	b_end = x._end;
+				// 	b_size = x._size;
+				// 	b_capacity = x._capacity;
+				// 	b_alloc = x._alloc;
+				// }
+				// else{
+				// 	b_start = this->_start;
+				// 	b_end = this->_end;
+				// 	b_size = this->_size;
+				// 	b_capacity = this->_capacity;
+				// 	b_alloc = this->_alloc;
+					
+				// 	a_start = x._start;
+				// 	a_end = x._end;
+				// 	a_size = x._size;
+				// 	a_capacity = x._capacity;
+				// 	a_alloc = x._alloc;
+				// }
+
 				if (x._size > this->_size){
+				{
 					iterator tmp_start, tmp_end;
 					size_type tmp_size = this->_size, tmp_capacity = this->_capacity;
 					Alloc tmp_alloc = this->_alloc;

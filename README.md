@@ -47,4 +47,4 @@
 -> relational operators √
 -> swap					X
 
-12 functions left
+6 functions left
