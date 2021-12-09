@@ -25,8 +25,8 @@
 * reverse		√
 
 -> Element access
-* operator[]	X
-* at			X
+* operator[]	√
+* at			√
 * front			√
 * back			√
 
@@ -40,7 +40,7 @@
 * clear			√
 
 -> Allocator
-* get_allocator X
+* get_allocator √
 
 ## Non-member function overloads:
 

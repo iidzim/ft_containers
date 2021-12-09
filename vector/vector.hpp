@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 21:49:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:59:50 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define VECTOR_HPP
 #include "../tools/iterator.hpp"
 #include "../tools/reverse_iterator.hpp"
-// #include <iterator>
 #include <memory>
+#include <stdexcept>
 #define MAX_SIZE 4611686018427387903
 
 namespace ft{
@@ -195,11 +195,19 @@ namespace ft{
 			//! Element access ******************************************** //
 
 			//? Returns a reference to the element at position n
-			reference operator[] (size_type n){}
-			const_reference operator[] (size_type n) const{}
+			reference operator[] (size_type n){ return (*(this->_start + n)); }
+			const_reference operator[] (size_type n) const{ return (*(this->_start + n)); }
 
-			reference at (size_type n){}
-			const_reference at (size_type n) const{}
+			reference at (size_type n){
+				if (n < 0 || n >= this->_size)
+					throw std::out_of_range("vector");
+				return (*(this->_start + n));
+			}
+			const_reference at (size_type n) const{
+				if (n < 0 || n >= this->_size)
+					throw std::out_of_range("vector");
+				return (*(this->_start + n));
+			}
 
 			//? Returns a reference to the first element
 			reference front(){ return (*(this->_start)); }
@@ -213,15 +221,69 @@ namespace ft{
 
 			//? Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last){}
+			void assign (InputIterator first, InputIterator last){
 
-			void assign (size_type n, const value_type& val){}
+				size_type len = last - first;
+				if (len > this->_size){
+
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_start = this->_alloc.allocate(len);
+					this->_end = this->_start + len;
+					for (int i = 0; i < len; i++)
+						this->_alloc.construct((this->_start + i), *(first + i));
+					this->_size = this->_capacity = len;
+				}
+				else{
+					for (int i = len; i < this->_size; i++)
+						this->_alloc.destroy(this->_start + i);
+					this->_size = len;
+					for (int i = 0; i < this->_size; i++)
+						*(this->_start + i) = *(first + i);
+				}
+			}
+
+			void assign (size_type n, const value_type& val){
+
+				if (n > this->_size)
+				{
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_start = this->_alloc.allocate(n);
+					this->_end = this->_start + n;
+					this->_size = this->_capacity = n;
+					for (int i = 0; i < n; i++)
+						this->_alloc.construct((this->_start + i), val);
+				}
+				else{
+					for (int i = n; i < this->_size; i++)
+						this->_alloc.destroy(this->_start + i);
+					this->_size = n;
+					for (iterator it = this->_start; it < this->_end; it++)
+						*it = val;
+				}
+			}
 
 			//? Add element at the end
-			void push_back (const value_type& val){}
+			void push_back (const value_type& val){
+
+				// if (this->_size < this->_capacity){
+				// 	this->_size += 1;
+					
+				// }
+				// else{
+				// 	this->_capacity *= 2;
+				// 	this->_size += 1;
+				// }
+			}
 
 			//? Delete last element
-			void pop_back(){}
+			void pop_back(){
+
+				this->_size -= 1;
+				this->_end -= 1;
+				this->_alloc.destroy(this->_end);
+			}
 
 			//? Insert elements
 			iterator insert (iterator position, const value_type& val){}
@@ -232,26 +294,40 @@ namespace ft{
 			void insert (iterator position, InputIterator first, InputIterator last){}
 
 			//? Erase elements
-			iterator erase (iterator position){}
+			iterator erase (iterator position){
 
-			iterator erase (iterator first, iterator last){}
+				if (position < this->_size){
+					this->_size -= 1;
+					this->_alloc.destroy(this->_start + position);
+					for (int i = position; i < this->_size - 1; i++)
+						this->_alloc.construct((this->_start + i), *(this->_start + i + 1));
+				}
+			}
+
+			iterator erase (iterator first, iterator last){
+
+				if (position < this->__size)
+				{
+					
+				}
+			}
 
 			//? Swap content
 			void swap (vector& x){}
 
 			//? Clear content
 			void clear(void){
-				for (iterator it = ths->_start; it < this->_end; it++)
-					this->_alloc.deallocate(it, 1);
 				for (iterator it = this->_start; it < this->_end; it++)
 					this->_alloc.destroy(it);
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->_alloc.deallocate(it, 1);
 				this->_size = 0;
 			}
 
 			//! Allocator ************************************************* //
 
 			//? Returns a copy of the allocator object associated with the vector
-			allocator_type get_allocator() const{}
+			allocator_type get_allocator() const{ return (this->_alloc); }
 
 		private:
 			Alloc		_alloc;
