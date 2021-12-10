@@ -32,7 +32,7 @@
 
 -> Modifiers
 * assign		√
-* push_back		X
+* push_back		√s
 * pop_back		√
 * insert		√
 * erase			√

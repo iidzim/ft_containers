@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 19:44:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 19:53:05 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,14 +282,12 @@ namespace ft{
 			//? Add element at the end
 			void push_back (const value_type& val){
 
-				// if (this->_size < this->_capacity){
-				// 	this->_size += 1;
-					
-				// }
-				// else{
-				// 	this->_capacity *= 2;
-				// 	this->_size += 1;
-				// }
+				bool flag = 0;
+				if (this->_size == this->_capacity)
+					flag = 1;
+				insert(--(this->_end), val);
+				if (flag == 1)
+					this->_capacity *= 2;
 			}
 
 			//? Delete last element
