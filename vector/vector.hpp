@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 17:49:03 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 18:54:55 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ namespace ft{
 				if (this != x)
 				{
 					for (int i = 0; i < this->_size; i++)
-						this->_alloc.destroy(this->_start + i);		//!!!!!!!!!!
+						this->_alloc.destroy(this->_start + i);
 					for (int i = 0; i < this->_size; i++)
 						this->_alloc.deallocate(this->_start + i, 1);
 					this->_alloc = x._alloc;
@@ -148,6 +148,7 @@ namespace ft{
 				}
 				else if (n > this->_size && n < this->_capacity) {
 					//? insert at the end as many elements as needed to reach a size of n
+					insert(this->_size(), n, val);
 				}
 				else {
 					iterator tmp_start, tmp_end;
@@ -162,6 +163,8 @@ namespace ft{
 					}
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
 					this->_start = tmp_start;
 					this->_end = tmp_end;
 					this->_capacity = n;
@@ -191,6 +194,8 @@ namespace ft{
 						*tmp_start = *(this->_start + i);
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
 					this->_start = tmp_start;
 					this->_end = tmp_end;
 					this->_capacity = n;
@@ -233,6 +238,8 @@ namespace ft{
 
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
 					this->_start = this->_alloc.allocate(len);
 					this->_end = this->_start + len;
 					for (int i = 0; i < len; i++)
@@ -254,6 +261,8 @@ namespace ft{
 				{
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
 					this->_start = this->_alloc.allocate(n);
 					this->_end = this->_start + n;
 					this->_size = this->_capacity = n;
@@ -290,18 +299,72 @@ namespace ft{
 				iterator it = this->_end;
 				this->_end -= 1;
 				this->_alloc.destroy(it);
+				this->_alloc.deallocate(it, 1);
 			}
 
 			//? Insert elements
 			iterator insert (iterator position, const value_type& val){
 
-				
+				iterator start, end;
+				this->_size += 1;
+				start = this->_alloc.allocate(this->_size);
+				end = this->_start + this->_size;
+				for (int i = 0; i < position; i++)
+					this->_alloc.construct((start + i), *(this->_start + i));
+				this->_alloc.construct((start + i), val);
+				for (int i = position; i < this->_size; i++)
+					this->_alloc.construct((start + i + 1), *(this->_start + i));
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->destroy(it);
+				for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+					this->deallocate(it, 1);
+				this->_start = start;
+				this->_end - end;
+				this->_capacity = this->_size;
 			}
 
-			void insert (iterator position, size_type n, const value_type& val){}
+			void insert (iterator position, size_type n, const value_type& val){
+
+				iterator start, end;
+				size_type new_size = this->_size + n;
+				start = this->_alloc.allocate(new_size);
+				end = start + new_size;
+				for (int i = 0; i < position; i++)
+					this->_alloc.construct((start + i), *(this->_start + i));
+				for (int i = 0; i < n; i++)
+					this->_alloc.construct((start + position + i), val);
+				for (int i = position; i < this->_size; i++)
+					this->_alloc.construct((start + position + n + i), *(this->_start + i));
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->_alloc.destroy(it);
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->_alloc.deallocate(it, 1);
+				this->_start = start;
+				this->_end = end;
+				this->_capacity = this->_size = new_size;
+			}
 
 			template <typename InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last){}
+			void insert (iterator position, InputIterator first, InputIterator last){
+
+				iterator start, end;
+				size_type new_size = this->_size + (last - first);
+				start = this->_alloc.allocate(new_size);
+				end = start + new_size;
+				for (int i = 0; i < position; i++)
+					this->_alloc.construct((start + i), *(this->_start + i));
+				for (int i = 0; i < (last - first); i++)
+					this->_alloc.constrcut((start + position + i), *(first + i));
+				for (int i = position; i < this->_size; i++)
+					this->_alloc.construct((start + position + (last - first) + i), *(this->_start + i));
+				for (iterator it = this->_start; it < this->_end; it++)
+					this->destroy(it);
+				for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+					this->deallocate(it, 1);
+				this->_start = start;
+				this->_end = end;
+				this->_capacity = this->_size = new_size;
+			}
 
 			//? Erase elements
 			iterator erase (iterator position){

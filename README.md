@@ -8,7 +8,7 @@
 
 *->* destructor   √
 
-*->* operator=    X
+*->* operator=    √
 
 -> Iterators
 * begin			√
@@ -19,7 +19,7 @@
 -> Capacity
 * size			√
 * max_size		√
-* resize		X
+* resize		√
 * capacity		√
 * empty			√
 * reverse		√
@@ -34,9 +34,9 @@
 * assign		√
 * push_back		X
 * pop_back		√
-* insert		X
+* insert		√
 * erase			√
-* swap			X
+* swap			√
 * clear			√
 
 -> Allocator
@@ -45,6 +45,8 @@
 ## Non-member function overloads:
 
 -> relational operators √
--> swap					X
+-> swap					√
 
-6 functions left
+3 functions left
+
+enable if
