@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 18:54:55 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 19:44:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ namespace ft{
 			typedef typename Alloc::const_reference		const_reference;
 			typedef typename Alloc::pointer				pointer;
 			typedef typename Alloc::const_pointer		const_pointer;
-			typedef typename ft::iterator<T>			iterator;
-			// typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> iterator;
-			typedef typename ft::iterator<T>			const_iterator;
+			// typedef typename ft::iterator<T>			iterator;
+			typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> iterator;
+			// typedef typename ft::iterator<T>			const_iterator;
+			typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> const_iterator;
 			typedef typename ft::reverse_iterator<T>	reverse_iterator;
 			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
 
@@ -104,7 +105,7 @@ namespace ft{
 					this->_size = x._size;
 					this->_start = this->_alloc.allocate(this->_size);
 					this->_end = this->_start + this->_size;
-					for (int i = 0; it < this->_size; i++)
+					for (int i = 0; i < this->_size; i++)
 						this->_alloc.construct((this->_start + i), *(x._start + i));
 				}
 				return (*this);
@@ -191,7 +192,7 @@ namespace ft{
 					tmp_start = this->_alloc.allocate(n);
 					tmp_end = tmp_start + this->_size;
 					for (int i = 0; i < this->_size; i++)
-						*tmp_start = *(this->_start + i);
+						this->_alloc.constrcut(tmp_start ,*(this->_start + i));
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
 					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
@@ -274,7 +275,7 @@ namespace ft{
 						this->_alloc.destroy(this->_start + i);
 					this->_size = n;
 					for (iterator it = this->_start; it < this->_end; it++)
-						*it = val;
+						this->_alloc.construct(it ,val);
 				}
 			}
 
@@ -309,10 +310,11 @@ namespace ft{
 				this->_size += 1;
 				start = this->_alloc.allocate(this->_size);
 				end = this->_start + this->_size;
-				for (int i = 0; i < position; i++)
+				int i;
+				for (i = 0; i < position; i++)
 					this->_alloc.construct((start + i), *(this->_start + i));
 				this->_alloc.construct((start + i), val);
-				for (int i = position; i < this->_size; i++)
+				for (i = position; i < this->_size; i++)
 					this->_alloc.construct((start + i + 1), *(this->_start + i));
 				for (iterator it = this->_start; it < this->_end; it++)
 					this->destroy(it);
@@ -371,6 +373,7 @@ namespace ft{
 
 				if (position < this->_size){
 					this->_size -= 1;
+					// this->_alloc.destroy(this->_start + position);
 					for (int i = position; i < this->_size - 1; i++)
 						this->_alloc.construct((this->_start + i), *(this->_start + i + 1));
 					iterator it = this->_end;
@@ -378,24 +381,28 @@ namespace ft{
 					this->_alloc.destroy(it);
 					return (this->_start + position);
 				}
-				return (NULL);
+				return (0);
 			}
 
 			iterator erase (iterator first, iterator last){
 
-				size_type position = last - first;
-				if (position < this->_size)
+				size_type len = last - first;
+				if (this->_size > len)
 				{
-					size_type len = last - first;
-					for (iterator it = first; it + len < this->_end; it++)
-						this->_alloc.construct(it, *(it + len));
+					for (iterator it = first; it + len < this->_end; it++){
+						this->_alloc.destroy(it);
+						this->_alloc.construct(it, *(it + len)); //!indirection requires pointer operand ('unsigned long' invalid)
+					}
 					for (iterator it = last; it < this->_end; it++)
 						this->_alloc.destroy(it);
-					this->_end = last + 1;
 					this->_size -= len;
+					this->_end = last + 1;
+					for (int i = this->_size; i < this->_capacity; i++)
+						this->_alloc.deallocate(this->_start + i, 1);
+					this->_capacity = this->_size;
 					return (this->_start + first);
 				}
-				return (NULL);
+				return (0);
 			}
 
 			//? Swap content
@@ -450,10 +457,10 @@ namespace ft{
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs >= rhs); }
 
 	//? Exchange contents of vectors
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
 
-		vector tmp;
+		vector<T, Alloc> tmp;
 		tmp = x;
 		x = y;
 		y = tmp;
