@@ -32,7 +32,7 @@
 
 -> Modifiers
 * assign		√
-* push_back		√s
+* push_back		√
 * pop_back		√
 * insert		√
 * erase			√
@@ -50,4 +50,5 @@
 
 enable if - iterator_traits - test 
 
-# NOTION -> [https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6] (https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6)
+# NOTION:
+[https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6](https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6)
