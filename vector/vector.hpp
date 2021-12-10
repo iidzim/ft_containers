@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 19:53:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 20:20:25 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ namespace ft{
 
 		public:
 
+			struct random_access_iterator_tag{};
 			typedef	T									value_type;
 			typedef	Alloc								allocator_type;
 			typedef size_t								size_type;
@@ -32,9 +33,9 @@ namespace ft{
 			typedef typename Alloc::pointer				pointer;
 			typedef typename Alloc::const_pointer		const_pointer;
 			// typedef typename ft::iterator<T>			iterator;
-			typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> iterator;
 			// typedef typename ft::iterator<T>			const_iterator;
-			typedef typename ft::iterator<std::__is_random_access_iterator, T, ptrdiff_t, T*, T&> const_iterator;
+			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	iterator;
+			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
 			typedef typename ft::reverse_iterator<T>	reverse_iterator;
 			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
 
