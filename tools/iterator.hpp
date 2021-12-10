@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 16:00:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 16:43:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,19 @@ namespace ft{
 
 		iterator operator+ (const int n) { return _ptr + n; };
 		iterator operator- (const int n) { return _ptr - n; };
-		iterator operator- (const iterator& a) { return this->_ptr - a._ptr; };
+		difference_type operator- (const iterator& a) { return this->_ptr - a._ptr; };
 		iterator& operator+= (const int& n) { this = this + n; return (*this); };
 		iterator& operator-= (const int& n) { this = this - n; return (*this); };
 		const T& operator[] (const int& index) { return this[index]; };
+
+		pointer get_ptr(void) const { return (this->_ptr); }
 
 		private:
 			pointer _ptr;
 	};
 
 	template<typename iterator>
-	iterator operator+ (const int n, const iterator& a) { return (n + a._ptr); }
+	iterator operator+ (const int n, const iterator& a) { return (n + a.get_ptr()); }
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/09 17:21:40 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/10 15:47:49 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,35 @@
 #include <string>
 #include <vector>
 #include <memory>
-// #include "vector/vector.hpp"
-// #include "tools/iterator.hpp"
+#include "vector/vector.hpp"
+#include "tools/iterator.hpp"
 
 int main(void){
 
-    // std::vector<int> v;
-    // std::cout << "size = " << v.size() << " - capacity = " <<  v.capacity() << std::endl;
-    // v.push_back(1);
-    // std::cout << "size = " << v.size() << " - capacity = " <<  v.capacity() << std::endl;
+	// constructors used in the same order as described above:
+	std::vector<int> first;                                // empty vector of ints
+	std::vector<int> second (4,100);                       // four ints with value 100
+	// std::vector<int> third (second.begin(),second.end());  // iterating through second
+	// std::vector<int> fourth (third);                       // a copy of third	
+	// the iterator constructor can also be used to construct from arrays:
+	// int myints[] = {16,2,77,29};
+	// std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
+	// std::cout << "The contents of fifth are:";
+	// for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
 
-    std::vector<int> v1, v2;
-    // std::cout << v2.max_size() << std::endl;
-    // std::cout << "size = " << v2.size() << " - capacity = " <<  v2.capacity() << std::endl;
-    for (int i=0; i<10; i++){
-        v2.push_back(i);
-        v1.push_back(i*2);
-    }
-    std::cout << v2.size() << std::endl;
-    v2.assign(5, 0);
-    // v2.assign(v1.begin(), (v1.end() - v1.size()/2));
-    // v2.assign(v1.begin(), v1.end());
-    for (int i=0; i<v2.size(); i++){
-        std::cout << v2[i] << " ";
-    }
-    std::cout << std::endl;
-    std::cout << v2.size() << std::endl;
-    // std::cout << "size = " << v2.size() << " - capacity = " <<  v2.capacity() << std::endl;
+	ft::vector<int> first1;                                // empty vector of ints
+	ft::vector<int> second1 (4,100);                       // four ints with value 100
+	// ft::vector<int> third1 (second1.begin(),second1.end());  // iterating through second
+	// ft::vector<int> fourth (third);                       // a copy of third	
+	// the iterator constructor can also be used to construct from arrays:
+	// int myints[] = {16,2,77,29};
+	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
+	// std::cout << "The contents of fifth are:";
+	// for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
 
-    // ft::vector<int, std::allocator<int> > test;
-    
-
-    return 0;
+	return 0;
 }
