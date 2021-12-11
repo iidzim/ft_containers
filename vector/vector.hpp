@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 20:20:25 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/11 21:00:02 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,46 @@ namespace ft{
 			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
-			explicit vector (const allocator_type& alloc = allocator_type()){
+			explicit vector (const allocator_type& alloc = allocator_type()): _start(0), _end(0){
 
-				this->_start = this->_end = 0;
 				this->_size = this->_capacity = 0;
 				this->_alloc = alloc;
 			}
 
 			//? Constructs the container with count copies of elements with value
 			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type()){
+				const allocator_type& alloc = allocator_type()): _start(0), _end(0){
 
 				this->_alloc = alloc;
 				this->_size = this->_capacity = n;
 				if (this->_size > 0)
 				{
-					this->_start = alloc.allocate(n);
+					this->_start = this->_alloc.allocate(n);
 					this->_end = this->_start + n;
 					for (iterator it = this->_start; it < this->_end; it++)
 						this->_alloc.construct(it, val);
+					// for (int i = 0; i < this->_size; i++)
+					// 	this->_alloc.construct((this->_start + i), val);
 				}
 				else
 					this->_start = this->_end = 0;
 			}
 
 			//? Constructs the container with the contents of the range [first, last)
-			template <typename InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+			template <typename InputIterator, typename ft::enable_if<ft::is_integral<InputIterator>::value, InputItertor>::type* = nullptr>
+			// template <typename InputIterator>
+			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
 
-				//* The allocator parameter is copied into a private member of the container
-				//* This private copy can then be used for all subsequent storage management
-				this->_alloc = alloc;
-				this->_size = this->_capacity = last - first;
-				//* An initial buffer is allocated using the allocator's allocate function
-				this->_start = this->_alloc.allocate(this->_size);
-				this->_end = this->_start + this->_size;
-				for (iterator it = this->_start; it < this->_end; it++)
-					this->_alloc.construct(it, *(first + it));
-			}
+			// 	//* The allocator parameter is copied into a private member of the container
+			// 	//* This private copy can then be used for all subsequent storage management
+			// 	this->_alloc = alloc;
+			// 	this->_size = this->_capacity = last - first;
+			// 	//* An initial buffer is allocated using the allocator's allocate function
+			// 	this->_start = this->_alloc.allocate(this->_size);
+			// 	this->_end = this->_start + this->_size;
+			// 	for (iterator it = this->_start; it < this->_end; it++)
+			// 		this->_alloc.construct(it, *(first + it));
+			// }
 
 			//? Copy constructor
 			vector (const vector& x){

@@ -1,6 +1,8 @@
 ### ft_containers
 
-* ToDo -- test vector - enable_if - iterator_traits 
+## ToDo 
+* test vector XXXXX XXXX XXXXXX XXXX XXXXXXX X XX
+* iterators_traits, reverse_iterator, enable_if, is_integral, equal/lexicographical compare, std::pair, std::make_pair, must be reimplemented.
 
 ## Member functions:
 
