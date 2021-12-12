@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/11 20:32:12 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 14:10:10 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,67 @@
 #include "vector/vector.hpp"
 #include "tools/iterator.hpp"
 
-int main(void){
+// int main(void){
 
-	// constructors used in the same order as described above:
-	std::vector<int> first;                                // empty vector of ints
-	std::vector<int> second (4,100);                       // four ints with value 100
-	// std::vector<int> third (second.begin(),second.end());  // iterating through second
-	// std::vector<int> fourth (third);                       // a copy of third	
-	// the iterator constructor can also be used to construct from arrays:
-	// int myints[] = {16,2,77,29};
-	// std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
-	// std::cout << "The contents of fifth are:";
-	// for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+// 	// constructors used in the same order as described above:
+// 	std::vector<int> first;                                // empty vector of ints
+// 	std::vector<int> second (4,100);                       // four ints with value 100
+// 	std::vector<int> third (second.begin(),second.end());  // iterating through second
+// 	// std::vector<int> fourth (third);                       // a copy of third	
+// 	// the iterator constructor can also be used to construct from arrays:
+// 	int myints[] = {16,2,77,29};
+// 	std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
+// 	std::cout << "The contents of fifth are:";
+// 	for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+// 		std::cout << ' ' << *it;
+// 	std::cout << '\n';
 
-	ft::vector<int> first1;                                // empty vector of ints
-	ft::vector<int> second1 (4,100);                       // four ints with value 100
-	// ft::vector<int> third1 (second1.begin(),second1.end());  // iterating through second
-	// ft::vector<int> fourth (third);                       // a copy of third	
-	// the iterator constructor can also be used to construct from arrays:
-	// int myints[] = {16,2,77,29};
-	// ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
-	// std::cout << "The contents of fifth are:";
-	// for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+// 	ft::vector<int> first1;                                // empty vector of ints
+// 	ft::vector<int> second1(4,100);                       // four ints with value 100
+// 	ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
+// 	// ft::vector<int> fourth (third);                       // a copy of third	
+// 	// the iterator constructor can also be used to construct from arrays:
+// 	ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );	
+// 	std::cout << "The contents of fifth are:";
+// 	for (ft::vector<int>::iterator it = fifth1.begin(); it != fifth1.end(); ++it)
+// 		std::cout << ' ' << *it;
+// 	std::cout << '\n';
 
-	return 0;
+// 	return 0;
+// }
+
+int main ()
+{
+  std::vector<int> myints;
+  std::cout << "0. size: " << myints.size() << '\n';
+
+  for (int i=0; i<10; i++) myints.push_back(i);
+  std::cout << "1. size: " << myints.size() << '\n';
+
+  myints.insert (myints.end(),10,100);
+  std::cout << "2. size: " << myints.size() << '\n';
+
+  myints.pop_back();
+  std::cout << "3. size: " << myints.size() << '\n';
+  
+  //??????????????????????????????
+
+  ft::vector<int> myints;
+  std::cout << "0. size: " << myints.size() << '\n';
+
+  for (int i=0; i<10; i++) myints.push_back(i);
+  std::cout << "1. size: " << myints.size() << '\n';
+
+  myints.insert (myints.end(),10,100);
+  std::cout << "2. size: " << myints.size() << '\n';
+
+  myints.pop_back();
+  std::cout << "3. size: " << myints.size() << '\n';
+
+  return 0;
 }
 
+// ****************************
 
 // #include <iostream>
 // #include <type_traits>
