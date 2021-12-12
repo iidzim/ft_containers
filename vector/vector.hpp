@@ -6,16 +6,17 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 14:10:53 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 21:49:09 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-#include "../tools/iterator.hpp"
-#include "../tools/reverse_iterator.hpp"
+
 #include <memory>
 #include <stdexcept>
+#include "../tools/reverse_iterator.hpp"
+#include "../tools/iterator.hpp"
 
 namespace ft{
 
@@ -91,8 +92,9 @@ namespace ft{
 			~vector(void){
 				for (pointer it = this->_start; it < this->_end; it++)
 					this->_alloc.destroy(it);
-				for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-					this->_alloc.deallocate(it, 1);
+				//! attempting free on address which was not malloc()-ed
+				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
+				// 	this->_alloc.deallocate(it, 1);
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
@@ -136,101 +138,101 @@ namespace ft{
 			// //! Capacity ************************************************** //
 
 			//? Returns the number of elements in the vector.
-			// size_type size() const { return (this->_size); }
+			size_type size() const { return (this->_size); }
 
-			// //? Returns the maximum number of elements that the vector can hold.
-			// size_type max_size() const { return (this->_alloc.max_size()); }
+			//? Returns the maximum number of elements that the vector can hold.
+			size_type max_size() const { return (this->_alloc.max_size()); }
 			// // size_type max_size() const { return (this->get_allocator().max_size()); }//*
 
-			// //? Resizes the container so that it contains n elements.
-			// void resize (size_type n, value_type val = value_type()){
+			//? Resizes the container so that it contains n elements.
+			void resize (size_type n, value_type val = value_type()){
 
-			// 	if (n < this->_size) {
-			// 		for (iterator it = this->_start + n; it < this->_end; it++)
-			// 			this->_alloc.destroy(it);
-			// 		this->_end = this->_start + n;
-			// 		this->_size = n;
-			// 	}
-			// 	else if (n > this->_size && n < this->_capacity) {
-			// 		//? insert at the end as many elements as needed to reach a size of n
-			// 		insert(this->_size(), n, val);
-			// 	}
-			// 	else {
-			// 		iterator tmp_start, tmp_end;
-			// 		tmp_start = this->_alloc.allocate(n);
-			// 		tmp_end = tmp_start + n;
-			// 		for (int i = 0; i < n; i++)
-			// 		{
-			// 			if (i < this->_size)
-			// 				this->_alloc.construct(tmp_start + i, *(this->_start + i));
-			// 			else
-			// 				this->_alloc.construct(tmp_start + i, val);
-			// 		}
-			// 		for (iterator it = this->_start; it < this->_end; it++)
-			// 			this->_alloc.destroy(it);
-			// 		for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
-			// 			this->_alloc.deallocate(it, 1);
-			// 		this->_start = tmp_start;
-			// 		this->_end = tmp_end;
-			// 		this->_capacity = n;
-			// 		this->_size = n;
-			// 	}
-			// }
+				if (n < this->_size) {
+					for (iterator it = this->_start + n; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					this->_end = this->_start + n;
+					this->_size = n;
+				}
+				else if (n > this->_size && n < this->_capacity) {
+					//? insert at the end as many elements as needed to reach a size of n
+					insert(this->_size(), n, val);
+				}
+				else {
+					iterator tmp_start, tmp_end;
+					tmp_start = this->_alloc.allocate(n);
+					tmp_end = tmp_start + n;
+					for (int i = 0; i < n; i++)
+					{
+						if (i < this->_size)
+							this->_alloc.construct(tmp_start + i, *(this->_start + i));
+						else
+							this->_alloc.construct(tmp_start + i, val);
+					}
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
+					this->_start = tmp_start;
+					this->_end = tmp_end;
+					this->_capacity = n;
+					this->_size = n;
+				}
+			}
 
-			// //? Return size of allocated storage capacity
-			// size_type capacity() const { return (this->_capacity); }
+			//? Return size of allocated storage capacity
+			size_type capacity() const { return (this->_capacity); }
 
-			// //? Test whether vector is empty
-			// bool empty() const{
-			// 	if (this->_size == 0)
-			// 		return (true);
-			// 	else
-			// 		return (false);
-			// }
+			//? Test whether vector is empty
+			bool empty() const{
+				if (this->_size == 0)
+					return (true);
+				else
+					return (false);
+			}
 
-			// //? Request a change in capacity
-			// void reserve (size_type n){
+			//? Request a change in capacity
+			void reserve (size_type n){
 
-			// 	if (n > this->_capacity){
-			// 		iterator tmp_start, tmp_end;
-			// 		tmp_start = this->_alloc.allocate(n);
-			// 		tmp_end = tmp_start + this->_size;
-			// 		for (int i = 0; i < this->_size; i++)
-			// 			this->_alloc.constrcut(tmp_start ,*(this->_start + i));
-			// 		for (iterator it = this->_start; it < this->_end; it++)
-			// 			this->_alloc.destroy(it);
-			// 		for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
-			// 			this->_alloc.deallocate(it, 1);
-			// 		this->_start = tmp_start;
-			// 		this->_end = tmp_end;
-			// 		this->_capacity = n;
-			// 	}
-			// }
+				if (n > this->_capacity){
+					iterator tmp_start, tmp_end;
+					tmp_start = this->_alloc.allocate(n);
+					tmp_end = tmp_start + this->_size;
+					for (int i = 0; i < this->_size; i++)
+						this->_alloc.constrcut(tmp_start ,*(this->_start + i));
+					for (iterator it = this->_start; it < this->_end; it++)
+						this->_alloc.destroy(it);
+					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+						this->_alloc.deallocate(it, 1);
+					this->_start = tmp_start;
+					this->_end = tmp_end;
+					this->_capacity = n;
+				}
+			}
 
 			// //! Element access ******************************************** //
 
-			// //? Returns a reference to the element at position n
-			// reference operator[] (size_type n){ return (*(this->_start + n)); }
-			// const_reference operator[] (size_type n) const{ return (*(this->_start + n)); }
+			//? Returns a reference to the element at position n
+			reference operator[] (size_type n){ return (*(this->_start + n)); }
+			const_reference operator[] (size_type n) const{ return (*(this->_start + n)); }
 
-			// reference at (size_type n){
-			// 	if (n < 0 || n >= this->_size)
-			// 		throw std::out_of_range("vector");
-			// 	return (*(this->_start + n));
-			// }
-			// const_reference at (size_type n) const{
-			// 	if (n < 0 || n >= this->_size)
-			// 		throw std::out_of_range("vector");
-			// 	return (*(this->_start + n));
-			// }
+			reference at (size_type n){
+				if (n < 0 || n >= this->_size)
+					throw std::out_of_range("vector");
+				return (*(this->_start + n));
+			}
+			const_reference at (size_type n) const{
+				if (n < 0 || n >= this->_size)
+					throw std::out_of_range("vector");
+				return (*(this->_start + n));
+			}
 
-			// //? Returns a reference to the first element
-			// reference front(){ return (*(this->_start)); }
-			// const_reference front() const{ return (*(this->_start)); }
+			//? Returns a reference to the first element
+			reference front(){ return (*(this->_start)); }
+			const_reference front() const{ return (*(this->_start)); }
 
-			// //? Returns a reference to the last element
-			// reference back(){ return (*(--(this->_end))); }
-			// const_reference back() const{ return (*(--(this->_end))); }
+			//? Returns a reference to the last element
+			reference back(){ return (*(--(this->_end))); }
+			const_reference back() const{ return (*(--(this->_end))); }
 
 			// //! Modifiers ************************************************* //
 
@@ -283,18 +285,18 @@ namespace ft{
 			// 	}
 			// }
 
-			// //? Add element at the end
-			void push_back (const value_type& val){
+			//? Add element at the end
+			// void push_back (const value_type& val){
 
-				bool flag = 0;
-				if (this->_size == this->_capacity)
-					flag = 1;
-				insert(--(this->_end), val);
-				if (flag == 1)
-					this->_capacity *= 2;
-			}
+			// 	bool flag = 0;
+			// 	if (this->_size == this->_capacity)
+			// 		flag = 1;
+			// 	insert(iterator(--(this->_end)), val);
+			// 	if (flag == 1)
+			// 		this->_capacity *= 2;
+			// }
 
-			// //? Delete last element
+			//? Delete last element
 			// void pop_back(){
 
 			// 	this->_size -= 1;
@@ -305,10 +307,10 @@ namespace ft{
 			// 	this->_alloc.deallocate(it, 1);
 			// }
 
-			// //? Insert elements
+			//? Insert elements
 			// iterator insert (iterator position, const value_type& val){
 
-			// 	iterator start, end;
+			// 	pointer start, end;
 			// 	this->_size += 1;
 			// 	start = this->_alloc.allocate(this->_size);
 			// 	end = this->_start + this->_size;
@@ -318,9 +320,9 @@ namespace ft{
 			// 	this->_alloc.construct((start + i), val);
 			// 	for (i = position; i < this->_size; i++)
 			// 		this->_alloc.construct((start + i + 1), *(this->_start + i));
-			// 	for (iterator it = this->_start; it < this->_end; it++)
+			// 	for (pointer it = this->_start; it < this->_end; it++)
 			// 		this->destroy(it);
-			// 	for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+			// 	for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
 			// 		this->deallocate(it, 1);
 			// 	this->_start = start;
 			// 	this->_end - end;
