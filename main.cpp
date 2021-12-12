@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 21:43:28 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 23:35:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,45 @@
 #include "tools/iterator.hpp"
 # include "tools/enable_if.hpp"
 
-// int main(void){
+int main(void){
 
-// 	// constructors used in the same order as described above:
-// 	std::vector<int> first;                                // empty vector of ints
-// 	std::vector<int> second (4,100);                       // four ints with value 100
-// 	// std::vector<int> third (second.begin(),second.end());  // iterating through second
-// 	// std::vector<int> fourth (third);                       // a copy of third	
-// 	// the iterator constructor can also be used to construct from arrays:
-// 	// int myints[] = {16,2,77,29};
-// 	// std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
-// 	// std::cout << "The contents of fifth are:";
-// 	// for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-// 		// std::cout << ' ' << *it;
-// 	// std::cout << '\n';
+	// constructors used in the same order as described above:
+	// std::vector<int> first;                                // empty vector of ints
+	// std::vector<int> second (4,100);                       // four ints with value 100
+	// std::vector<int> third (second.begin(),second.end());  // iterating through second
+	// std::vector<int> fourth (third);                       // a copy of third	
+	// the iterator constructor can also be used to construct from arrays:
+	// int myints[] = {16,2,77,29};
+	// std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
+	// std::cout << "The contents of fifth are:";
+	// for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+		// std::cout << ' ' << *it;
+	// std::cout << '\n';
 
-// 	ft::vector<int> first1;                                // empty vector of ints
-// 	ft::vector<int> second1(4,100);                       // four ints with value 100
-// 	// ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
-// 	// ft::vector<int> fourth (third);                       // a copy of third	
-// 	// the iterator constructor can also be used to construct from arrays:
-// 	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );	
-// 	// std::cout << "The contents of fifth are:";
-// 	// for (ft::vector<int>::iterator it = fifth1.begin(); it != fifth1.end(); ++it)
-// 		// std::cout << ' ' << *it;
-// 	// std::cout << '\n';
+	ft::vector<int> first1;                                // empty vector of ints
+	ft::vector<int> second1(3, 100);                       // four ints with value 100
+	std::cout << second1.size() << " - " << second1.capacity() << std::endl;
+	for (int i = 0; i < second1.size(); i++)
+		std::cout << second1[i] << " ";
+	std::cout << std::endl;
+	ft::vector<int> third(second1);
+	std::cout << "copy constructor -> ";
+	for (int i = 0; i < third.size(); i++)
+		std::cout << third[i] << " ";
+	first1 = third;
+	for (int i = 0; i < first1.size(); i++)
+		std::cout << first1[i] << " ";
+	// ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
+	// ft::vector<int> fourth (third);                       // a copy of third	
+	// the iterator constructor can also be used to construct from arrays:
+	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );	
+	// std::cout << "The contents of fifth are:";
+	// for (ft::vector<int>::iterator it = fifth1.begin(); it != fifth1.end(); ++it)
+		// std::cout << ' ' << *it;
+	// std::cout << '\n';
 
-// 	return 0;
-// }
+	return 0;
+}
 
 
 // ****************************
@@ -74,14 +85,14 @@
 //   return 0;
 // }
 
-#include <iostream>
-#include <type_traits>
+// #include <iostream>
+// #include <type_traits>
 
-int main() {
-  std::cout << std::boolalpha;
-  std::cout << "is_integral:" << std::endl;
-  std::cout << "char: " << ft::is_integral<char>::value << std::endl;
-  std::cout << "int: " << ft::is_integral<int>::value << std::endl;
-  std::cout << "float: " << ft::is_integral<float>::value << std::endl;
-  return 0;
-}
+// int main() {
+//   std::cout << std::boolalpha;
+//   std::cout << "is_integral:" << std::endl;
+//   std::cout << "char: " << ft::is_integral<char>::value << std::endl;
+//   std::cout << "int: " << ft::is_integral<int>::value << std::endl;
+//   std::cout << "float: " << ft::is_integral<float>::value << std::endl;
+//   return 0;
+// }

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 21:49:09 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 23:36:03 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include "../tools/reverse_iterator.hpp"
 #include "../tools/iterator.hpp"
+#include "../tools/enable_if.hpp"
 
 namespace ft{
 
@@ -66,8 +67,8 @@ namespace ft{
 			}
 
 			//? Constructs the container with the contents of the range [first, last)
-			// template <typename InputIterator, typename ft::enable_if<ft::is_integral<InputIterator>::value, InputItertor>::type* = nullptr>
-			// template <typename InputIterator>
+			// template <typename InputIterator, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
+			// // template <typename InputIterator>
 			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
 
 			// 	//* The allocator parameter is copied into a private member of the container
@@ -85,7 +86,18 @@ namespace ft{
 
 			//? Copy constructor
 			vector (const vector& x){
-				this = x;
+				// this = x; //! expression is not assignable
+				for (int i = 0; i < this->_size; i++)
+					this->_alloc.destroy(this->_start + i);
+				for (int i = 0; i < this->_size; i++)
+					this->_alloc.deallocate(this->_start + i, 1);
+				this->_alloc = x._alloc;
+				this->_capacity = x._capacity;
+				this->_size = x._size;
+				this->_start = this->_alloc.allocate(this->_size);
+				this->_end = this->_start + this->_size;
+				for (int i = 0; i < this->_size; i++)
+					this->_alloc.construct((this->_start + i), *(x._start + i));
 			}
 
 			//? Destroys the container object
