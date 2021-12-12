@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 23:35:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 23:51:39 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int main(void){
 	std::cout << "copy constructor -> ";
 	for (int i = 0; i < third.size(); i++)
 		std::cout << third[i] << " ";
-	first1 = third;
-	for (int i = 0; i < first1.size(); i++)
-		std::cout << first1[i] << " ";
-	// ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
+	// std::cout << "assignment operator -> ";
+	// first1 = third;
+	// for (int i = 0; i < first1.size(); i++)
+	// 	std::cout << first1[i] << " ";
+	ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
 	// ft::vector<int> fourth (third);                       // a copy of third	
 	// the iterator constructor can also be used to construct from arrays:
 	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );	

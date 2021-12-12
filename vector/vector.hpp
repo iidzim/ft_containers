@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 23:36:03 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/12 23:50:59 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,22 @@ namespace ft{
 			}
 
 			//? Constructs the container with the contents of the range [first, last)
-			// template <typename InputIterator, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
-			// // template <typename InputIterator>
-			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+			template <typename InputIterator, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
+			// template <typename InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
 
-			// 	//* The allocator parameter is copied into a private member of the container
-			// 	//* This private copy can then be used for all subsequent storage management
-			// 	this->_alloc = alloc;
-			// 	this->_size = this->_capacity = last - first;
-			// 	//* An initial buffer is allocated using the allocator's allocate function
-			// 	this->_start = this->_alloc.allocate(this->_size);
-			// 	this->_end = this->_start + this->_size;
-			// 	// for (iterator it = this->_start; it < this->_end; it++)
-			// 		// this->_alloc.construct(it, *(first + it));
-			// 	for (int i = 0; i < this->_size; i++)
-			// 		this->_alloc.construct((this->_start + i), *(first + i));
-			// }
+				//* The allocator parameter is copied into a private member of the container
+				//* This private copy can then be used for all subsequent storage management
+				this->_alloc = alloc;
+				this->_size = this->_capacity = last - first;
+				//* An initial buffer is allocated using the allocator's allocate function
+				this->_start = this->_alloc.allocate(this->_size);
+				this->_end = this->_start + this->_size;
+				// for (iterator it = this->_start; it < this->_end; it++)
+					// this->_alloc.construct(it, *(first + it));
+				for (int i = 0; i < this->_size; i++)
+					this->_alloc.construct((this->_start + i), *(first + i));
+			}
 
 			//? Copy constructor
 			vector (const vector& x){
@@ -112,7 +112,7 @@ namespace ft{
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){
 
-				if (this != x)
+				if (*this != x)
 				{
 					for (int i = 0; i < this->_size; i++)
 						this->_alloc.destroy(this->_start + i);
