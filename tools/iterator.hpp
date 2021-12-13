@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 18:52:47 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 23:36:00 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ namespace ft{
 			pointer _ptr;
 	};
 
-	template<typename iterator>
-	iterator operator+ (const int n, const iterator& a) { return (n + a.get_ptr()); }
+	// template<typename iterator>
+	// iterator operator+ (const int n, const iterator& a) { return (n + a.get_ptr()); }
 }
 
 #endif

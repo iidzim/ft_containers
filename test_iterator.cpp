@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:40:07 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 21:32:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 23:36:11 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,68 @@ int main(){
     std::reverse_iterator<std::vector<std::string>::iterator> ritt(tv.end());
     ft::reverse_iterator<std::vector<std::string>::iterator> my_ritt(tv.end());
     bool ttt = (ritt->length() == my_ritt->length()); std::cout << "operator-> " << ttt << std::endl;
+    bool tminus = ((&(*my_rit) == &(*(my_rit1 - 1))) && (&(*rit) == &(*(rit_1 - 1))));
+    std::cout << "operator- " << tminus << std::endl;
+    bool tplus = ((&(*(my_rit + 1)) == &(*my_rit1)) && (&(*(rit + 1)) == &(*rit_1)));
+    std::cout << "operator+ " << tplus << std::endl;
+    /*----------------------------------*/
+    my_rit += 1;
+    rit += 1;
+    bool tm = ((&(*my_rit) == &(*my_rit1)) && (&(*rit) == &(*rit_1))); //!!!!!!!!!!!!
+        std::cout << "operator+= " << tm << std::endl;
+    /*----------------------------------*/
+    my_rit -= 1;
+    rit -= 1;
+    bool ts = ((&(*my_rit) == &(*(my_rit1 - 1))) && (&(*rit) == &(*(rit_1 - 1))));
+        std::cout << "operator-= " << ts << std::endl;
+    /*----------------------------------*/
+    bool tr = (((my_rit[0] = 5) == 5) && (rit[0] == 5));
+        std::cout << "operator[] " << tr << std::endl;
+    /*----------------------------------*/
+    ++my_rit; // I incremented here to make sure that the object changes
+    ++rit;
+    bool te = (&(*my_rit) == &(*my_rit1)) && (&(*rit) == &(*rit_1));
+        std::cout << "operator++ " << te << std::endl;
+    /*----------------------------------*/
+    --my_rit; // I incremented here to make sure that the object changes
+    --rit;
+    bool tw = ((&(*my_rit) == &(*(my_rit1 - 1))) && (&(*rit) == &(*(rit_1 - 1))));
+        std::cout << "operator-- " << tw << std::endl;
+    /*----------------------------------*/
+    bool tq = ((&(*(2 + my_rit)) == &(*(1 + my_rit1))) && (&(*(2 + rit)) == &(*(1 + rit_1))));
+        std::cout << "+ operator (n + rit) " << tq << std::endl;
+    /*----------------------------------*/
+    // bool tf = (((my_rit - my_rit1) == (rit - rit_1)) && ((my_rit1 - my_rit) == (rit_1 - rit)));
+    //     std::cout << " - operator (rit1 - rit) " << tf << std::endl;
+    /*----------------------------------*/
+    // std::reverse_iterator<std::vector<int>::iterator> tmp(rit++);
+    // ft::reverse_iterator<std::vector<int>::iterator> my_tmp(my_rit++);
+    // bool pl = ((&(*tmp) == &(*(--rit))) && (&(*my_tmp) == &(*(--my_rit))));
+    //     std::cout << " rit++ operator " << pl << std::endl;
+    /*----------------------------------*/
+    // std::reverse_iterator<std::vector<int>::iterator> tmp(rit--);
+    // ft::reverse_iterator<std::vector<int>::iterator> my_tmp(my_rit--);
+    // bool po = ((&(*tmp) == &(*(++rit))) && (&(*my_tmp) == &(*(++my_rit))));
+    //     std::cout << " rit-- operator " << po << std::endl;
+    /*----------------------------------*/
+    // std::vector<char> v(10);
+    // std::string res, my_res;
+    // std::reverse_iterator<std::vector<char>::iterator> start(v.end()), end(v.begin());
+    // ft::reverse_iterator<std::vector<char>::iterator> my_start(v.end()), my_end(v.begin());
+    // for (size_t i = 0; i < 10; ++i)
+    //     v[i] = '0' + i;
+    // while (start != end)
+    //     res.push_back(*start++);
+    // while (my_start != my_end)
+    //     my_res.push_back(*my_start++);
+    // bool pk = (res == my_res); std::cout << " *rit++ test " << pk << std::endl;
+    /*----------------------------------*/
 
 
+
+    
+    /*----------------------------------*/
+    /*----------------------------------*/
     //*  the function decreases a copy of its base iterator and returns the result of dereferencing it.
 
     return 0;
