@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/10 19:22:27 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 18:05:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ namespace ft{
 		typedef Reference reference;
 		// typedef T&			reference;
 
+		iterator(void) : _ptr(NULL) {}
 		iterator(pointer ptr) : _ptr(ptr) {}
 		iterator(const iterator& x) { *this = x; }
 		iterator& operator= (const iterator& x) {this->_ptr = x._ptr; return (*this); }
@@ -55,10 +56,9 @@ namespace ft{
 		iterator operator+ (const int n) { return _ptr + n; };
 		iterator operator- (const int n) { return _ptr - n; };
 		difference_type operator- (const iterator& a) { return this->_ptr - a._ptr; };
-		iterator& operator+= (const int& n) { this = this + n; return (*this); };
-		iterator& operator-= (const int& n) { this = this - n; return (*this); };
-		const T& operator[] (const int& index) { return this[index]; };
-
+		iterator& operator+= (const int& n) { return (*(this + n)); };
+		iterator& operator-= (const int& n) { return (*(this - n)); };
+		T& operator[] (difference_type n) { return *(_ptr+n); };
 		pointer get_ptr(void) const { return (this->_ptr); }
 
 		private:

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/12 23:51:39 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 16:36:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@
 
 int main(void){
 
-	// constructors used in the same order as described above:
-	// std::vector<int> first;                                // empty vector of ints
-	// std::vector<int> second (4,100);                       // four ints with value 100
-	// std::vector<int> third (second.begin(),second.end());  // iterating through second
-	// std::vector<int> fourth (third);                       // a copy of third	
-	// the iterator constructor can also be used to construct from arrays:
-	// int myints[] = {16,2,77,29};
-	// std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
-	// std::cout << "The contents of fifth are:";
-	// for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-		// std::cout << ' ' << *it;
-	// std::cout << '\n';
-
 	ft::vector<int> first1;                                // empty vector of ints
 	ft::vector<int> second1(3, 100);                       // four ints with value 100
 	std::cout << second1.size() << " - " << second1.capacity() << std::endl;
@@ -43,14 +30,16 @@ int main(void){
 	std::cout << "copy constructor -> ";
 	for (int i = 0; i < third.size(); i++)
 		std::cout << third[i] << " ";
+	std::cout << std::endl;
+	// third.reserve(10);
 	// std::cout << "assignment operator -> ";
 	// first1 = third;
 	// for (int i = 0; i < first1.size(); i++)
 	// 	std::cout << first1[i] << " ";
-	ft::vector<int> third1(second1.begin(),second1.end());  // iterating through second
-	// ft::vector<int> fourth (third);                       // a copy of third	
+	ft::vector<int> third1(second1.begin(),second1.end());   // iterating through second
+	// ft::vector<int> fourth (third);                       // a copy of third
 	// the iterator constructor can also be used to construct from arrays:
-	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );	
+	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );
 	// std::cout << "The contents of fifth are:";
 	// for (ft::vector<int>::iterator it = fifth1.begin(); it != fifth1.end(); ++it)
 		// std::cout << ' ' << *it;
