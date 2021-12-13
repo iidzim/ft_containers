@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 16:38:50 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 20:01:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ namespace ft{
 
 		public:
 
-			struct random_access_iterator_tag{};
 			typedef	T									value_type;
 			typedef	Alloc								allocator_type;
 			typedef size_t								size_type;
@@ -38,8 +37,8 @@ namespace ft{
 			// typedef typename ft::iterator<T>			const_iterator;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	iterator;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
-			typedef typename ft::reverse_iterator<T>	reverse_iterator;
-			typedef typename ft::reverse_iterator<T>	const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>	reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>	const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){

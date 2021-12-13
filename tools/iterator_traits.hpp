@@ -6,16 +6,18 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:00:54 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/06 16:01:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/13 19:57:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_HPP
 # define ITERATOR_TRAITS_HPP
-#include "tools/iterator.hpp"
-#include "tools/reverse_iterator.hpp"
+#include "./iterator.hpp"
+#include "./reverse_iterator.hpp"
 
 namespace ft{
+
+	struct random_access_iterator_tag{};
 
 	template <typename iterator>
 	struct iterator_traits{
@@ -29,8 +31,8 @@ namespace ft{
 
 	template <typename T>
 	struct iterator_traits<T*>{
-		
-		typedef random_access_iterator_tag	iterator_category;
+
+		typedef ft::random_access_iterator_tag	iterator_category;
 		typedef T							value_type;
 		typedef ptrdiff_t					difference_type;
 		typedef T*							pointer;
