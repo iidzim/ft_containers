@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 23:26:21 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 00:52:09 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,11 @@ void reverse_iterator_with_ft_vector(void)
         ft::vector<std::string>::reverse_iterator my_rit(my_v.end());
         EQUAL(rit->length() == my_rit->length());
     }
+
+
+
+
+    
     std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " - operator "
               << "] --------------------]\t\t\033[0m";
     EQUAL((&(*my_rit) == &(*(my_rit1 - 1))) && (&(*rit) == &(*(rit_1 - 1))));
@@ -306,6 +311,10 @@ void reverse_iterator_with_ft_vector(void)
     --my_rit; // I incremented here to make sure that the object changes
     --rit;
     EQUAL((&(*my_rit) == &(*(my_rit1 - 1))) && (&(*rit) == &(*(rit_1 - 1))));
+
+
+
+    
     std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " + operator (n + rit) "
               << "] --------------------]\t\t\033[0m";
     EQUAL((&(*(2 + my_rit)) == &(*(1 + my_rit1))) && (&(*(2 + rit)) == &(*(1 + rit_1))));
