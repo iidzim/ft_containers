@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 02:05:04 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 14:23:15 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ namespace ft{
 			iterator& operator--() { --(_ptr); return (*this); }
 			iterator operator--(int) { iterator tmp = *this; --(*this); return (tmp); }
 
-			bool operator== (const iterator& a) { return this->_ptr == a._ptr; };
-			bool operator!= (const iterator& a) { return this->_ptr != a._ptr; };
-			bool operator< (const iterator& a) { return this->_ptr < a._ptr; };
-			bool operator> (const iterator& a) { return this->_ptr > a._ptr; };
-			bool operator<= (const iterator& a) { return this->_ptr <= a._ptr; };
-			bool operator>= (const iterator& a) { return this->_ptr >= a._ptr; };
+			friend bool operator== (const iterator& lhs, const iterator& rhs) { return lhs._ptr == rhs._ptr; };
+			friend bool operator!= (const iterator& lhs, const iterator& rhs) { return lhs._ptr != rhs._ptr; };
+			friend bool operator< (const iterator& lhs, const iterator& rhs) { return lhs._ptr < rhs._ptr; };
+			friend bool operator> (const iterator& lhs, const iterator& rhs) { return lhs._ptr > rhs._ptr; };
+			friend bool operator<= (const iterator& lhs, const iterator& rhs) { return lhs._ptr <= rhs._ptr; };
+			friend bool operator>= (const iterator& lhs, const iterator& rhs) { return lhs._ptr >= rhs._ptr; };
+
+			friend iterator operator+ (int n, iterator a) { return iterator(a._ptr + n); }
 
 			iterator operator+ (const int n) { return _ptr + n; };
 			iterator operator- (const int n) { return _ptr - n; };
@@ -62,14 +64,10 @@ namespace ft{
 			iterator& operator-= (const int& n) { _ptr -= n; return (*this); };
 			T& operator[] (difference_type n) { return *(_ptr+n); };
 
-			pointer get_ptr(void) const { return (this->_ptr); }
-
 		private:
 			pointer _ptr;
 	};
 
-	template<typename iterator>
-	iterator operator+ (typename iterator::difference_type n, const iterator& a) { return (a + n); }
 }
 
 #endif
