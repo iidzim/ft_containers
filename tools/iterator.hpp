@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 14:23:15 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 21:26:27 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ namespace ft{
 			iterator(const iterator& x) { *this = x; }
 			iterator& operator= (const iterator& x) {this->_ptr = x._ptr; return (*this); }
 			~iterator(void) {}
-			reference operator* () const { return *_ptr; }
-			pointer operator-> () { return _ptr; }
+			reference operator* () const { return (*_ptr); }
+			pointer operator-> () { return (_ptr); }
 
 			iterator& operator++() { ++(_ptr); return (*this); }
 			iterator operator++(int) { iterator tmp = *this; ++(*this); return (tmp); }
@@ -57,9 +57,9 @@ namespace ft{
 
 			friend iterator operator+ (int n, iterator a) { return iterator(a._ptr + n); }
 
-			iterator operator+ (const int n) { return _ptr + n; };
-			iterator operator- (const int n) { return _ptr - n; };
-			difference_type operator- (const iterator& a) { return this->_ptr - a._ptr; };
+			iterator operator+ (const int n) { return (_ptr + n); };
+			iterator operator- (const int n) { return (_ptr - n); };
+			difference_type operator- (const iterator& a) { return (this->_ptr - a._ptr); };
 			iterator& operator+= (const int& n) { _ptr += n; return (*this); };
 			iterator& operator-= (const int& n) { _ptr -= n; return (*this); };
 			T& operator[] (difference_type n) { return *(_ptr+n); };
@@ -67,7 +67,6 @@ namespace ft{
 		private:
 			pointer _ptr;
 	};
-
 }
 
 #endif
