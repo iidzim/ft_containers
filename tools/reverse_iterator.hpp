@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 00:43:56 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 01:55:44 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ namespace ft{
 			reverse_iterator (const reverse_iterator<Iter>& rev_it) { this->_it = rev_it.base(); }
 
 			//? Returns a copy of the base iterator.
-			iterator_type base() const {return (_it + 1); }
+			iterator_type base() const {return (_it); }
 
 			//? Operator overloading
 			reference operator* () const { iterator_type tmp = _it; return *(--tmp); }
 			reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(_it - n)); }
 			reverse_iterator operator- (difference_type n) const {return (reverse_iterator(_it + n)); }
 			reverse_iterator& operator++() { --(_it); return (*this); }
-			reverse_iterator  operator++(int) { reverse_iterator temp = *this; ++(*this); return (temp);}
+			reverse_iterator  operator++(int) { reverse_iterator temp = *this; ++(*this); return (temp); }
 			reverse_iterator& operator--() { ++(_it); return (*this); }
 			reverse_iterator  operator--(int) { reverse_iterator temp = *this; --(*this); return (temp); }
 			reverse_iterator& operator+= (difference_type n) { return *(this - n); }

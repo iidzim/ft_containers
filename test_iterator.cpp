@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 16:40:07 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 00:56:48 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 01:37:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int main(){
 
-    //? Vector iterator tests
+    // //? Vector iterator tests
     // /*------------ std::vector ---------*/
     // std::vector<int> v(3, 4);
     // std::vector<int>::iterator it, it1;
@@ -118,11 +118,11 @@ int main(){
     // else
     //     std::cout << "not equal11" << std::endl;
 
-    //? Vector const_iterator tests
+    // ? Vector const_iterator tests
 
 
 
-    //? Reverse_iterator tests
+    // // ? Reverse_iterator tests
     // /*------------ std::reverse_iterator ---------*/
     // std::vector<int> v(3, 4);
     // std::reverse_iterator<std::vector<int>::iterator> rit(v.end()), rit_1(v.end() - 1);
@@ -217,28 +217,28 @@ int main(){
     // while (my_start != my_end)
     //     my_res.push_back(*my_start++);
     // bool pk = (res == my_res); std::cout << " *rit++ test " << pk << std::endl;
-    /*----------------------------------*/
+    // /*----------------------------------*/
 
     //? reverse_iterator with ft::vector
 
-    std::cout << std::boolalpha;
-    /*------------ std::reverse_iterator ---------*/
-    std::vector<int> v(3, 4);
-    std::vector<int>::reverse_iterator rit(v.end()), rit_1(v.end() - 1);
-    /*------------ ft::reverse_iterator ---------*/
-    ft::vector<int> my_v(3, 4);
-    ft::vector<int>::reverse_iterator my_rit(my_v.end()), my_rit1(my_v.end() - 1);
-    /*----------------------------------*/
-    ft::vector<int>::reverse_iterator ob(my_rit);
-    bool b = (&(*my_rit) == &(*ob)); std::cout << "copy constructor " << b << std::endl;
-    bool bb = ((&(*rit) == &(*rit_1.base())) && (&(*my_rit) == &(*my_rit1.base())));
-        std::cout << "base function " << bb << std::endl;
-    bool bn = ((rit == rit_1) == (my_rit == my_rit1)); std::cout << "== operator " << bn << std::endl;
-    bool bm = ((rit != rit_1) == (my_rit != my_rit1)); std::cout << "!= operator " << bm << std::endl;
-    bool bl = ((rit > rit_1) == (my_rit > my_rit1)); std::cout << "> operator " << bl << std::endl;
-    bool bv = ((rit >= rit_1) == (my_rit >= my_rit1)); std::cout << ">= operator " << bv << std::endl;
-    bool bc = ((rit < rit_1) == (my_rit < my_rit1)); std::cout << "< operator " << bc << std::endl;
-    bool bx = ((rit <= rit_1) == (my_rit <= my_rit1)); std::cout << "<= operator " << bx << std::endl;
+    // std::cout << std::boolalpha;
+    // /*------------ std::reverse_iterator ---------*/
+    // std::vector<int> v(3, 4);
+    // std::vector<int>::reverse_iterator rit(v.end()), rit_1(v.end() - 1);
+    // /*------------ ft::reverse_iterator ---------*/
+    // ft::vector<int> my_v(3, 4);
+    // ft::vector<int>::reverse_iterator my_rit(my_v.end()), my_rit1(my_v.end() - 1);
+    // /*----------------------------------*/
+    // ft::vector<int>::reverse_iterator ob(my_rit);
+    // bool b = (&(*my_rit) == &(*ob)); std::cout << "copy constructor " << b << std::endl;
+    // bool bb = ((&(*rit) == &(*rit_1.base())) && (&(*my_rit) == &(*my_rit1.base())));
+    //     std::cout << "base function " << bb << std::endl;
+    // bool bn = ((rit == rit_1) == (my_rit == my_rit1)); std::cout << "== operator " << bn << std::endl;
+    // bool bm = ((rit != rit_1) == (my_rit != my_rit1)); std::cout << "!= operator " << bm << std::endl;
+    // bool bl = ((rit > rit_1) == (my_rit > my_rit1)); std::cout << "> operator " << bl << std::endl;
+    // bool bv = ((rit >= rit_1) == (my_rit >= my_rit1)); std::cout << ">= operator " << bv << std::endl;
+    // bool bc = ((rit < rit_1) == (my_rit < my_rit1)); std::cout << "< operator " << bc << std::endl;
+    // bool bx = ((rit <= rit_1) == (my_rit <= my_rit1)); std::cout << "<= operator " << bx << std::endl;
     // bool bz = (((*my_rit == *(my_v.end() - 1)) && (&(*my_rit) == &(*(my_v.end() - 1)))) 
     //     && ((*rit == *(v.end() - 1)) && (&(*rit) == &(*(v.end() - 1)))));
     //     std::cout << "* operator " << bz << std::endl;
@@ -253,6 +253,8 @@ int main(){
     // std::cout << "- operator " << bs << std::endl;
     // bool bd = ((&(*(my_rit + 1)) == &(*my_rit1)) && (&(*(rit + 1)) == &(*rit_1)));
     // std::cout << "+ operator " << bd << std::endl;
+
+    
     // /*----------------------------------*/
     // my_rit += 1;
     // rit += 1;

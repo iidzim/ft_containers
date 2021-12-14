@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 23:36:00 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/14 02:05:04 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ namespace ft{
 			iterator operator+ (const int n) { return _ptr + n; };
 			iterator operator- (const int n) { return _ptr - n; };
 			difference_type operator- (const iterator& a) { return this->_ptr - a._ptr; };
-			iterator& operator+= (const int& n) { return (*(this + n)); };
-			iterator& operator-= (const int& n) { return (*(this - n)); };
+			iterator& operator+= (const int& n) { _ptr += n; return (*this); };
+			iterator& operator-= (const int& n) { _ptr -= n; return (*this); };
 			T& operator[] (difference_type n) { return *(_ptr+n); };
 
 			pointer get_ptr(void) const { return (this->_ptr); }
@@ -68,8 +68,8 @@ namespace ft{
 			pointer _ptr;
 	};
 
-	// template<typename iterator>
-	// iterator operator+ (const int n, const iterator& a) { return (n + a.get_ptr()); }
+	template<typename iterator>
+	iterator operator+ (typename iterator::difference_type n, const iterator& a) { return (a + n); }
 }
 
 #endif
