@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/15 18:45:36 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/15 21:02:01 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ namespace ft{
 				// 	_alloc.destroy(this->_start + i);
 				// for (int i = 0; i < this->_capacity; i++) //!! range constructor
 				// 	this->_alloc.deallocate(this->_start + i, 1);
+				std::cout << this->_capacity << " - " << this->_size << std::cot 
 				this->_alloc = x._alloc;
 				this->_capacity = x._capacity;
 				this->_size = x._size;
@@ -243,11 +244,11 @@ namespace ft{
 
 			//? Returns a reference to the first element
 			reference front(){ return (*(this->_start)); }
-			const_reference front() const{ return (*(this->_start)); }
+			const_reference front() const{ return (*this->_start); }
 
 			//? Returns a reference to the last element
-			reference back(){ return (*(--(this->_end))); }
-			const_reference back() const{ return (*(--(this->_end))); }
+			reference back(){ iterator tmp = this->_end - 1; return (*tmp); }
+			const_reference back() const{ iterator tmp = this->_end - 1; return (*tmp); }
 
 			// //! Modifiers ************************************************* //
 
