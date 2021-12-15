@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 23:06:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/15 18:45:36 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ namespace ft{
 
 			//* enable_if -> Yields type T only if bool B is true
 			//? Constructs the container with the contents of the range [first, last)
-			template <typename InputIterator, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+			template <typename InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), 
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
 				//* The allocator parameter is copied into a private member of the container
 				//* This private copy can then be used for all subsequent storage management
@@ -86,18 +87,18 @@ namespace ft{
 
 			//? Copy constructor
 			vector (const vector& x){
-				// this = x; //! expression is not assignable
-				for (int i = 0; i < this->_size; i++)
-					this->_alloc.destroy(this->_start + i);
-				for (int i = 0; i < this->_size; i++)
-					this->_alloc.deallocate(this->_start + i, 1);
-				this->_alloc = x._alloc;
-				this->_capacity = x._capacity;
-				this->_size = x._size;
-				this->_start = this->_alloc.allocate(this->_size);
-				this->_end = this->_start + this->_size;
-				for (int i = 0; i < this->_size; i++)
-					this->_alloc.construct((this->_start + i), *(x._start + i));
+				*this = x; //! expression is not assignable
+				// for (int i = 0; i < this->_size; i++)
+				// 	this->_alloc.destroy(this->_start + i);
+				// for (int i = 0; i < this->_size; i++)
+				// 	this->_alloc.deallocate(this->_start + i, 1);
+				// this->_alloc = x._alloc;
+				// this->_capacity = x._capacity;
+				// this->_size = x._size;
+				// this->_start = this->_alloc.allocate(this->_size);
+				// this->_end = this->_start + this->_size;
+				// for (int i = 0; i < this->_size; i++)
+				// 	this->_alloc.construct((this->_start + i), *(x._start + i));
 			}
 
 			//? Destroys the container object
@@ -106,30 +107,29 @@ namespace ft{
 					this->_alloc.destroy(it);
 				//! attempting free on address which was not malloc()-ed
 				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-				// 	this->_alloc.deallocate(it, 1);
+					// this->_alloc.deallocate(it, 1);
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){ //! segfault
 
-				if (*this != x)
-				{
-					for (int i = 0; i < this->_size; i++)
-						this->_alloc.destroy(this->_start + i);
-					for (int i = 0; i < this->_size; i++)
-						this->_alloc.deallocate(this->_start + i, 1);
-					this->_alloc = x._alloc;
-					this->_capacity = x._capacity;
-					this->_size = x._size;
-					this->_start = this->_alloc.allocate(this->_size);
-					this->_end = this->_start + this->_size;
-					for (int i = 0; i < this->_size; i++)
-						this->_alloc.construct((this->_start + i), *(x._start + i));
-				}
+				// if (*this == x)
+					// return(*this);
+				// for (int i = 0; i < this->_size; i++) //! capacity
+				// 	_alloc.destroy(this->_start + i);
+				// for (int i = 0; i < this->_capacity; i++) //!! range constructor
+				// 	this->_alloc.deallocate(this->_start + i, 1);
+				this->_alloc = x._alloc;
+				this->_capacity = x._capacity;
+				this->_size = x._size;
+				this->_start = this->_alloc.allocate(this->_size);
+				this->_end = this->_start + this->_size;
+				for (int i = 0; i < this->_size; i++)
+					this->_alloc.construct((this->_start + i), *(x._start + i));
 				return (*this);
 			}
 
-			// //! iterators ************************************************ //
+			//! iterators ************************************************ //
 
 			//? Returns an iterator pointing to the first element
 			iterator begin(){ return (this->_start); }
@@ -144,33 +144,33 @@ namespace ft{
 			const_reverse_iterator rbegin() const{ return (reverse_iterator(this->_end)); }
 
 			//? Returns a reverse iterator pointing to the theoretical element preceding the first element
-			reverse_iterator rend(){ return (reverse_iterator(this->_begin)); }
-			const_reverse_iterator rend() const{ return (reverse_iterator(this->_begin)); }
+			reverse_iterator rend(){ return (reverse_iterator(this->_start)); }
+			const_reverse_iterator rend() const{ return (reverse_iterator(this->_start)); }
 
-			// //! Capacity ************************************************** //
+			//! Capacity ************************************************** //
 
 			//? Returns the number of elements in the vector.
 			size_type size() const { return (this->_size); }
 
 			//? Returns the maximum number of elements that the vector can hold.
 			size_type max_size() const { return (this->_alloc.max_size()); }
-			// // size_type max_size() const { return (this->get_allocator().max_size()); }//*
+			// size_type max_size() const { return (this->get_allocator().max_size()); }//*
 
 			//? Resizes the container so that it contains n elements.
 			void resize (size_type n, value_type val = value_type()){
 
 				if (n < this->_size) {
-					for (iterator it = this->_start + n; it < this->_end; it++)
+					for (pointer it = this->_start + n; it < this->_end; it++)
 						this->_alloc.destroy(it);
 					this->_end = this->_start + n;
 					this->_size = n;
 				}
 				else if (n > this->_size && n < this->_capacity) {
 					//? insert at the end as many elements as needed to reach a size of n
-					insert(this->_size(), n, val);
+					insert(this->_end, n, val);
 				}
 				else {
-					iterator tmp_start, tmp_end;
+					pointer tmp_start, tmp_end;
 					tmp_start = this->_alloc.allocate(n);
 					tmp_end = tmp_start + n;
 					for (int i = 0; i < n; i++)
@@ -180,9 +180,9 @@ namespace ft{
 						else
 							this->_alloc.construct(tmp_start + i, val);
 					}
-					for (iterator it = this->_start; it < this->_end; it++)
+					for (pointer it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
-					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+					for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
 						this->_alloc.deallocate(it, 1);
 					this->_start = tmp_start;
 					this->_end = tmp_end;
@@ -192,7 +192,10 @@ namespace ft{
 			}
 
 			//? Return size of allocated storage capacity
-			size_type capacity() const { return (this->_capacity); }
+			size_type capacity() const { 
+				if (this->size() == 0)
+					return (0);
+				return (this->_capacity); }
 
 			//? Test whether vector is empty
 			bool empty() const{
@@ -206,14 +209,14 @@ namespace ft{
 			void reserve (size_type n){
 
 				if (n > this->_capacity){
-					iterator tmp_start, tmp_end;
+					pointer tmp_start, tmp_end;
 					tmp_start = this->_alloc.allocate(n);
 					tmp_end = tmp_start + this->_size;
 					for (int i = 0; i < this->_size; i++)
 						this->_alloc.constrcut(tmp_start ,*(this->_start + i));
-					for (iterator it = this->_start; it < this->_end; it++)
+					for (pointer it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
-					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
+					for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
 						this->_alloc.deallocate(it, 1);
 					this->_start = tmp_start;
 					this->_end = tmp_end;
@@ -444,6 +447,9 @@ namespace ft{
 			//? Returns a copy of the allocator object associated with the vector
 			allocator_type get_allocator() const{ return (this->_alloc); }
 
+			// friend bool operator!= (const vector& lhs, const vector& rhs) { return (lhs != rhs); }
+			friend bool operator== (const vector& lhs, const vector& rhs) { return (lhs == rhs); }
+
 		private:
 			Alloc		_alloc;
 			int			_capacity;
@@ -456,8 +462,8 @@ namespace ft{
 	};
 
 	//? Relational operators
-	template <class T, class Alloc>
-	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs == rhs); }
+	// template <class T, class Alloc>
+	// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs == rhs); }
 
 	template <class T, class Alloc>
 	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs != rhs); }
