@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:00:54 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/13 19:57:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/15 21:47:10 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft{
 	};
 
 	// template <class T> 
-	// class iterator_traits<const T*>{} //?
+	// class iterator_traits<const T*>{} //?????????
 }
 
 #endif

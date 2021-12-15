@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/15 21:02:01 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/15 23:41:00 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdexcept>
 #include "../tools/reverse_iterator.hpp"
 #include "../tools/iterator.hpp"
-#include "../tools/enable_if.hpp"
+#include "../tools/tools.hpp"
 
 namespace ft{
 
@@ -108,6 +108,8 @@ namespace ft{
 				//! attempting free on address which was not malloc()-ed
 				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
 					// this->_alloc.deallocate(it, 1);
+				this->_size = 0;
+				this->_capacity = 0;
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
@@ -119,7 +121,6 @@ namespace ft{
 				// 	_alloc.destroy(this->_start + i);
 				// for (int i = 0; i < this->_capacity; i++) //!! range constructor
 				// 	this->_alloc.deallocate(this->_start + i, 1);
-				std::cout << this->_capacity << " - " << this->_size << std::cot 
 				this->_alloc = x._alloc;
 				this->_capacity = x._capacity;
 				this->_size = x._size;
@@ -155,7 +156,6 @@ namespace ft{
 
 			//? Returns the maximum number of elements that the vector can hold.
 			size_type max_size() const { return (this->_alloc.max_size()); }
-			// size_type max_size() const { return (this->get_allocator().max_size()); }//*
 
 			//? Resizes the container so that it contains n elements.
 			void resize (size_type n, value_type val = value_type()){
@@ -199,12 +199,7 @@ namespace ft{
 				return (this->_capacity); }
 
 			//? Test whether vector is empty
-			bool empty() const{
-				if (this->_size == 0)
-					return (true);
-				else
-					return (false);
-			}
+			bool empty() const { return (this->_start == this->_end); }
 
 			//? Request a change in capacity
 			void reserve (size_type n){
@@ -228,8 +223,8 @@ namespace ft{
 			// //! Element access ******************************************** //
 
 			//? Returns a reference to the element at position n
-			reference operator[] (size_type n){ return (*(this->_start + n)); }
-			const_reference operator[] (size_type n) const{ return (*(this->_start + n)); }
+			reference operator[] (size_type n){ return *(this->_start + n); }
+			const_reference operator[] (size_type n) const{ return *(this->_start + n); }
 
 			reference at (size_type n){
 				if (n < 0 || n >= this->_size)
@@ -243,12 +238,13 @@ namespace ft{
 			}
 
 			//? Returns a reference to the first element
-			reference front(){ return (*(this->_start)); }
-			const_reference front() const{ return (*this->_start); }
+			reference front(){ return *(this->_start); }
+			const_reference front() const{ return *(this->_start); }
 
 			//? Returns a reference to the last element
-			reference back(){ iterator tmp = this->_end - 1; return (*tmp); }
-			const_reference back() const{ iterator tmp = this->_end - 1; return (*tmp); }
+			reference back(){ return *(this->_end - 1); }
+			const_reference back() const{ return *(this->_end - 1); }
+
 
 			// //! Modifiers ************************************************* //
 
@@ -448,8 +444,36 @@ namespace ft{
 			//? Returns a copy of the allocator object associated with the vector
 			allocator_type get_allocator() const{ return (this->_alloc); }
 
-			// friend bool operator!= (const vector& lhs, const vector& rhs) { return (lhs != rhs); }
-			friend bool operator== (const vector& lhs, const vector& rhs) { return (lhs == rhs); }
+			//? Relational operators
+			friend bool operator== (const vector& lhs, const vector& rhs){
+
+				if (lhs._size != rhs._size)
+					return (false);
+				return(ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
+
+			friend bool operator!= (const vector& lhs, const vector& rhs){
+				if (lhs == rhs)
+					return (false);
+				return (true);
+			}
+
+			friend bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			}
+
+			friend bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+				return (!ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
+			}
+
+			friend bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+				return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
+			}
+
+			friend bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+				return (!ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			}
+
 
 		private:
 			Alloc		_alloc;
@@ -461,25 +485,6 @@ namespace ft{
 			pointer		_end;
 
 	};
-
-	//? Relational operators
-	// template <class T, class Alloc>
-	// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs == rhs); }
-
-	template <class T, class Alloc>
-	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs != rhs); }
-
-	template <class T, class Alloc>
-	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs < rhs); }
-
-	template <class T, class Alloc>
-	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs <= rhs); }
-
-	template <class T, class Alloc>
-	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs > rhs); }
-
-	template <class T, class Alloc>
-	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (lhs >= rhs); }
 
 	//? Exchange contents of vectors
 	template <typename T, typename Alloc>
