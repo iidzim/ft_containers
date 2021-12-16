@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/15 23:41:00 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/16 15:28:33 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,19 +204,27 @@ namespace ft{
 			//? Request a change in capacity
 			void reserve (size_type n){
 
-				if (n > this->_capacity){
-					pointer tmp_start, tmp_end;
-					tmp_start = this->_alloc.allocate(n);
-					tmp_end = tmp_start + this->_size;
-					for (int i = 0; i < this->_size; i++)
-						this->_alloc.constrcut(tmp_start ,*(this->_start + i));
-					for (pointer it = this->_start; it < this->_end; it++)
-						this->_alloc.destroy(it);
-					for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-						this->_alloc.deallocate(it, 1);
-					this->_start = tmp_start;
-					this->_end = tmp_end;
-					this->_capacity = n;
+				if (n > this->max_size())
+					throw (std::length_error("vector"));
+				try{
+					if (n > this->_capacity){
+						pointer tmp_start, tmp_end;
+						tmp_start = _alloc.allocate(n);
+						tmp_end = tmp_start + this->_size;
+						for (int i = 0; i < this->_size; i++)
+							_alloc.construct((tmp_start + i), *(this->_start + i));
+						for (pointer it = this->_start; it < this->_end; it++)
+							_alloc.destroy(it);
+						// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
+							// _alloc.deallocate(it, 1);
+						this->_start = tmp_start;
+						this->_end = tmp_end;
+						this->_capacity = n;
+						// std::cout << "capacity = " << this->_capacity << " - size = " << this->_size << std::endl;
+					}
+				}
+				catch(std::bad_alloc& err){
+					std::cerr << "bad_alloc caught: " << err.what() << '\n';
 				}
 			}
 
