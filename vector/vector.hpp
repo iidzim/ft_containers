@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/16 15:28:33 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/16 17:37:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,43 +160,37 @@ namespace ft{
 			//? Resizes the container so that it contains n elements.
 			void resize (size_type n, value_type val = value_type()){
 
-				if (n < this->_size) {
+				if (n < this->_size){
 					for (pointer it = this->_start + n; it < this->_end; it++)
 						this->_alloc.destroy(it);
 					this->_end = this->_start + n;
 					this->_size = n;
 				}
-				else if (n > this->_size && n < this->_capacity) {
-					//? insert at the end as many elements as needed to reach a size of n
-					insert(this->_end, n, val);
-				}
-				else {
+				else{
 					pointer tmp_start, tmp_end;
-					tmp_start = this->_alloc.allocate(n);
-					tmp_end = tmp_start + n;
-					for (int i = 0; i < n; i++)
-					{
-						if (i < this->_size)
-							this->_alloc.construct(tmp_start + i, *(this->_start + i));
-						else
-							this->_alloc.construct(tmp_start + i, val);
+					if (n > this->_size && n < this->_capacity){
+						tmp_start = this->_alloc.allocate(this->_capacity);
+						tmp_end = tmp_start + this->_size + n;
 					}
+					else{
+						tmp_start = this->_alloc.allocate(n);
+						tmp_end = tmp_start + n;
+						this->_capacity = n;
+					}
+					for (int i = 0; i < this->_size; i++)
+						this->_alloc.construct(tmp_start + i, *(this->_start + i));
+					for (int i = this->_size; i < n; i++)
+						this->_alloc.construct(tmp_start + i, val);
 					for (pointer it = this->_start; it < this->_end; it++)
 						this->_alloc.destroy(it);
-					for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-						this->_alloc.deallocate(it, 1);
 					this->_start = tmp_start;
 					this->_end = tmp_end;
-					this->_capacity = n;
 					this->_size = n;
 				}
 			}
 
 			//? Return size of allocated storage capacity
-			size_type capacity() const { 
-				if (this->size() == 0)
-					return (0);
-				return (this->_capacity); }
+			size_type capacity() const { return (this->_capacity); }
 
 			//? Test whether vector is empty
 			bool empty() const { return (this->_start == this->_end); }
@@ -204,27 +198,23 @@ namespace ft{
 			//? Request a change in capacity
 			void reserve (size_type n){
 
-				if (n > this->max_size())
-					throw (std::length_error("vector"));
-				try{
-					if (n > this->_capacity){
-						pointer tmp_start, tmp_end;
-						tmp_start = _alloc.allocate(n);
-						tmp_end = tmp_start + this->_size;
-						for (int i = 0; i < this->_size; i++)
-							_alloc.construct((tmp_start + i), *(this->_start + i));
-						for (pointer it = this->_start; it < this->_end; it++)
-							_alloc.destroy(it);
-						// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-							// _alloc.deallocate(it, 1);
-						this->_start = tmp_start;
-						this->_end = tmp_end;
-						this->_capacity = n;
-						// std::cout << "capacity = " << this->_capacity << " - size = " << this->_size << std::endl;
-					}
-				}
-				catch(std::bad_alloc& err){
-					std::cerr << "bad_alloc caught: " << err.what() << '\n';
+				if (n > this->max_size() || n < 0)
+					throw std::length_error("vector");
+				if (n < this->_capacity)
+					return ;
+				else{
+					pointer tmp_start, tmp_end;
+					tmp_start = _alloc.allocate(n);
+					tmp_end = tmp_start + this->_size;
+					for (int i = 0; i < this->_size; i++)
+						_alloc.construct((tmp_start + i), *(this->_start + i));
+					for (pointer it = this->_start; it < this->_end; it++)
+						_alloc.destroy(it);
+					// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
+					// 	_alloc.deallocate(it, 1);
+					this->_start = tmp_start;
+					this->_end = tmp_end;
+					this->_capacity = n;
 				}
 			}
 
