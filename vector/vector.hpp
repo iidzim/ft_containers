@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/16 18:42:40 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:47:20 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,8 +312,6 @@ namespace ft{
 					this->_alloc.construct((start + i + 1), *(this->_start + i));
 				for (pointer it = this->_start; it < this->_end; it++)
 					_alloc.destroy(it);
-				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-					// _alloc.deallocate(it, 1);
 				this->_start = start;
 				this->_end = end;
 				this->_capacity = this->_size;
@@ -471,7 +469,6 @@ namespace ft{
 		x = y;
 		y = tmp;
 	}
-
 }
 
 #endif
