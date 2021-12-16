@@ -1,7 +1,7 @@
 ### ft_containers
 
 ## ToDo 
-* test vector √√√X√ √√√√ √√X√√X √√√√ XXXXXXX √ √X
+* test vector √√√X√ √√√√ √√√√√√ √√√√ XXXXXXX √ √X
 * random access iterator √
 * iterators_traits √
 * reverse_iterator √
@@ -16,10 +16,9 @@
 [https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6](https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6)
 
 
-assign
-push_back
-pop_back
-insert
-erase
-swap
-clear
+* assign range
+* push_back
+* insert
+* erase
+* swap
+* clear

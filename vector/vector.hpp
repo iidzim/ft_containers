@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/16 17:37:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:42:40 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,17 @@ namespace ft{
 		public:
 
 			//* STL container and iterator types are easier to work with if you use some typedefs
-			typedef	T									value_type;
-			typedef	Alloc								allocator_type;
-			typedef size_t								size_type;
-			typedef typename Alloc::reference			reference;
-			typedef typename Alloc::const_reference		const_reference;
-			typedef typename Alloc::pointer				pointer;
-			typedef typename Alloc::const_pointer		const_pointer;
-			// typedef typename ft::iterator<T>			iterator;
-			// typedef typename ft::iterator<T>			const_iterator;
+			typedef	T																		value_type;
+			typedef	Alloc																	allocator_type;
+			typedef size_t																	size_type;
+			typedef typename Alloc::reference												reference;
+			typedef typename Alloc::const_reference											const_reference;
+			typedef typename Alloc::pointer													pointer;
+			typedef typename Alloc::const_pointer											const_pointer;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	iterator;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
-			typedef typename ft::reverse_iterator<iterator>	reverse_iterator;
-			typedef typename ft::reverse_iterator<iterator>	const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>									reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>									const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
@@ -79,8 +77,6 @@ namespace ft{
 				//* An initial buffer is allocated using the allocator's allocate function
 				this->_start = this->_alloc.allocate(this->_size);
 				this->_end = this->_start + this->_size;
-				// for (iterator it = this->_start; it < this->_end; it++)
-					// this->_alloc.construct(it, *(first + it));
 				for (int i = 0; i < this->_size; i++)
 					this->_alloc.construct((this->_start + i), *(first + i));
 			}
@@ -88,17 +84,6 @@ namespace ft{
 			//? Copy constructor
 			vector (const vector& x){
 				*this = x; //! expression is not assignable
-				// for (int i = 0; i < this->_size; i++)
-				// 	this->_alloc.destroy(this->_start + i);
-				// for (int i = 0; i < this->_size; i++)
-				// 	this->_alloc.deallocate(this->_start + i, 1);
-				// this->_alloc = x._alloc;
-				// this->_capacity = x._capacity;
-				// this->_size = x._size;
-				// this->_start = this->_alloc.allocate(this->_size);
-				// this->_end = this->_start + this->_size;
-				// for (int i = 0; i < this->_size; i++)
-				// 	this->_alloc.construct((this->_start + i), *(x._start + i));
 			}
 
 			//? Destroys the container object
@@ -211,7 +196,7 @@ namespace ft{
 					for (pointer it = this->_start; it < this->_end; it++)
 						_alloc.destroy(it);
 					// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-					// 	_alloc.deallocate(it, 1);
+					// 	_alloc.deallocate(it, 1); //! attempting free on address which was not malloc()-ed
 					this->_start = tmp_start;
 					this->_end = tmp_end;
 					this->_capacity = n;
@@ -248,19 +233,17 @@ namespace ft{
 
 			// //? Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last){
+			void assign (InputIterator first, InputIterator last,//!!!!!!!!!!!!!!!!!!!!!!!!! doesn't compile
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
 				size_type len = last - first;
 				if (len > this->_size){
-
-					for (iterator it = this->_start; it < this->_end; it++)
-						this->_alloc.destroy(it);
-					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
-						this->_alloc.deallocate(it, 1);
+					for (int i = 0; i < this->_size; i++)
+						_alloc.destroy(this->_start + i);
 					this->_start = this->_alloc.allocate(len);
 					this->_end = this->_start + len;
 					for (int i = 0; i < len; i++)
-						this->_alloc.construct((this->_start + i), *(first + i));
+						_alloc.construct(this->_start + i, *(first + i));
 					this->_size = this->_capacity = len;
 				}
 				else{
@@ -268,7 +251,7 @@ namespace ft{
 						this->_alloc.destroy(this->_start + i);
 					this->_size = len;
 					for (int i = 0; i < this->_size; i++)
-						*(this->_start + i) = *(first + i);
+						_alloc.construct(this->_start + i, *(first + i));
 				}
 			}
 
@@ -276,10 +259,8 @@ namespace ft{
 
 				if (n > this->_size)
 				{
-					for (iterator it = this->_start; it < this->_end; it++)
-						this->_alloc.destroy(it);
-					for (iterator it = this->_start; it < this->_start + this->_capacity; it++)
-						this->_alloc.deallocate(it, 1);
+					for (int i = 0; i < this->_size; i++)
+						_alloc.destroy(this->_start + i);
 					this->_start = this->_alloc.allocate(n);
 					this->_end = this->_start + n;
 					this->_size = this->_capacity = n;
@@ -288,9 +269,9 @@ namespace ft{
 				}
 				else{
 					for (int i = n; i < this->_size; i++)
-						this->_alloc.destroy(this->_start + i);
+						_alloc.destroy(this->_start + i);
 					this->_size = n;
-					for (iterator it = this->_start; it < this->_end; it++)
+					for (pointer it = this->_start; it < this->_end; it++)
 						this->_alloc.construct(it ,val);
 				}
 			}
@@ -310,33 +291,33 @@ namespace ft{
 			void pop_back(){
 
 				this->_size -= 1;
-				this->_end -= 1;
-				iterator it = this->_end;
+				pointer it = this->_end;
 				this->_end -= 1;
 				this->_alloc.destroy(it);
-				this->_alloc.deallocate(it, 1);
 			}
 
 			//? Insert elements
 			iterator insert (iterator position, const value_type& val){
 
-				pointer start, end;
+				int i;
 				this->_size += 1;
+				pointer start, end;
 				start = this->_alloc.allocate(this->_size);
 				end = this->_start + this->_size;
-				int i;
-				for (i = 0; i < position; i++)
+				size_type pos = position - this->_start;
+				for (i = 0; i < pos; i++)
 					this->_alloc.construct((start + i), *(this->_start + i));
 				this->_alloc.construct((start + i), val);
-				for (i = position; i < this->_size; i++)
+				for (i = pos; i < this->_size; i++)
 					this->_alloc.construct((start + i + 1), *(this->_start + i));
 				for (pointer it = this->_start; it < this->_end; it++)
-					this->destroy(it);
-				for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-					this->deallocate(it, 1);
+					_alloc.destroy(it);
+				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
+					// _alloc.deallocate(it, 1);
 				this->_start = start;
-				this->_end - end;
+				this->_end = end;
 				this->_capacity = this->_size;
+				return (this->_start + pos);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val){
@@ -385,16 +366,16 @@ namespace ft{
 			//? Erase elements
 			iterator erase (iterator position){
 
-				if (position < this->_size){
+				// if (position < this->_size){
 					this->_size -= 1;
-					// this->_alloc.destroy(this->_start + position);
-					for (int i = position; i < this->_size - 1; i++)
-						this->_alloc.construct((this->_start + i), *(this->_start + i + 1));
-					iterator it = this->_end;
+					this->_alloc.destroy(this->_start + position);
+					for (pointer it = position; it < this->_end - 1; it++)
+						this->_alloc.construct((this->_start + it), *(this->_start + it + 1));
+					pointer ite = this->_end;
 					this->_end -= 1;
-					this->_alloc.destroy(it);
+					this->_alloc.destroy(ite);
 					return (this->_start + position);
-				}
+				// }
 				return (0);
 			}
 
@@ -403,11 +384,11 @@ namespace ft{
 				size_type len = last - first;
 				if (this->_size > len)
 				{
-					for (iterator it = first; it + len < this->_end; it++){
+					for (pointer it = first; it + len < this->_end; it++){
 						this->_alloc.destroy(it);
 						this->_alloc.construct(it, *(it + len)); //!indirection requires pointer operand ('unsigned long' invalid)
 					}
-					for (iterator it = last; it < this->_end; it++)
+					for (pointer it = last; it < this->_end; it++)
 						this->_alloc.destroy(it);
 					this->_size -= len;
 					this->_end = last + 1;
@@ -451,9 +432,7 @@ namespace ft{
 			}
 
 			friend bool operator!= (const vector& lhs, const vector& rhs){
-				if (lhs == rhs)
-					return (false);
-				return (true);
+				return (!(lhs == rhs));
 			}
 
 			friend bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
@@ -471,7 +450,6 @@ namespace ft{
 			friend bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 				return (!ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 			}
-
 
 		private:
 			Alloc		_alloc;
