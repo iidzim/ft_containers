@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/17 20:55:15 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/17 22:09:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,26 +297,46 @@ namespace ft{
 			}
 
 			//? Insert elements
+			// iterator insert (iterator position, const value_type& val){
+
+			// 	int i;
+			// 	_size += 1;
+			// 	pointer start, end;
+			// 	pointer pos_ = &(*position);
+			// 	start = _alloc.allocate(_size);
+			// 	end = start + _size;
+			// 	size_type pos = position - _start;
+			// 	for (i = 0; i < pos; i++)
+			// 		_alloc.construct((start + i), *(_start + i));
+			// 	_alloc.construct((start + i), val);
+			// 	for (i = pos + 1; i < _size; i++)
+			// 		_alloc.construct((start + i), *(_start + i - 1));
+			// 	for (pointer it = _start; it < _end; it++)
+			// 		_alloc.destroy(it);
+			// 	_start = start; 
+			// 	_end = end;
+			// 	_capacity = _size;
+			// 	// return (_start + pos);
+			// 	return (iterator(pos_));
+			// }
 			iterator insert (iterator position, const value_type& val){
 
-				int i;
-				_size += 1;
 				pointer start, end;
-				pointer pos = &(*position);
-				start = _alloc.allocate(_size);
-				end = start + _size;
-				size_type pos = position - _start;
-				for (i = 0; i < pos; i++)
-					_alloc.construct((start + i), *(_start + i));
-				_alloc.construct((start + i), val);
-				for (i = pos; i < _size; i++)
-					_alloc.construct((start + i + 1), *(_start + i));
-				for (pointer it = _start; it < _end; it++)
-					_alloc.destroy(it);
+				int size;
+				//? empty vector
+				if (_size == 0){
+					size = _size + 1;
+					start = _alloc.allocate(size);
+					end = start + size;
+					_alloc.construct(start, val);
+					_capacity = size;
+				}
+				for(int i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
 				_start = start;
 				_end = end;
-				_capacity = _size;
-				return (_start + pos);
+				_size = size;
+				return (iterator(_start));
 			}
 
 			void insert (iterator position, size_type n, const value_type& val){
