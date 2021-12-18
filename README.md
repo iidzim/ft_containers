@@ -17,5 +17,5 @@
 
 
 * assign range X
-* insert XXX
+* insert X
 * erase XX

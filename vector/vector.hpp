@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/18 19:11:20 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:02:41 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,7 @@ namespace ft{
 				int i;
 				int pos = _end - &(*position);
 				if (_size == _capacity && _size == 0)
-					reserve(_size + 1);
+					reserve(1);
 				else if (_size == _capacity)
 					reserve(_size * 2);
 				for (i = 0; i < pos; i++)
@@ -315,36 +315,38 @@ namespace ft{
 
 			void insert (iterator position, size_type n, const value_type& val){
 
-				int i;
-				int pos = _end - &(*position);
+				size_type i;
+				size_type pos = _end - &(*position);
 				if (_size == _capacity && _size == 0)
 					reserve(n);
-				else if (_size == _capacity)
-					reserve(_size + n);
-				
+				else if (_size + (int)n >= _capacity){
+					if (_size + (int)n > _capacity && (int)n < _size)
+						reserve(_capacity * 2);
+					else
+						reserve(_size + n);
+				}
+				if (_size == 0){
+					for (i = 0; i < n; i++)
+						_alloc.construct(_start + i, val);
+				}
+				else{
+					pointer h;
+					for (i = 0; i <= pos; i++)
+						_alloc.construct(_end + n - i, *(_end - i));
+					h = _end + n - i;
+					for (i = 0; i < n; i++){
+						_alloc.construct(h - i, val);
+					}
+				}
+				_end += n;
+				_size += n;
 			}
 
 			template <typename InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
-				iterator start, end;
-				size_type new_size = _size + (last - first);
-				start = _alloc.allocate(new_size);
-				end = start + new_size;
-				for (int i = 0; i < position; i++)
-					_alloc.construct((start + i), *(_start + i));
-				for (int i = 0; i < (last - first); i++)
-					_alloc.constrcut((start + position + i), *(first + i));
-				for (int i = position; i < _size; i++)
-					_alloc.construct((start + position + (last - first) + i), *(_start + i));
-				for (iterator it = _start; it < _end; it++)
-					destroy(it);
-				for (iterator it = _start; it < _start + _capacity; it++)
-					deallocate(it, 1);
-				_start = start;
-				_end = end;
-				_capacity = _size = new_size;
+				
 			}
 
 			//? Erase elements
