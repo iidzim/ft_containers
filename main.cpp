@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/15 18:15:31 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/18 19:11:03 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <memory>
 #include "vector/vector.hpp"
 #include "tools/iterator.hpp"
-# include "tools/enable_if.hpp"
+# include "tools/tools.hpp"
 
 #include <iterator>
 #include <ctime>
@@ -95,8 +95,8 @@
 // // }
 
 
-// int main()
-// {
+int main()
+{
 // 	// ft::vector<int> test(5, 5);
 // 	// ft::vector<int>::const_iterator itc = test.begin();
 
@@ -111,6 +111,82 @@
 // 	ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
 // 	std::cout << "The contents of fifth are:";
 // 	for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)		std::cout << ' ' << *it;
-// 	std::cout << '\n';	
-// 	return 0;
-// }
+// 	std::cout << '\n';	ft::vector<int> data(5, 15);
+ 
+    // ft::vector<int>::iterator    en = data.end();
+
+    // std::cout << "my iterator - begin " << *be << std::endl;
+    // std::cout << "my iterator - end " << *(--en) << std::endl;
+    // std::cout << "index[15] = " << data[15] << std::endl;
+    // std::cout << "capacity = " << data.capacity() << " - size = " << data.size() << std::endl;
+
+    // std::cout << "***********************************\n";
+
+    // std::vector<int> data1(10, 5);
+
+    // std::vector<int>::iterator    be1 = data1.begin();
+    // std::vector<int>::iterator    en1 = data1.end();
+
+    // std::cout << "std iterator - begin " << *be1 << std::endl;
+    // std::cout << "std iterator - end " << *(--en1) << std::endl;
+    // std::cout << "index[15] = " << data1[15] << std::endl;
+    // std::cout << "capacity = " << data1.capacity() << " - size = " << data1.size() << std::endl;
+    
+    // ft::vector<int>    it(be, en);
+    // std::cout << it.size() << std::endl;
+    // std::cout << *it.begin() << " - " << *(it.end()) << std::endl;
+
+//*********************************************************************************
+   
+    // ft::vector<int> data(20, 5);
+    // ft::vector<int>::iterator    be = data.begin();
+    // be += 3;
+    // ft::vector<int> d1;
+    // d1.push_back(1);
+    // d1.push_back(3);
+    // d1.push_back(4);
+    // d1.push_back(5);
+
+    // std::cout << d1.size() << " - " << d1.capacity() << std::endl;
+    // d1.insert(d1.begin()+1, 2);
+    // for (size_t i=0; i<d1.size(); i++)
+    //     std::cout << d1[i] << " ";
+    // std::cout << std::endl;
+    // std::cout << *be << std::endl;
+    // std::cout << data.size() << " - " << data.capacity() << std::endl;
+    // data.insert(be, 999);
+    // for (size_t i=0; i<data.size(); i++)
+    //     std::cout << data[i] << " ";
+    // std::cout << std::endl;
+    // std::cout << data.size() << " - " << data.capacity() << std::endl;
+
+    std::cout << "*********************\n";
+    std::cout << "std insert\n";
+
+    std::vector<int> d2;
+    d2.push_back(1);
+    d2.push_back(5);
+    d2.push_back(6);
+    std::cout << d2.size() << " - " << d2.capacity() << std::endl;
+    // d2.insert(d2.begin()+1, 2);
+    d2.insert(d2.begin()+1, 3, 2);
+    for (size_t j=0; j<d2.size(); j++)
+        std::cout << d2[j] << " ";
+    std::cout << std::endl;
+    std::cout << d2.size() << " - " << d2.capacity() << std::endl;
+
+    // std::vector<int> data1(20, 5);
+    // std::vector<int>::iterator    be1 = data1.begin();
+    // be1 += 3;
+    // // std::cout << *be1 << std::endl;
+    // std::cout << data1.size() << " - " << data1.capacity() << std::endl;
+    // data1.insert(be1, 999);
+    // for (size_t i=0; i<data1.size(); i++)
+    //     std::cout << data1[i] << " ";
+    // std::cout << std::endl;
+    // std::cout << data1.size() << " - " << data1.capacity() << std::endl;
+
+//*********************************************************************************
+
+	return 0;
+}

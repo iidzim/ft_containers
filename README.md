@@ -1,13 +1,13 @@
 ### ft_containers
 
 ## ToDo 
-* test vector √√√X√ √√√√ √√√√√√ √√√√ XXXXXXX √ √X
+* test vector √√√√√ √√√√ √√√√√√ √√√√ XX√XX√√ √ √√
 * random access iterator √
 * iterators_traits √
 * reverse_iterator √
 * enable_if
-* is_integral
-* equal/lexicographical compare
+* is_integral √
+* equal/lexicographical compare √
 * std::pair
 * std::make_pair
 
@@ -17,6 +17,5 @@
 
 
 * assign range X
-* push_back X
 * insert XXX
 * erase XX

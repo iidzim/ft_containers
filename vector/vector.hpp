@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/17 22:09:17 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/18 19:11:20 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ namespace ft{
 
 				if (n > max_size() || n < 0)
 					throw std::length_error("vector");
-				if (n < _capacity)
+				if ((int)n < _capacity)
 					return ;
 				else{
 					pointer tmp_start, tmp_end;
@@ -234,7 +234,7 @@ namespace ft{
 			void assign (InputIterator first, InputIterator last,//!!!!!!!!!!!!!!!!!!!!!!!!! doesn't compile
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
-				size_type len = last - first;
+				int len = last - first;
 				pointer pfirst = &(*first);
 				pointer plast = &(*last);
 				if (len > _size){
@@ -279,12 +279,13 @@ namespace ft{
 			//? Add element at the end
 			void push_back (const value_type& val){
 
-				bool flag = 0;
-				if (_size == _capacity)
-					flag = 1;
-				insert(iterator(--(_end)), val);
-				if (flag == 1)
-					_capacity *= 2;
+				if (_capacity == _size && _size == 0)
+					reserve(_size + 1);
+				else if (_capacity == _size)
+					reserve(_size * 2);
+				_alloc.construct(_start + _size, val);
+				_end += 1;
+				_size += 1;
 			}
 
 			//? Delete last element
@@ -297,67 +298,30 @@ namespace ft{
 			}
 
 			//? Insert elements
-			// iterator insert (iterator position, const value_type& val){
-
-			// 	int i;
-			// 	_size += 1;
-			// 	pointer start, end;
-			// 	pointer pos_ = &(*position);
-			// 	start = _alloc.allocate(_size);
-			// 	end = start + _size;
-			// 	size_type pos = position - _start;
-			// 	for (i = 0; i < pos; i++)
-			// 		_alloc.construct((start + i), *(_start + i));
-			// 	_alloc.construct((start + i), val);
-			// 	for (i = pos + 1; i < _size; i++)
-			// 		_alloc.construct((start + i), *(_start + i - 1));
-			// 	for (pointer it = _start; it < _end; it++)
-			// 		_alloc.destroy(it);
-			// 	_start = start; 
-			// 	_end = end;
-			// 	_capacity = _size;
-			// 	// return (_start + pos);
-			// 	return (iterator(pos_));
-			// }
 			iterator insert (iterator position, const value_type& val){
 
-				pointer start, end;
-				int size;
-				//? empty vector
-				if (_size == 0){
-					size = _size + 1;
-					start = _alloc.allocate(size);
-					end = start + size;
-					_alloc.construct(start, val);
-					_capacity = size;
-				}
-				for(int i = 0; i < _size; i++)
-					_alloc.destroy(_start + i);
-				_start = start;
-				_end = end;
-				_size = size;
-				return (iterator(_start));
+				int i;
+				int pos = _end - &(*position);
+				if (_size == _capacity && _size == 0)
+					reserve(_size + 1);
+				else if (_size == _capacity)
+					reserve(_size * 2);
+				for (i = 0; i < pos; i++)
+					_alloc.construct(_end - i, *(_end - i - 1));
+				_alloc.construct(_end - i, val);
+				_size += 1;
+				return (iterator(_start + pos));
 			}
 
 			void insert (iterator position, size_type n, const value_type& val){
 
-				iterator start, end;
-				size_type new_size = _size + n;
-				start = _alloc.allocate(new_size);
-				end = start + new_size;
-				for (int i = 0; i < position; i++)
-					_alloc.construct((start + i), *(_start + i));
-				for (int i = 0; i < n; i++)
-					_alloc.construct((start + position + i), val);
-				for (int i = position; i < _size; i++)
-					_alloc.construct((start + position + n + i), *(_start + i));
-				for (iterator it = _start; it < _end; it++)
-					_alloc.destroy(it);
-				for (iterator it = _start; it < _end; it++)
-					_alloc.deallocate(it, 1);
-				_start = start;
-				_end = end;
-				_capacity = _size = new_size;
+				int i;
+				int pos = _end - &(*position);
+				if (_size == _capacity && _size == 0)
+					reserve(n);
+				else if (_size == _capacity)
+					reserve(_size + n);
+				
 			}
 
 			template <typename InputIterator>
@@ -425,7 +389,7 @@ namespace ft{
 				pointer pfirst= &(*first);
 				pointer plast= &(*last);
 				size_type len = plast - pfirst;
-				for (int i = 0; i < len; i++){
+				for (size_type i = 0; i < len; i++){
 					_alloc.destroy(pfirst + i);
 					_alloc.construct(pfirst + i, *(plast + i));
 				}
