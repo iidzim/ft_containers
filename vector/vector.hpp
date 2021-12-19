@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 01:32:40 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 18:40:04 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ namespace ft{
 		public:
 
 			//* STL container and iterator types are easier to work with if you use some typedefs
-			typedef	T																		value_type;
-			typedef	Alloc																	allocator_type;
-			typedef size_t																	size_type;
-			typedef typename Alloc::reference												reference;
-			typedef typename Alloc::const_reference											const_reference;
-			typedef typename Alloc::pointer													pointer;
-			typedef typename Alloc::const_pointer											const_pointer;
-			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	iterator;
+			typedef	T																							value_type;
+			typedef	Alloc																						allocator_type;
+			typedef size_t																						size_type;
+			typedef typename Alloc::reference																	reference;
+			typedef typename Alloc::const_reference																const_reference;
+			typedef typename Alloc::pointer																		pointer;
+			typedef typename Alloc::const_pointer																const_pointer;
+			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>						iterator;
+			// typedef typename ft::iterator<random_access_iterator_tag, const T, ptrdiff_t, const T*, const T&>	const_iterator;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
-			typedef typename ft::reverse_iterator<iterator>									reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>									const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>														reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>												const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
@@ -100,7 +101,7 @@ namespace ft{
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){ //! segfault
 
-				// if (*this == x)
+				// if (*this == x)//! self assignment
 					// return(*this);
 				// for (int i = 0; i < this->_size; i++) //! capacity
 				// 	_alloc.destroy(this->_start + i);
@@ -183,12 +184,12 @@ namespace ft{
 			//? Request a change in capacity
 			void reserve (size_type n){
 
-				if (n > max_size() || n < 0)
+				if (n > max_size())
 					throw std::length_error("vector");
 				if ((int)n < _capacity)
 					return ;
 				else{
-					pointer tmp_start, tmp_end;
+				 	pointer tmp_start, tmp_end;
 					tmp_start = _alloc.allocate(n);
 					tmp_end = tmp_start + _size;
 					for (int i = 0; i < _size; i++)
@@ -333,9 +334,8 @@ namespace ft{
 					for (i = 0; i <= pos; i++)
 						_alloc.construct(_end + n - i, *(_end - i));
 					h = _end + n - i;
-					for (i = 0; i < n; i++){
+					for (i = 0; i < n; i++)
 						_alloc.construct(h - i, val);
-					}
 				}
 				_end += n;
 				_size += n;
@@ -365,9 +365,8 @@ namespace ft{
 					for (i = 0; i <= pos; i++)
 						_alloc.construct(_end + n - i, *(_end - i));
 					h = _end + n - i;
-					for (i = 0; i < n; i++){
-						_alloc.construct(h - i, *(last - i));
-					}
+					for (i = 0; i < n; i++)
+						_alloc.construct(h - i, *(last - i - 1));
 				}
 				_end += n; 
 				_size += n;
@@ -377,41 +376,19 @@ namespace ft{
 			iterator erase (iterator position){
 
 				pointer pos_ = &(*position);
-				// if (position < _end){
-					int pos = position - _start;
-					_size -= 1;
-					for (int i = pos; i < _size - 1; i++)
-						_alloc.construct((_start + i), *(_start + i + 1));
-					pointer ite = _end;
-					_end -= 1;
-					_alloc.destroy(ite);
-					std::cout << *pos_ << std::endl;
-					return (iterator(pos_));
-					// iterator t(_start + pos);
-					// return (t);
-				// }
-				// return (0);
+				int pos = position - _start;
+				_size -= 1;
+				for (int i = pos; i < _size - 1; i++)
+					_alloc.construct((_start + i), *(_start + i + 1));
+				pointer ite = _end;
+				_end -= 1;
+				_alloc.destroy(ite);
+				std::cout << *pos_ << std::endl;
+				return (iterator(pos_));
 			}
 
 			iterator erase (iterator first, iterator last){
 
-			// 	size_type len = last - first;
-			// 	pointer pfirst = &(*first);
-			// 	pointer plast = &(*last);
-			// 	// if (this->_size > len)
-			// 	{
-			// 		for (pointer it = pfirst; it + len < _end; it++){
-			// 			_alloc.destroy(it);
-			// 			_alloc.construct(it, *(it + len)); //!indirection requires pointer operand ('unsigned long' invalid)
-			// 		}
-			// 		for (pointer it = plast; it < _end; it++)
-			// 			_alloc.destroy(it);
-			// 		_size -= len;
-			// 		_end = last + 1;
-			// 		_capacity = _size;
-			// 		return (first);
-			// 	// }
-			// 	// return (0);
 				pointer pfirst= &(*first);
 				pointer plast= &(*last);
 				size_type len = plast - pfirst;

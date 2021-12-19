@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 01:31:34 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 18:38:40 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,44 +97,13 @@
 
 int main()
 {
-// 	// ft::vector<int> test(5, 5);
-// 	// ft::vector<int>::const_iterator itc = test.begin();
+	// ft::vector<int> test(5, 5);
+	// ft::vector<int>::const_iterator itc = test.begin();
 
-// 	// if (itc != test.end())
-// 	//     std::cout<<"ls "<<std::endl;
-// 	// //std::cout<<*itc<<std::endl;
-// 	ft::vector<int> first;                                
-// 	ft::vector<int> second (4,100);                       
-// 	ft::vector<int> third (second.begin(),second.end());
-// 	ft::vector<int> fourth (third);                      
-// 	int myints[] = {16,2,77,29};
-// 	ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	
-// 	std::cout << "The contents of fifth are:";
-// 	for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)		std::cout << ' ' << *it;
-// 	std::cout << '\n';	ft::vector<int> data(5, 15);
- 
-    // ft::vector<int>::iterator    en = data.end();
+	// if (itc != test.end())
+	//     std::cout<<"ls "<<std::endl;
+	// std::cout<<*itc<<std::endl;
 
-    // std::cout << "my iterator - begin " << *be << std::endl;
-    // std::cout << "my iterator - end " << *(--en) << std::endl;
-    // std::cout << "index[15] = " << data[15] << std::endl;
-    // std::cout << "capacity = " << data.capacity() << " - size = " << data.size() << std::endl;
-
-    // std::cout << "***********************************\n";
-
-    // std::vector<int> data1(10, 5);
-
-    // std::vector<int>::iterator    be1 = data1.begin();
-    // std::vector<int>::iterator    en1 = data1.end();
-
-    // std::cout << "std iterator - begin " << *be1 << std::endl;
-    // std::cout << "std iterator - end " << *(--en1) << std::endl;
-    // std::cout << "index[15] = " << data1[15] << std::endl;
-    // std::cout << "capacity = " << data1.capacity() << " - size = " << data1.size() << std::endl;
-    
-    // ft::vector<int>    it(be, en);
-    // std::cout << it.size() << std::endl;
-    // std::cout << *it.begin() << " - " << *(it.end()) << std::endl;
 
 // //*********************************************************************************
    
@@ -216,9 +185,57 @@ int main()
     // std::cout << data1.size() << " - " << data1.capacity() << std::endl;
 
 //*********************************************************************************
-    ft::vector<std::string> ft_v1(1e6, "string2");
-            // std::vector<std::string>    v1(1e6, "string2");
-    std::vector<std::string> v2(1e4, "string2");
-    v2.assign(ft_v1.begin(), ft_v1.end());
+    // ft::vector<std::string> ft_v1(10, "string2");
+    //         // std::vector<std::string>    v1(1e6, "string2");
+    // std::vector<std::string> v2(5, "string1");
+    // // for (int i =0; i<v2.size(); i++)
+    // //     std::cout << v2[i] << " ";
+    // // std::cout << std::endl;
+    // v2.assign(ft_v1.begin(), ft_v1.end());
+    // // for (int i =0; i<v2.size(); i++)
+    // //     std::cout << v2[i] << " ";
+    // // std::cout << std::endl;
+    // std::vector<int> v;
+    // for (int i = 0;i < 10;i++)
+    //     v.push_back(i);
+    // std::vector<int>::const_iterator it = v.begin();
+    
+    // it += 2;
+    // std::cout << *it << std::endl;
+
+    ft::vector<int> abc;
+    ft::vector<int> data(20);
+    ft::vector<int>::const_iterator it;
+    
+    for (int i = 0; i < 10;i++)
+        abc.push_back(i+1);
+    for (int i = 0; i < abc.size(); i++)
+        std::cout << abc[i] << " ";
+    std::cout << std::endl;
+    it = data.begin();
+    it = it + 3;
+    data.insert(it,abc.begin(),abc.end());
+    for (int i = 0; i < data.size(); i++)
+        std::cout << data[i] << " ";
+    std::cout << std::endl;
+
+    std::cout << "***************************\n";
+    //*******************************************************
+    
+    std::vector<int> abc1;
+    std::vector<int> data1(20);
+    std::vector<int>::const_iterator it1;
+    
+    for (int i = 0; i < 10;i++)
+        abc1.push_back(i+1);
+    for (int i = 0; i < abc1.size(); i++)
+        std::cout << abc1[i] << " ";
+    std::cout << std::endl;
+    it1 = data1.begin();
+    it1 = it1 + 3;
+    data1.insert(it1,abc1.begin(),abc1.end());
+    for (int i = 0; i < data1.size(); i++)
+        std::cout << data1[i] << " ";
+    std::cout << std::endl;
 	return 0;
 }

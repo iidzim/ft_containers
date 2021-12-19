@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/14 21:26:27 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 17:55:49 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,48 +21,47 @@ namespace ft{
 	// template <typename T>
 	struct iterator {
 
-		public:
-			//* Category to which the iterator belongs to (input, output, forward, bidirectionnal, rnadom_access)
-			typedef Category  iterator_category;
-			//* Type of elements pointed by the iterator.
-			typedef T			value_type;
-			//* Type to represent the difference between two iterators.
-			typedef Distance  difference_type;
-			//* Type to represent a pointer to an element pointed by the iterator.
-			typedef Pointer   pointer;
-			// typedef T*			pointer;
-			//* Type to represent a reference to an element pointed by the iterator.
-			typedef Reference reference;
-			// typedef T&			reference;
+		//* Category to which the iterator belongs to (input, output, forward, bidirectionnal, rnadom_access)
+		typedef Category  iterator_category;
+		//* Type of elements pointed by the iterator.
+		typedef T			value_type;
+		//* Type to represent the difference between two iterators.
+		typedef Distance  difference_type;
+		//* Type to represent a pointer to an element pointed by the iterator.
+		typedef Pointer   pointer;
+		// typedef T*			pointer;
+		//* Type to represent a reference to an element pointed by the iterator.
+		typedef Reference reference;
+		// typedef T&			reference;
+		iterator(void) : _ptr(NULL) {}
+		iterator(pointer ptr) : _ptr(ptr) {}
+		iterator(const iterator& x) { *this = x; }
+		iterator& operator= (const iterator& x) {this->_ptr = x._ptr; return (*this); }
+		~iterator(void) {}
+		reference operator* () const { return (*_ptr); }
+		pointer operator-> () { return (_ptr); }
 
-			iterator(void) : _ptr(NULL) {}
-			iterator(pointer ptr) : _ptr(ptr) {}
-			iterator(const iterator& x) { *this = x; }
-			iterator& operator= (const iterator& x) {this->_ptr = x._ptr; return (*this); }
-			~iterator(void) {}
-			reference operator* () const { return (*_ptr); }
-			pointer operator-> () { return (_ptr); }
+		operator iterator<iterator_category, const T, ptrdiff_t, const T*, const T&>(){
+			return iterator<iterator_category, const T, ptrdiff_t, const T*, const T&>(_ptr);
+		}
 
-			iterator& operator++() { ++(_ptr); return (*this); }
-			iterator operator++(int) { iterator tmp = *this; ++(*this); return (tmp); }
-			iterator& operator--() { --(_ptr); return (*this); }
-			iterator operator--(int) { iterator tmp = *this; --(*this); return (tmp); }
-
-			friend bool operator== (const iterator& lhs, const iterator& rhs) { return lhs._ptr == rhs._ptr; };
-			friend bool operator!= (const iterator& lhs, const iterator& rhs) { return lhs._ptr != rhs._ptr; };
-			friend bool operator< (const iterator& lhs, const iterator& rhs) { return lhs._ptr < rhs._ptr; };
-			friend bool operator> (const iterator& lhs, const iterator& rhs) { return lhs._ptr > rhs._ptr; };
-			friend bool operator<= (const iterator& lhs, const iterator& rhs) { return lhs._ptr <= rhs._ptr; };
-			friend bool operator>= (const iterator& lhs, const iterator& rhs) { return lhs._ptr >= rhs._ptr; };
-
-			friend iterator operator+ (int n, iterator a) { return iterator(a._ptr + n); }
-
-			iterator operator+ (const int n) { return (_ptr + n); };
-			iterator operator- (const int n) { return (_ptr - n); };
-			difference_type operator- (const iterator& a) { return (this->_ptr - a._ptr); };
-			iterator& operator+= (const int& n) { _ptr += n; return (*this); };
-			iterator& operator-= (const int& n) { _ptr -= n; return (*this); };
-			T& operator[] (difference_type n) { return *(_ptr+n); };
+		iterator& operator++() { ++(_ptr); return (*this); }
+		iterator operator++(int) { iterator tmp = *this; ++(*this); return (tmp); }
+		iterator& operator--() { --(_ptr); return (*this); }
+		iterator operator--(int) { iterator tmp = *this; --(*this); return (tmp); }
+		friend bool operator== (const iterator& lhs, const iterator& rhs) { return lhs._ptr == rhs._ptr; };
+		friend bool operator!= (const iterator& lhs, const iterator& rhs) { return lhs._ptr != rhs._ptr; };
+		friend bool operator< (const iterator& lhs, const iterator& rhs) { return lhs._ptr < rhs._ptr; };
+		friend bool operator> (const iterator& lhs, const iterator& rhs) { return lhs._ptr > rhs._ptr; };
+		friend bool operator<= (const iterator& lhs, const iterator& rhs) { return lhs._ptr <= rhs._ptr; };
+		friend bool operator>= (const iterator& lhs, const iterator& rhs) { return lhs._ptr >= rhs._ptr; };
+		friend iterator operator+ (int n, iterator a) { return iterator(a._ptr + n); }
+		iterator operator+ (const int n) { return (_ptr + n); };
+		iterator operator- (const int n) { return (_ptr - n); };
+		difference_type operator- (const iterator& a) { return (this->_ptr - a._ptr); };
+		iterator& operator+= (const int& n) { _ptr += n; return (*this); };
+		iterator& operator-= (const int& n) { _ptr -= n; return (*this); };
+		T& operator[] (difference_type n) { return *(_ptr+n); };
 
 		private:
 			pointer _ptr;
