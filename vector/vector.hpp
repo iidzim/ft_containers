@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 18:40:04 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 23:15:05 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <algorithm>
 #include "../tools/reverse_iterator.hpp"
 #include "../tools/iterator.hpp"
 #include "../tools/tools.hpp"
@@ -27,18 +28,18 @@ namespace ft{
 		public:
 
 			//* STL container and iterator types are easier to work with if you use some typedefs
-			typedef	T																							value_type;
-			typedef	Alloc																						allocator_type;
-			typedef size_t																						size_type;
-			typedef typename Alloc::reference																	reference;
-			typedef typename Alloc::const_reference																const_reference;
-			typedef typename Alloc::pointer																		pointer;
-			typedef typename Alloc::const_pointer																const_pointer;
-			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>						iterator;
-			// typedef typename ft::iterator<random_access_iterator_tag, const T, ptrdiff_t, const T*, const T&>	const_iterator;
-			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
-			typedef typename ft::reverse_iterator<iterator>														reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>												const_reverse_iterator;
+			typedef	T															value_type;
+			typedef	Alloc														allocator_type;
+			typedef size_t														size_type;
+			typedef typename Alloc::reference									reference;
+			typedef typename Alloc::const_reference								const_reference;
+			typedef typename Alloc::pointer										pointer;
+			typedef typename Alloc::const_pointer								const_pointer;
+			typedef typename ft::iterator<random_access_iterator_tag, T>		iterator;
+			// typedef typename ft::iterator<random_access_iterator_tag, const T>	const_iterator;
+			typedef typename ft::iterator<random_access_iterator_tag, T>		const_iterator;
+			typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
@@ -91,9 +92,6 @@ namespace ft{
 			~vector(void){
 				for (pointer it = this->_start; it < this->_end; it++)
 					this->_alloc.destroy(it);
-				//! attempting free on address which was not malloc()-ed
-				// for (pointer it = this->_start; it < this->_start + this->_capacity; it++)
-					// this->_alloc.deallocate(it, 1);
 				this->_size = 0;
 				this->_capacity = 0;
 			}
@@ -103,10 +101,8 @@ namespace ft{
 
 				// if (*this == x)//! self assignment
 					// return(*this);
-				// for (int i = 0; i < this->_size; i++) //! capacity
-				// 	_alloc.destroy(this->_start + i);
-				// for (int i = 0; i < this->_capacity; i++) //!! range constructor
-				// 	this->_alloc.deallocate(this->_start + i, 1);
+				for (int i = 0; i < this->_size; i++) //! capacity
+					_alloc.destroy(this->_start + i);
 				this->_alloc = x._alloc;
 				this->_capacity = x._capacity;
 				this->_size = x._size;
@@ -397,7 +393,7 @@ namespace ft{
 					_alloc.construct(pfirst + i, *(plast + i));
 				}
 				for (int i = len; i < _size; i++)
-			 		_alloc.desttro(plast + i);
+			 		_alloc.destroy(plast + i);
 				_size -= len;
 				_end -= len;
 				return (plast);
@@ -407,33 +403,25 @@ namespace ft{
 			void swap (vector& x){
 
 				pointer tmp_start, tmp_end;
-				int tmp_capacity, tmp_size;
-				Alloc tmp_alloc;
 
 				tmp_start = x._start;
 				tmp_end = x._end;
-				tmp_size = x._size;
-				tmp_capacity = x._capacity;
-				tmp_alloc = x._alloc;
+				x._start = _start;
+				x._end = _end;
+				_start = tmp_start;
+				_end = tmp_end;
 
-				x._start = this->_start;
-				x._end = this->_end;
-				x._size = this->_size;
-				x._capacity = this->_capacity;
-				x._alloc = this->_alloc;
-
-				this->_start = tmp_start;
-				this->_end = tmp_end;
-				this->_capacity = tmp_capacity;
-				this->_size = tmp_size;
-				this->_alloc = tmp_alloc;
+				std::swap(x._size, _size);
+				std::swap(x._capacity, _capacity);
+				std::swap(x._alloc, _alloc);
 			}
 
 			//? Clear content
 			void clear(void){
-				for (pointer it = this->_start; it < this->_end; it++)
-					this->_alloc.destroy(it);
-				this->_size = 0;
+				for (pointer it = _start; it < _end; it++)
+					_alloc.destroy(it);
+				_end = _start;
+				_size = 0;
 			}
 
 			//! Allocator ************************************************* //
@@ -452,9 +440,7 @@ namespace ft{
 
 	//? Exchange contents of vectors
 	template <typename T, typename Alloc>
-	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
-		x.swap(y);
-	}
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){ x.swap(y); }
 
 	//? Relational operators
 	template <typename T, typename Alloc>
