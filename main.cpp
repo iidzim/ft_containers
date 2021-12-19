@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/18 23:46:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 01:31:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,45 +136,45 @@ int main()
     // std::cout << it.size() << std::endl;
     // std::cout << *it.begin() << " - " << *(it.end()) << std::endl;
 
-//*********************************************************************************
+// //*********************************************************************************
    
-    ft::vector<int> d;
-    d.push_back(1);
-    d.push_back(2);
-    d.push_back(3);
-    d.push_back(4);
-    d.push_back(5);
-    d.push_back(6);
-    d.push_back(7);
-    d.push_back(8);
+//     ft::vector<int> d;
+//     d.push_back(1);
+//     d.push_back(2);
+//     d.push_back(3);
+//     d.push_back(4);
+//     d.push_back(5);
+//     d.push_back(6);
+//     d.push_back(7);
+//     d.push_back(8);
 
-    std::cout << d.size() << " - " << d.capacity() << std::endl;
-    d.insert(d.begin()+4, 10, 99);
-    for (size_t j=0; j<d.size(); j++)
-        std::cout << d[j] << " ";
-    std::cout << std::endl;
-    std::cout << d.size() << " - " << d.capacity() << std::endl;
+//     std::cout << d.size() << " - " << d.capacity() << std::endl;
+//     d.insert(d.begin()+4, 10, 99);
+//     for (size_t j=0; j<d.size(); j++)
+//         std::cout << d[j] << " ";
+//     std::cout << std::endl;
+//     std::cout << d.size() << " - " << d.capacity() << std::endl;
 
-//*********************************************************************************
+// //*********************************************************************************
 
-    std::cout << "******************\n";
+//     std::cout << "******************\n";
     
-    std::vector<int> d1;
-    d1.push_back(1);
-    d1.push_back(2);
-    d1.push_back(3);
-    d1.push_back(4);
-    d1.push_back(5);
-    d1.push_back(6);
-    d1.push_back(7);
-    d1.push_back(8);
+//     std::vector<int> d1;
+//     d1.push_back(1);
+//     d1.push_back(2);
+//     d1.push_back(3);
+//     d1.push_back(4);
+//     d1.push_back(5);
+//     d1.push_back(6);
+//     d1.push_back(7);
+//     d1.push_back(8);
 
-    std::cout << d1.size() << " - " << d1.capacity() << std::endl;
-    d1.insert(d1.begin()+4, 10, 99);
-    for (size_t j=0; j<d1.size(); j++)
-        std::cout << d1[j] << " ";
-    std::cout << std::endl;
-    std::cout << d1.size() << " - " << d1.capacity() << std::endl;
+//     std::cout << d1.size() << " - " << d1.capacity() << std::endl;
+//     d1.insert(d1.begin()+4, 10, 99);
+//     for (size_t j=0; j<d1.size(); j++)
+//         std::cout << d1[j] << " ";
+//     std::cout << std::endl;
+//     std::cout << d1.size() << " - " << d1.capacity() << std::endl;
 
     // std::cout << d1.size() << " - " << d1.capacity() << std::endl;
     // d1.insert(d1.begin()+1, 2);
@@ -216,6 +216,9 @@ int main()
     // std::cout << data1.size() << " - " << data1.capacity() << std::endl;
 
 //*********************************************************************************
-
+    ft::vector<std::string> ft_v1(1e6, "string2");
+            // std::vector<std::string>    v1(1e6, "string2");
+    std::vector<std::string> v2(1e4, "string2");
+    v2.assign(ft_v1.begin(), ft_v1.end());
 	return 0;
 }

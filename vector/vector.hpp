@@ -6,12 +6,12 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 00:05:54 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/19 01:32:40 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef vector_HPP
+# define vector_HPP
 
 #include <memory>
 #include <stdexcept>
@@ -37,7 +37,7 @@ namespace ft{
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	iterator;
 			typedef typename ft::iterator<random_access_iterator_tag, T, ptrdiff_t, T*, T&>	const_iterator;
 			typedef typename ft::reverse_iterator<iterator>									reverse_iterator;
-			typedef typename ft::reverse_iterator<iterator>									const_reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>									const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
@@ -231,8 +231,7 @@ namespace ft{
 
 			// //? Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last,//!!!!!!!!!!!!!!!!!!!!!!!!! doesn't compile
-				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
+			void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
 				int len = last - first;
 				pointer pfirst = &(*first);
@@ -342,7 +341,7 @@ namespace ft{
 				_size += n;
 			}
 
-			template <typename InputIterator>
+			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
@@ -359,7 +358,7 @@ namespace ft{
 				}
 				if (_size == 0){
 					for (i = 0; i < n; i++)
-						_alloc.construct(_start + i, first + i);
+						_alloc.construct(_start + i, *(first + i));
 				}
 				else{
 					pointer h;
@@ -367,10 +366,10 @@ namespace ft{
 						_alloc.construct(_end + n - i, *(_end - i));
 					h = _end + n - i;
 					for (i = 0; i < n; i++){
-						_alloc.construct(h - i, last - i);
+						_alloc.construct(h - i, *(last - i));
 					}
 				}
-				_end += n;
+				_end += n; 
 				_size += n;
 			}
 
