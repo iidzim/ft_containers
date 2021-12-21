@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 23:15:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 14:01:48 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ namespace ft{
 			typedef typename Alloc::const_reference								const_reference;
 			typedef typename Alloc::pointer										pointer;
 			typedef typename Alloc::const_pointer								const_pointer;
-			typedef typename ft::iterator<random_access_iterator_tag, T>		iterator;
-			// typedef typename ft::iterator<random_access_iterator_tag, const T>	const_iterator;
-			typedef typename ft::iterator<random_access_iterator_tag, T>		const_iterator;
+			typedef typename ft::iterator<std::random_access_iterator_tag, T>		iterator;
+			typedef typename ft::iterator<std::random_access_iterator_tag, const T>	const_iterator;
 			typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
@@ -85,7 +84,7 @@ namespace ft{
 
 			//? Copy constructor
 			vector (const vector& x){
-				*this = x; //! expression is not assignable
+				*this = x;
 			}
 
 			//? Destroys the container object
@@ -97,11 +96,9 @@ namespace ft{
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
-			vector& operator= (const vector& x){ //! segfault
+			vector& operator= (const vector& x){
 
-				// if (*this == x)//! self assignment
-					// return(*this);
-				for (int i = 0; i < this->_size; i++) //! capacity
+				for (int i = 0; i < this->_size; i++)
 					_alloc.destroy(this->_start + i);
 				this->_alloc = x._alloc;
 				this->_capacity = x._capacity;
@@ -113,7 +110,7 @@ namespace ft{
 				return (*this);
 			}
 
-			//! iterators ************************************************ //
+			//* iterators ************************************************ //
 
 			//? Returns an iterator pointing to the first element
 			iterator begin(){ return (this->_start); }
@@ -131,7 +128,7 @@ namespace ft{
 			reverse_iterator rend(){ return (reverse_iterator(this->_start)); }
 			const_reverse_iterator rend() const{ return (reverse_iterator(this->_start)); }
 
-			//! Capacity ************************************************** //
+			//* Capacity ************************************************** //
 
 			//? Returns the number of elements in the vector.
 			size_type size() const { return (_size); }
@@ -140,8 +137,9 @@ namespace ft{
 			size_type max_size() const { return (_alloc.max_size()); }
 
 			//? Resizes the container so that it contains n elements.
-			void resize (size_type n, value_type val = value_type()){
+			void resize (size_type nn, value_type val = value_type()){
 
+				int n = static_cast<int>(nn);
 				if (n < _size){
 					for (pointer it = _start + n; it < _end; it++)
 						_alloc.destroy(it);
@@ -198,19 +196,19 @@ namespace ft{
 				}
 			}
 
-			// //! Element access ******************************************** //
+			//* Element access ******************************************** //
 
 			//? Returns a reference to the element at position n
 			reference operator[] (size_type n){ return *(_start + n); }
 			const_reference operator[] (size_type n) const{ return *(_start + n); }
 
 			reference at (size_type n){
-				if (n < 0 || n >= _size)
+				if ((int)n >= _size)
 					throw std::out_of_range("vector");
 				return (*(_start + n));
 			}
 			const_reference at (size_type n) const{
-				if (n < 0 || n >= _size)
+				if ((int)n >= _size)
 					throw std::out_of_range("vector");
 				return (*(_start + n));
 			}
@@ -224,16 +222,16 @@ namespace ft{
 			const_reference back() const{ return *(_end - 1); }
 
 
-			// //! Modifiers ************************************************* //
+			//* Modifiers ************************************************* //
 
-			// //? Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
+			//? Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
+			void assign (InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
 				int len = last - first;
 				pointer pfirst = &(*first);
-				pointer plast = &(*last);
-				if (len > _size){
+				if (len > _capacity){
 					for (int i = 0; i < _size; i++)
 						_alloc.destroy(_start + i);
 					_start = _alloc.allocate(len);
@@ -251,8 +249,9 @@ namespace ft{
 				}
 			}
 
-			void assign (size_type n, const value_type& val){
+			void assign (size_type nn, const value_type& val){
 
+				int n = static_cast<int>(nn);
 				if (n > _size)
 				{
 					for (int i = 0; i < _size; i++)
@@ -309,14 +308,15 @@ namespace ft{
 				return (iterator(_start + pos));
 			}
 
-			void insert (iterator position, size_type n, const value_type& val){
+			void insert (iterator position, size_type nn, const value_type& val){
 
-				size_type i;
-				size_type pos = _end - &(*position);
+				int n = static_cast<int>(nn);
+				int i;
+				int pos = _end - &(*position);
 				if (_size == _capacity && _size == 0)
 					reserve(n);
-				else if (_size + (int)n >= _capacity){
-					if (_size + (int)n > _capacity && (int)n < _size)
+				else if (_size + n >= _capacity){
+					if (_size + n > _capacity && n < _size)
 						reserve(_capacity * 2);
 					else
 						reserve(_size + n);
@@ -341,8 +341,8 @@ namespace ft{
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
 
-				size_type i;
-				size_type pos = _end - &(*position);
+				int i;
+				int pos = _end - &(*position);
 				int n = last - first;
 				if (_size == _capacity && _size == 0)
 					reserve(n);
@@ -379,25 +379,39 @@ namespace ft{
 				pointer ite = _end;
 				_end -= 1;
 				_alloc.destroy(ite);
-				std::cout << *pos_ << std::endl;
 				return (iterator(pos_));
 			}
+
+			// iterator erase (iterator first, iterator last){
+
+			// 	pointer pfirst= &(*first);
+			// 	pointer plast= &(*last);
+			// 	size_type len = plast - pfirst;
+			// 	for (size_type i = 0; i < (_end - last); i++){
+			// 		// _alloc.destroy(pfirst + i);
+			// 		_alloc.construct(pfirst + i, *(plast + i));
+			// 	}
+			// 	for (int i = len; i < _size; i++)
+			//  		_alloc.destroy(plast + i);
+			// 	_size -= len;
+			// 	_end -= len;
+			// 	return (plast);
+			// }
 
 			iterator erase (iterator first, iterator last){
 
 				pointer pfirst= &(*first);
 				pointer plast= &(*last);
-				size_type len = plast - pfirst;
-				for (size_type i = 0; i < len; i++){
-					_alloc.destroy(pfirst + i);
+				int len = plast - pfirst;
+				for (int i = 0; i < _end - plast; i++)
 					_alloc.construct(pfirst + i, *(plast + i));
-				}
-				for (int i = len; i < _size; i++)
-			 		_alloc.destroy(plast + i);
+				for (int i = _size - len; i < _size; i++)
+					_alloc.destroy(_start + i);
 				_size -= len;
 				_end -= len;
-				return (plast);
+				return (iterator(plast));
 			}
+
 
 			//? Swap content
 			void swap (vector& x){
@@ -424,7 +438,7 @@ namespace ft{
 				_size = 0;
 			}
 
-			//! Allocator ************************************************* //
+			//* Allocator ************************************************* //
 
 			//? Returns a copy of the allocator object associated with the vector
 			allocator_type get_allocator() const{ return (this->_alloc); }

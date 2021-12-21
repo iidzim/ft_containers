@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:00:54 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/19 18:32:20 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 13:37:41 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 namespace ft{
 
-	struct random_access_iterator_tag{};
+	// struct random_access_iterator_tag{};
 
 	template <typename iterator>
 	struct iterator_traits{
@@ -32,7 +32,7 @@ namespace ft{
 	template <typename T>
 	struct iterator_traits<T*>{
 
-		typedef ft::random_access_iterator_tag	iterator_category;
+		typedef std::random_access_iterator_tag	iterator_category;
 		typedef T							value_type;
 		typedef ptrdiff_t					difference_type;
 		typedef T*							pointer;
