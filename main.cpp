@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 14:00:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:06:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,27 +285,32 @@ int main()
 	// std::vector<int> a;
 
 	// it = data.begin();
-	// // abc.insert(it +2,data.begin(),data.end());
-	// // a.insert(a.begin(), data.begin(), data.end());
+	// abc.insert(it +2,data.begin(),data.end());
+	// a.insert(a.begin(), data.begin(), data.end());
 	// a.insert(a.begin(), it, it + data.size());
 
-	std::vector<int> v;
-	std::vector<int>::iterator it = v.begin();
-	
-	for (int i = 0; i < 10; i++)
-		v.push_back(i+1);
-	
-	for (size_t i = 0; i < v.size(); i++)
-		std::cout << v[i] << " ";
-	std::cout << std::endl;
 
-	v.erase(it, it + 2);
+	std::vector<int> myvector;
+	for (int i=1; i<=10; i++)
+		myvector.push_back(i);
+	myvector.erase (myvector.begin()+6);
+	myvector.erase (myvector.begin(),myvector.begin()+3);
+	std::cout << "myve contains:";
+	for (unsigned i=0; i<myvector.size(); ++i)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
 
-	// std::cout << *(v.erase(it, it + 2));
-	
-	for (size_t i = 0; i < v.size(); i++)
-		std::cout << v[i] << " ";
-	std::cout << std::endl;
+	std::cout << "**********************\n";
+
+	ft::vector<int> vect;
+	for (int i=1; i<=10; i++)
+		vect.push_back(i);
+	vect.erase (vect.begin()+6);
+	vect.erase (vect.begin(),vect.begin()+3);
+	std::cout << "vect contains:";
+	for (unsigned i=0; i<vect.size(); ++i)
+		std::cout << ' ' << vect[i];
+	std::cout << '\n';
 
 	return 0;
 }

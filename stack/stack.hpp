@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 23:13:20 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/20 00:08:51 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:13:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft{
 			typedef Container   container_type;
 			typedef size_t      size_type;
 
-			explicit stack (const container_type& ctnr = container_type()): _c(container_type()){}
+			explicit stack (const container_type& ctnr = container_type()): _c(ctnr){}
 			~stack (void){}
 			bool empty() const { return (_c.empty()); }
 			size_type size() const { return (_c.size()); }

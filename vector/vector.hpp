@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 14:01:48 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:42:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ namespace ft{
 		public:
 
 			//* STL container and iterator types are easier to work with if you use some typedefs
-			typedef	T															value_type;
-			typedef	Alloc														allocator_type;
-			typedef size_t														size_type;
-			typedef typename Alloc::reference									reference;
-			typedef typename Alloc::const_reference								const_reference;
-			typedef typename Alloc::pointer										pointer;
-			typedef typename Alloc::const_pointer								const_pointer;
+			typedef	T																value_type;
+			typedef	Alloc															allocator_type;
+			typedef size_t															size_type;
+			typedef typename Alloc::reference										reference;
+			typedef typename Alloc::const_reference									const_reference;
+			typedef typename Alloc::pointer											pointer;
+			typedef typename Alloc::const_pointer									const_pointer;
 			typedef typename ft::iterator<std::random_access_iterator_tag, T>		iterator;
 			typedef typename ft::iterator<std::random_access_iterator_tag, const T>	const_iterator;
-			typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()){
 
-				this->_start = this->_end = 0;
+				this->_start = this->_end = NULL;
 				this->_size = this->_capacity = 0;
 				this->_alloc = alloc;
 			}
@@ -89,24 +89,25 @@ namespace ft{
 
 			//? Destroys the container object
 			~vector(void){
-				for (pointer it = this->_start; it < this->_end; it++)
-					this->_alloc.destroy(it);
-				this->_size = 0;
-				this->_capacity = 0;
+				for (pointer it = _start; it < _end; it++)
+					_alloc.destroy(it);
+				_end = _start;
+				_size = 0;
+				_capacity = 0;
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){
 
-				for (int i = 0; i < this->_size; i++)
-					_alloc.destroy(this->_start + i);
-				this->_alloc = x._alloc;
-				this->_capacity = x._capacity;
-				this->_size = x._size;
-				this->_start = this->_alloc.allocate(this->_size);
-				this->_end = this->_start + this->_size;
-				for (int i = 0; i < this->_size; i++)
-					this->_alloc.construct((this->_start + i), *(x._start + i));
+				for (int i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
+				_alloc = x._alloc;
+				_capacity = x._capacity;
+				_size = x._size;
+				_start = _alloc.allocate(_size);
+				_end = _start + _size;
+				for (int i = 0; i < _size; i++)
+					_alloc.construct((_start + i), *(x._start + i));
 				return (*this);
 			}
 
@@ -286,10 +287,10 @@ namespace ft{
 			//? Delete last element
 			void pop_back(){
 
-				_size -= 1;
 				pointer it = _end;
 				_end -= 1;
 				_alloc.destroy(it);
+				_size -= 1;
 			}
 
 			//? Insert elements
@@ -310,8 +311,8 @@ namespace ft{
 
 			void insert (iterator position, size_type nn, const value_type& val){
 
-				int n = static_cast<int>(nn);
 				int i;
+				int n = static_cast<int>(nn);
 				int pos = _end - &(*position);
 				if (_size == _capacity && _size == 0)
 					reserve(n);
@@ -374,29 +375,13 @@ namespace ft{
 				pointer pos_ = &(*position);
 				int pos = position - _start;
 				_size -= 1;
-				for (int i = pos; i < _size - 1; i++)
+				for (int i = pos; i < _size; i++)
 					_alloc.construct((_start + i), *(_start + i + 1));
 				pointer ite = _end;
 				_end -= 1;
 				_alloc.destroy(ite);
 				return (iterator(pos_));
 			}
-
-			// iterator erase (iterator first, iterator last){
-
-			// 	pointer pfirst= &(*first);
-			// 	pointer plast= &(*last);
-			// 	size_type len = plast - pfirst;
-			// 	for (size_type i = 0; i < (_end - last); i++){
-			// 		// _alloc.destroy(pfirst + i);
-			// 		_alloc.construct(pfirst + i, *(plast + i));
-			// 	}
-			// 	for (int i = len; i < _size; i++)
-			//  		_alloc.destroy(plast + i);
-			// 	_size -= len;
-			// 	_end -= len;
-			// 	return (plast);
-			// }
 
 			iterator erase (iterator first, iterator last){
 
@@ -406,12 +391,11 @@ namespace ft{
 				for (int i = 0; i < _end - plast; i++)
 					_alloc.construct(pfirst + i, *(plast + i));
 				for (int i = _size - len; i < _size; i++)
-					_alloc.destroy(_start + i);
+					_alloc.destroy(_start + i - 1);
 				_size -= len;
 				_end -= len;
-				return (iterator(plast));
+				return (iterator(pfirst));
 			}
-
 
 			//? Swap content
 			void swap (vector& x){
@@ -476,19 +460,18 @@ namespace ft{
 
 	template <typename T, typename Alloc>
 	bool operator<= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs){
-		return (!ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
+		return (!(rhs<lhs));
 	}
 
 	template <typename T, typename Alloc>
 	bool operator>  (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs){
-		return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
+		return (rhs<lhs);
 	}
 
 	template <typename T, typename Alloc>
 	bool operator>= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs){
-		return (!ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-	}
-			
+		return (!(lhs<rhs));
+	}	
 }
 
 #endif
