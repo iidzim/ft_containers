@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 23:13:20 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 18:13:34 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/21 22:27:53 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft{
 			friend bool operator>= (const stack& lhs, const stack& rhs){ return (lhs._c >= rhs._c); }
 
 		private:
-			value_type _c;
+			container_type _c;
 	};
 
 }
