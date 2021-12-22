@@ -1,7 +1,7 @@
 ### ft_containers
 
 ## ToDo 
-* test vector √√√√√ √√√√ √√√√√√ √√√√ X√√XX√√ √ √√
+* test vector √√√√√ √√√√ √√√√√√ √√√√ √√√√√√√ √ √√
 * random access iterator √
 * iterators_traits √
 * reverse_iterator √
@@ -15,7 +15,6 @@
 # NOTION:
 [https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6](https://ikram9.notion.site/Containers-7aaee5764be64ecf8b0bcb2c263366b6)
 
-
-* assign range X
-* insert range X
-* erase XX
+* leaks
+* read from file - vector 
+* roll back
