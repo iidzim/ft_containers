@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 18:42:29 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/23 18:06:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,16 @@ namespace ft{
 					pointer tmp_start, tmp_end;
 					if (n > _size && n < _capacity){
 						tmp_start = _alloc.allocate(_capacity);
-						tmp_end = tmp_start + _size + n;
+						_capacity = _capacity * 2;
+						tmp_end = tmp_start + n;
 					}
 					else{
-						tmp_start = _alloc.allocate(n);
+						if (_capacity * 2 < n)
+							_capacity = n;
+						else
+							_capacity *= 2;
+						tmp_start = _alloc.allocate(_capacity);
 						tmp_end = tmp_start + n;
-						_capacity = n;
 					}
 					for (int i = 0; i < _size; i++)
 						_alloc.construct(tmp_start + i, *(_start + i));
@@ -242,7 +246,7 @@ namespace ft{
 					_size = _capacity = len;
 				}
 				else{
-					for (int i = len; i < _size; i++)
+					for (int i = 0; i < _size; i++)
 						_alloc.destroy(_start + i);
 					_size = len;
 					for (int i = 0; i < _size; i++)

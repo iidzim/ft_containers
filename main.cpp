@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 18:06:58 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/23 18:42:25 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,27 +290,51 @@ int main()
 	// a.insert(a.begin(), it, it + data.size());
 
 
-	std::vector<int> myvector;
-	for (int i=1; i<=10; i++)
-		myvector.push_back(i);
-	myvector.erase (myvector.begin()+6);
-	myvector.erase (myvector.begin(),myvector.begin()+3);
-	std::cout << "myve contains:";
-	for (unsigned i=0; i<myvector.size(); ++i)
-		std::cout << ' ' << myvector[i];
-	std::cout << '\n';
+	// std::vector<int> myvector;
+	// for (int i=1; i<=10; i++)
+	// 	myvector.push_back(i);
+	// myvector.erase (myvector.begin()+6);
+	// myvector.erase (myvector.begin(),myvector.begin()+3);
+	// std::cout << "myve contains:";
+	// for (unsigned i=0; i<myvector.size(); ++i)
+	// 	std::cout << ' ' << myvector[i];
+	// std::cout << '\n';
 
-	std::cout << "**********************\n";
+	// std::cout << "**********************\n";
 
-	ft::vector<int> vect;
-	for (int i=1; i<=10; i++)
-		vect.push_back(i);
-	vect.erase (vect.begin()+6);
-	vect.erase (vect.begin(),vect.begin()+3);
-	std::cout << "vect contains:";
-	for (unsigned i=0; i<vect.size(); ++i)
-		std::cout << ' ' << vect[i];
-	std::cout << '\n';
+	// ft::vector<int> vect;
+	// for (int i=1; i<=10; i++)
+	// 	vect.push_back(i);
+	// vect.erase (vect.begin()+6);
+	// vect.erase (vect.begin(),vect.begin()+3);
+	// std::cout << "vect contains:";
+	// for (unsigned i=0; i<vect.size(); ++i)
+	// 	std::cout << ' ' << vect[i];
+	// std::cout << '\n';
 
+{
+	std::vector<int> vect(5, 99);
+	std::vector<int>::iterator it;
+	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+	vect.resize(461168);
+	// for (it = vect.begin(); it < vect.end(); it++)
+	// 	std::cout << *it << " ";
+	std::cout << std::endl;
+	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+}
+
+std::cout << "****************\n";
+
+{
+	ft::vector<int> vect(5, 99);
+	ft::vector<int>::iterator it;
+	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+	vect.resize(461168);
+	// for (it = vect.begin(); it < vect.end(); it++)
+	// 	std::cout << *it << " ";
+	std::cout << std::endl;
+	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+}
+	
 	return 0;
 }
