@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/23 18:42:25 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/24 15:33:13 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/time.h>
+
+using std::cout;
+using std::endl;
+using std::string;
 
 // // int main(void){
 
@@ -315,6 +319,8 @@ int main()
 {
 	std::vector<int> vect(5, 99);
 	std::vector<int>::iterator it;
+	vect.push_back(9);
+	vect.push_back(9);
 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
 	vect.resize(461168);
 	// for (it = vect.begin(); it < vect.end(); it++)
@@ -328,6 +334,8 @@ std::cout << "****************\n";
 {
 	ft::vector<int> vect(5, 99);
 	ft::vector<int>::iterator it;
+	vect.push_back(9);
+	vect.push_back(9);
 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
 	vect.resize(461168);
 	// for (it = vect.begin(); it < vect.end(); it++)
@@ -336,5 +344,53 @@ std::cout << "****************\n";
 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
 }
 	
+
+// {
+// 	std::vector<string> v(12, "hello");
+// 	std::vector<string> v(12, "bye");
+// 	std::vector<string>::iterator it;
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	// v.assign(130, "hola");
+// 	v.assign();
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	// for (it = v.begin(); it < v.end(); it++)
+// 	// 	cout << *it << " ";
+// 	// cout << endl;
+// }
+// cout << "*****************\n";
+// {
+// 	ft::vector<string> v(12, "hello");
+// 	ft::vector<string> v(12, "bye");
+// 	ft::vector<string>::iterator it;
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	v.assign(130, "hola");
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	// for (it = v.begin(); it < v.end(); it++)
+// 	// 	cout << *it << " ";
+// 	// cout << endl;
+// }
+
+// {
+// 	std::vector<int> v;
+// 	for (int i = 0; i < 10; i++)
+// 		v.push_back(i+1);
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	v.resize(100);
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	v.clear();
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// }
+// cout << "*****************\n";
+// {
+// 	ft::vector<int> v;
+// 	for (int i = 0; i < 10; i++)
+// 		v.push_back(i+1);
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	v.resize(100);
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// 	v.clear();
+// 	cout << v.size() << " - " << v.capacity() << endl;
+// }
+
 	return 0;
 }

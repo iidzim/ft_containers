@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/23 18:06:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/24 17:00:02 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ namespace ft{
 				for (int i = 0; i < _size; i++)
 					_alloc.destroy(_start + i);
 				_alloc = x._alloc;
-				_capacity = x._capacity;
+				_capacity = x._size;
 				_size = x._size;
 				_start = _alloc.allocate(_size);
 				_end = _start + _size;
@@ -138,38 +138,55 @@ namespace ft{
 			size_type max_size() const { return (_alloc.max_size()); }
 
 			//? Resizes the container so that it contains n elements.
+			// void resize (size_type nn, value_type val = value_type()){
+
+			// 	int n = static_cast<int>(nn);
+			// 	if (n < _size){
+			// 		for (pointer it = _start + n; it < _end; it++)
+			// 			_alloc.destroy(it);
+			// 		_end = _start + n;
+			// 		_size = n;
+			// 	}
+			// 	else{
+			// 		pointer tmp_start, tmp_end;
+			// 		if (n > _size && n < _capacity){
+			// 			tmp_start = _alloc.allocate(_capacity);
+			// 			tmp_end = tmp_start + n;
+			// 		}
+			// 		else{
+			// 			_capacity = n;
+			// 			tmp_start = _alloc.allocate(_capacity);
+			// 			tmp_end = tmp_start + n;
+			// 		}
+			// 		for (int i = 0; i < _size; i++)
+			// 			_alloc.construct(tmp_start + i, *(_start + i));
+			// 		for (int i = _size; i < n; i++)
+			// 			_alloc.construct(tmp_start + i, val);
+			// 		for (pointer it = _start; it < _end; it++)
+			// 			_alloc.destroy(it);
+			// 		_alloc.deallocate(_start, )
+			// 		_start = tmp_start;
+			// 		_end = tmp_end;
+			// 		_size = n;
+			// 	}
+			// }
+
 			void resize (size_type nn, value_type val = value_type()){
 
 				int n = static_cast<int>(nn);
+				if (n > _capacity){
+					if (n > _capacity * 2)
+						reserve(n);
+					else
+						reserve(_capacity * 2);
+				}
+				if (n > _size){
+					
+				}
 				if (n < _size){
 					for (pointer it = _start + n; it < _end; it++)
 						_alloc.destroy(it);
 					_end = _start + n;
-					_size = n;
-				}
-				else{
-					pointer tmp_start, tmp_end;
-					if (n > _size && n < _capacity){
-						tmp_start = _alloc.allocate(_capacity);
-						_capacity = _capacity * 2;
-						tmp_end = tmp_start + n;
-					}
-					else{
-						if (_capacity * 2 < n)
-							_capacity = n;
-						else
-							_capacity *= 2;
-						tmp_start = _alloc.allocate(_capacity);
-						tmp_end = tmp_start + n;
-					}
-					for (int i = 0; i < _size; i++)
-						_alloc.construct(tmp_start + i, *(_start + i));
-					for (int i = _size; i < n; i++)
-						_alloc.construct(tmp_start + i, val);
-					for (pointer it = _start; it < _end; it++)
-						_alloc.destroy(it);
-					_start = tmp_start;
-					_end = tmp_end;
 					_size = n;
 				}
 			}
@@ -195,6 +212,7 @@ namespace ft{
 						_alloc.construct((tmp_start + i), *(_start + i));
 					for (pointer it = _start; it < _end; it++)
 						_alloc.destroy(it);
+					_alloc.deallocate(_start, _size);//?
 					_start = tmp_start;
 					_end = tmp_end;
 					_capacity = n;
@@ -239,6 +257,7 @@ namespace ft{
 				if (len > _capacity){
 					for (int i = 0; i < _size; i++)
 						_alloc.destroy(_start + i);
+					_alloc.deallocate(_start, _capacity);
 					_start = _alloc.allocate(len);
 					_end = _start + len;
 					for (int i = 0; i < len; i++)
@@ -257,10 +276,11 @@ namespace ft{
 			void assign (size_type nn, const value_type& val){
 
 				int n = static_cast<int>(nn);
+				for (int i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
 				if (n > _size)
 				{
-					for (int i = 0; i < _size; i++)
-						_alloc.destroy(_start + i);
+					_alloc.deallocate(_start, _capacity);
 					_start = _alloc.allocate(n);
 					_end = _start + n;
 					_size = _capacity = n;
@@ -268,9 +288,8 @@ namespace ft{
 						_alloc.construct((_start + i), val);
 				}
 				else{
-					for (int i = n; i < _size; i++)
-						_alloc.destroy(_start + i);
 					_size = n;
+					_end = _start + n;
 					for (pointer it = _start; it < _end; it++)
 						_alloc.construct(it ,val);
 				}
