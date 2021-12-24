@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/24 17:00:02 by iidzim           ###   ########.fr       */
+/*   Updated: 2021/12/24 17:11:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,39 +138,6 @@ namespace ft{
 			size_type max_size() const { return (_alloc.max_size()); }
 
 			//? Resizes the container so that it contains n elements.
-			// void resize (size_type nn, value_type val = value_type()){
-
-			// 	int n = static_cast<int>(nn);
-			// 	if (n < _size){
-			// 		for (pointer it = _start + n; it < _end; it++)
-			// 			_alloc.destroy(it);
-			// 		_end = _start + n;
-			// 		_size = n;
-			// 	}
-			// 	else{
-			// 		pointer tmp_start, tmp_end;
-			// 		if (n > _size && n < _capacity){
-			// 			tmp_start = _alloc.allocate(_capacity);
-			// 			tmp_end = tmp_start + n;
-			// 		}
-			// 		else{
-			// 			_capacity = n;
-			// 			tmp_start = _alloc.allocate(_capacity);
-			// 			tmp_end = tmp_start + n;
-			// 		}
-			// 		for (int i = 0; i < _size; i++)
-			// 			_alloc.construct(tmp_start + i, *(_start + i));
-			// 		for (int i = _size; i < n; i++)
-			// 			_alloc.construct(tmp_start + i, val);
-			// 		for (pointer it = _start; it < _end; it++)
-			// 			_alloc.destroy(it);
-			// 		_alloc.deallocate(_start, )
-			// 		_start = tmp_start;
-			// 		_end = tmp_end;
-			// 		_size = n;
-			// 	}
-			// }
-
 			void resize (size_type nn, value_type val = value_type()){
 
 				int n = static_cast<int>(nn);
@@ -181,9 +148,12 @@ namespace ft{
 						reserve(_capacity * 2);
 				}
 				if (n > _size){
-					
+					for (int i = _size; i < n; i++)
+						_alloc.construct(_start + i, val);
+					_size = n;
+					_end = _start + n;
 				}
-				if (n < _size){
+				else if (n < _size){
 					for (pointer it = _start + n; it < _end; it++)
 						_alloc.destroy(it);
 					_end = _start + n;
