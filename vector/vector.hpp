@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 20:50:07 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 21:58:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,8 +346,9 @@ namespace ft{
 						reserve(_size + n);
 				}
 				if (_size == 0){
-					for (i = 0; i < n; i++)
-						_alloc.construct(_start + i, *(first + i));
+					// for (i = 0; i < n; i++)
+					// 	_alloc.construct(_start + i, *(first + i));
+					std::copy(first, last, _start);
 				}
 				else{
 					pointer h;

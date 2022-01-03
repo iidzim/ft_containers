@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 18:58:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 22:08:37 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,41 +447,41 @@ int main()
 // 	// x.insert(x.end(), s.begin(), s.end());
 // }
 
-{
-	std::vector<int> a;
-	std::vector<int> b(20);
-	std::vector<int> c(100000);
-	// cout << a.size() << " - " << a.capacity() << endl;
-	// cout << b.size() << " - " << b.capacity() << endl;
-	a.push_back(1);
-	a.push_back(2);
-	a.push_back(3);
-	std::vector<int> d(a);
-	b = a;
-	cout << a.size() << " - " << a.capacity() << endl;
-	cout << b.size() << " - " << b.capacity() << endl;
-	// cout << c.size() << " - " << c.capacity() << endl;
-	cout << d.size() << " - " << d.capacity() << endl;
-}
-cout << "*****************\n";
-{
-	ft::vector<int> a;
-	ft::vector<int> b(20);
-	ft::vector<int> c(100000);
-	// cout << a.size() << " - " << a.capacity() << endl;
-	// cout << b.size() << " - " << b.capacity() << endl;
-	a.push_back(1);
-	a.push_back(2);
-	a.push_back(3);
-	// cout << "d\n";
-	ft::vector<int> d(a);
-	// cout << "b\n";
-	b = a;
-	cout << a.size() << " - " << a.capacity() << endl;
-	cout << b.size() << " - " << b.capacity() << endl;
-	// cout << c.size() << " - " << c.capacity() << endl;
-	cout << d.size() << " - " << d.capacity() << endl;
-}
+// {
+// 	std::vector<int> a;
+// 	std::vector<int> b(20);
+// 	std::vector<int> c(100000);
+// 	// cout << a.size() << " - " << a.capacity() << endl;
+// 	// cout << b.size() << " - " << b.capacity() << endl;
+// 	a.push_back(1);
+// 	a.push_back(2);
+// 	a.push_back(3);
+// 	std::vector<int> d(a);
+// 	b = a;
+// 	cout << a.size() << " - " << a.capacity() << endl;
+// 	cout << b.size() << " - " << b.capacity() << endl;
+// 	// cout << c.size() << " - " << c.capacity() << endl;
+// 	cout << d.size() << " - " << d.capacity() << endl;
+// }
+// cout << "*****************\n";
+// {
+// 	ft::vector<int> a;
+// 	ft::vector<int> b(20);
+// 	ft::vector<int> c(100000);
+// 	// cout << a.size() << " - " << a.capacity() << endl;
+// 	// cout << b.size() << " - " << b.capacity() << endl;
+// 	a.push_back(1);
+// 	a.push_back(2);
+// 	a.push_back(3);
+// 	// cout << "d\n";
+// 	ft::vector<int> d(a);
+// 	// cout << "b\n";
+// 	b = a;
+// 	cout << a.size() << " - " << a.capacity() << endl;
+// 	cout << b.size() << " - " << b.capacity() << endl;
+// 	// cout << c.size() << " - " << c.capacity() << endl;
+// 	cout << d.size() << " - " << d.capacity() << endl;
+// }
 
 
 // {
@@ -502,5 +502,33 @@ cout << "*****************\n";
 // 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
 // }
 
+{
+ 	std::vector<int> vector(10);
+ 	std::vector<int> v;
+	std::vector<int> tmp0(vector);
+    std::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
+    tmp = tmp2;
+    std::vector<int> tmp3(tmp);
+    std::vector<int> tmp4(tmp.begin(), tmp.end());
+    v.push_back(tmp4.size());
+    v.push_back(tmp4.capacity());
+    v.push_back(tmp[2]);
+    v.push_back(tmp3[2]);
+    v.push_back(tmp4[2]);
+}
+{
+ 	ft::vector<int> vector(10);
+ 	ft::vector<int> v;
+	ft::vector<int> tmp0(vector);
+    ft::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
+    tmp = tmp2;
+    ft::vector<int> tmp3(tmp);
+    ft::vector<int> tmp4(tmp.begin(), tmp.end());
+    v.push_back(tmp4.size());
+    v.push_back(tmp4.capacity());
+    v.push_back(tmp[2]);
+    v.push_back(tmp3[2]);
+    v.push_back(tmp4[2]);
+}
 	return 0;
 }
