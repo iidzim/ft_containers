@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/24 15:33:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 15:25:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,33 +316,33 @@ int main()
 	// 	std::cout << ' ' << vect[i];
 	// std::cout << '\n';
 
-{
-	std::vector<int> vect(5, 99);
-	std::vector<int>::iterator it;
-	vect.push_back(9);
-	vect.push_back(9);
-	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
-	vect.resize(461168);
-	// for (it = vect.begin(); it < vect.end(); it++)
-	// 	std::cout << *it << " ";
-	std::cout << std::endl;
-	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
-}
+// {
+// 	std::vector<int> vect(5, 99);
+// 	std::vector<int>::iterator it;
+// 	vect.push_back(9);
+// 	vect.push_back(9);
+// 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+// 	vect.resize(461168);
+// 	// for (it = vect.begin(); it < vect.end(); it++)
+// 	// 	std::cout << *it << " ";
+// 	std::cout << std::endl;
+// 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+// }
 
-std::cout << "****************\n";
+// std::cout << "****************\n";
 
-{
-	ft::vector<int> vect(5, 99);
-	ft::vector<int>::iterator it;
-	vect.push_back(9);
-	vect.push_back(9);
-	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
-	vect.resize(461168);
-	// for (it = vect.begin(); it < vect.end(); it++)
-	// 	std::cout << *it << " ";
-	std::cout << std::endl;
-	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
-}
+// {
+// 	ft::vector<int> vect(5, 99);
+// 	ft::vector<int>::iterator it;
+// 	vect.push_back(9);
+// 	vect.push_back(9);
+// 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+// 	vect.resize(461168);
+// 	// for (it = vect.begin(); it < vect.end(); it++)
+// 	// 	std::cout << *it << " ";
+// 	std::cout << std::endl;
+// 	std::cout << vect.size() << " - " << vect.capacity() << std::endl;
+// }
 	
 
 // {
@@ -390,6 +390,79 @@ std::cout << "****************\n";
 // 	cout << v.size() << " - " << v.capacity() << endl;
 // 	v.clear();
 // 	cout << v.size() << " - " << v.capacity() << endl;
+// }
+
+
+// {v.insert(v)
+// 	std::vector<int> a(10, 5);
+// 	std::vector<int>::iterator it;
+
+// 	for (size_t i = 0; i < a.size(); i++)
+// 		cout << a[i] << " ";
+// 	cout << endl;
+// 	a.insert(a.end(), a.begin(), a.end());
+// 	for (size_t i = 0; i < a.size(); i++)
+// 		cout << a[i] << " ";
+// 	cout << endl;	
+// }
+// cout << "*******************\n";
+// {//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! append vector to itself
+// 	ft::vector<int> a(10, 5);
+// 	ft::vector<int> b;
+// 	ft::vector<int>::iterator it;
+
+// 	for (size_t i = 0; i < a.size(); i++)
+// 		cout << a[i] << " ";
+// 	cout << endl;
+// 	b = a;
+// 	b.insert(b.end(), a.begin(), a.end());//?????
+// 	for (size_t i = 0; i < a.size(); i++)
+// 		cout << a[i] << " ";
+// 	cout << endl;	
+// }
+
+{//*insert(value)
+	std::vector<string> s, x;
+	s.insert(s.end(), "first");
+	cout << s.front() << endl;
+	cout << s.back() << endl;
+	s.insert(s.end() - 1, "second");
+	cout << s[1] << endl;
+	cout << s.front() << endl;
+	// s.insert(s.begin() + 1, "second");
+	// cout << s[1] << endl;
+	// x.insert(x.end(), s.begin(), s.end());
+}
+cout << "****************\n";
+{
+	ft::vector<string> s, x;
+	s.insert(s.end(), "first");
+	cout << s.front() << endl;
+	cout << s.back() << endl;
+	s.insert(s.end() - 1, "second");
+	cout << s[1] << endl;
+	cout << s.front() << endl;
+	// s.insert(s.begin() + 1, "second");
+	// cout << s[1] << endl;
+	// x.insert(x.end(), s.begin(), s.end());
+}
+
+// {
+// 	std::vector<string> s(10, "hola");
+// 	s.push_back("first");
+// 	s.push_back("second");
+// 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
+// 	s.erase(s.begin()+5);
+// 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
+// }
+// cout << "****************\n";
+// {
+// 	ft::vector<string> s(10, "hola");
+// 	s.push_back("first");
+// 	s.push_back("second");
+// 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
+// 	s.erase(s.begin()+5);
+// 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
 // }
 
 	return 0;

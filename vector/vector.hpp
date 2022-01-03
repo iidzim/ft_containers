@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/24 17:11:29 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 16:00:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ namespace ft{
 			typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 			//? Constructs an empty container with the given allocator alloc
-			explicit vector (const allocator_type& alloc = allocator_type()){
+			explicit vector (const allocator_type& alloc = allocator_type()):
+				_start(NULL), _end(NULL), _size(0), _capacity(0), _alloc(alloc){}
 
-				this->_start = this->_end = NULL;
-				this->_size = this->_capacity = 0;
-				this->_alloc = alloc;
-			}
+			// 	this->_start = this->_end = NULL;
+			// 	this->_size = this->_capacity = 0;
+			// 	this->_alloc = alloc;
+			// }
 
 			//? Constructs the container with count copies of elements with value
 			explicit vector (size_type n, const value_type& val = value_type(),
@@ -99,8 +100,11 @@ namespace ft{
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){
 
-				for (int i = 0; i < _size; i++)
-					_alloc.destroy(_start + i);
+				// if (_start != _end){
+					for (pointer it = _start; it < _end; it++)
+						_alloc.destroy(it);
+					// _alloc.deallocate(_start, _capacity);
+				// }
 				_alloc = x._alloc;
 				_capacity = x._size;
 				_size = x._size;
@@ -182,7 +186,7 @@ namespace ft{
 						_alloc.construct((tmp_start + i), *(_start + i));
 					for (pointer it = _start; it < _end; it++)
 						_alloc.destroy(it);
-					_alloc.deallocate(_start, _size);//?
+					_alloc.deallocate(_start, _capacity);//? _size
 					_start = tmp_start;
 					_end = tmp_end;
 					_capacity = n;
@@ -224,20 +228,19 @@ namespace ft{
 
 				int len = last - first;
 				pointer pfirst = &(*first);
+				for (pointer it = _start; it < _end; it++)
+					_alloc.destroy(it);
 				if (len > _capacity){
-					for (int i = 0; i < _size; i++)
-						_alloc.destroy(_start + i);
 					_alloc.deallocate(_start, _capacity);
 					_start = _alloc.allocate(len);
 					_end = _start + len;
+					_size = _capacity = len;
 					for (int i = 0; i < len; i++)
 						_alloc.construct(_start + i, *(pfirst + i));
-					_size = _capacity = len;
 				}
 				else{
-					for (int i = 0; i < _size; i++)
-						_alloc.destroy(_start + i);
 					_size = len;
+					_end = _start + _size;
 					for (int i = 0; i < _size; i++)
 						_alloc.construct(_start + i, *(pfirst + i));
 				}
@@ -246,10 +249,11 @@ namespace ft{
 			void assign (size_type nn, const value_type& val){
 
 				int n = static_cast<int>(nn);
-				for (int i = 0; i < _size; i++)
-					_alloc.destroy(_start + i);
-				if (n > _size)
-				{
+				// if (_size != 0){
+					for (pointer it = _start; it < _end; it++)
+						_alloc.destroy(it);
+				// }
+				if (n > _capacity){
 					_alloc.deallocate(_start, _capacity);
 					_start = _alloc.allocate(n);
 					_end = _start + n;
@@ -259,7 +263,7 @@ namespace ft{
 				}
 				else{
 					_size = n;
-					_end = _start + n;
+					_end = _start + _size;
 					for (pointer it = _start; it < _end; it++)
 						_alloc.construct(it ,val);
 				}
@@ -299,6 +303,7 @@ namespace ft{
 					_alloc.construct(_end - i, *(_end - i - 1));
 				_alloc.construct(_end - i, val);
 				_size += 1;
+				_end += 1;
 				return (iterator(_start + pos));
 			}
 
@@ -358,21 +363,38 @@ namespace ft{
 					for (i = 0; i < n; i++)
 						_alloc.construct(h - i, *(last - i - 1));
 				}
-				_end += n; 
+				// else{
+				// 	ft::vector<T> tmp(first, last);
+				// 	pointer h;
+				// 	for (i = 0; i <= pos; i++)
+				// 		_alloc.construct(_end + n - i, *(_end - i));
+				// 	h = tmp.end() + n - i;
+				// 	for (i = 0; i < n; i++)
+				// 		_alloc.construct(h - i, *(last - i - 1));
+				// }
+				_end += n;
 				_size += n;
 			}
 
 			//? Erase elements
+			// iterator erase (iterator position){//!TLE
+					// check if position = end is true then no need to construct
+			// 	pointer pos_ = &(*position);
+			// 	int pos = position - _start;
+			// 	_size -= 1;
+			// 	for (int i = pos; i < _size; i++)
+			// 		_alloc.construct((_start + i), *(_start + i + 1));
+			// 	_end -= 1;
+			// 	return (iterator(pos_));
+			// }
 			iterator erase (iterator position){
 
 				pointer pos_ = &(*position);
-				int pos = position - _start;
-				_size -= 1;
-				for (int i = pos; i < _size; i++)
-					_alloc.construct((_start + i), *(_start + i + 1));
-				pointer ite = _end;
+				if (position + 1 != _end)
+					std::copy(pos_ + 1, _end, pos_);
 				_end -= 1;
-				_alloc.destroy(ite);
+				_size -= 1;
+				_alloc.destroy(_end);
 				return (iterator(pos_));
 			}
 
@@ -393,18 +415,30 @@ namespace ft{
 			//? Swap content
 			void swap (vector& x){
 
-				pointer tmp_start, tmp_end;
-
-				tmp_start = x._start;
-				tmp_end = x._end;
-				x._start = _start;
-				x._end = _end;
-				_start = tmp_start;
-				_end = tmp_end;
-
+				std::swap(x._start, _start);
+				std::swap(x._end, _end);
 				std::swap(x._size, _size);
 				std::swap(x._capacity, _capacity);
 				std::swap(x._alloc, _alloc);
+
+				// pointer tmp_start, tmp_end;
+				// int tmp_capacity, tmp_size;
+				// Alloc tmp_alloc;
+				// tmp_start = x._start;
+				// tmp_end = x._end;
+				// tmp_size = x._size;
+				// tmp_capacity = x._capacity;
+				// tmp_alloc = x._alloc;
+				// x._start = this->_start;
+				// x._end = this->_end;
+				// x._size = this->_size;
+				// x._capacity = this->_capacity;
+				// x._alloc = this->_alloc;
+				// this->_start = tmp_start;
+				// this->_end = tmp_end;
+				// this->_capacity = tmp_capacity;
+				// this->_size = tmp_size;
+				// this->_alloc = tmp_alloc;
 			}
 
 			//? Clear content
