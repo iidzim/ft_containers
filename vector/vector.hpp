@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 16:00:17 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 20:50:07 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,7 @@ namespace ft{
 
 			//? Constructs an empty container with the given allocator alloc
 			explicit vector (const allocator_type& alloc = allocator_type()):
-				_start(NULL), _end(NULL), _size(0), _capacity(0), _alloc(alloc){}
-
-			// 	this->_start = this->_end = NULL;
-			// 	this->_size = this->_capacity = 0;
-			// 	this->_alloc = alloc;
-			// }
+				_alloc(alloc), _capacity(0), _size(0), _start(NULL), _end(NULL){}
 
 			//? Constructs the container with count copies of elements with value
 			explicit vector (size_type n, const value_type& val = value_type(),
@@ -92,6 +87,7 @@ namespace ft{
 			~vector(void){
 				for (pointer it = _start; it < _end; it++)
 					_alloc.destroy(it);
+				_alloc.deallocate(_start, _capacity);
 				_end = _start;
 				_size = 0;
 				_capacity = 0;
@@ -99,15 +95,15 @@ namespace ft{
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){
-
-				// if (_start != _end){
-					for (pointer it = _start; it < _end; it++)
-						_alloc.destroy(it);
-					// _alloc.deallocate(_start, _capacity);
-				// }
+				
+				for (int i = 0; i < _size; i++)
+					_alloc.destroy(_start + i);
+				// _alloc.deallocate(_start, _capacity);
 				_alloc = x._alloc;
-				_capacity = x._size;
+				if (_size < x._size)
+					_capacity = x._size;
 				_size = x._size;
+				// _start = _alloc.allocate(_capacity);
 				_start = _alloc.allocate(_size);
 				_end = _start + _size;
 				for (int i = 0; i < _size; i++)
@@ -249,10 +245,8 @@ namespace ft{
 			void assign (size_type nn, const value_type& val){
 
 				int n = static_cast<int>(nn);
-				// if (_size != 0){
-					for (pointer it = _start; it < _end; it++)
-						_alloc.destroy(it);
-				// }
+				for (pointer it = _start; it < _end; it++)
+					_alloc.destroy(it);
 				if (n > _capacity){
 					_alloc.deallocate(_start, _capacity);
 					_start = _alloc.allocate(n);

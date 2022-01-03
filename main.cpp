@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 15:25:58 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/03 18:58:13 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,31 +421,68 @@ int main()
 // 	cout << endl;	
 // }
 
-{//*insert(value)
-	std::vector<string> s, x;
-	s.insert(s.end(), "first");
-	cout << s.front() << endl;
-	cout << s.back() << endl;
-	s.insert(s.end() - 1, "second");
-	cout << s[1] << endl;
-	cout << s.front() << endl;
-	// s.insert(s.begin() + 1, "second");
-	// cout << s[1] << endl;
-	// x.insert(x.end(), s.begin(), s.end());
-}
-cout << "****************\n";
+// {//*insert(value)
+// 	std::vector<string> s, x;
+// 	s.insert(s.end(), "first");
+// 	cout << s.front() << endl;
+// 	cout << s.back() << endl;
+// 	s.insert(s.end() - 1, "second");
+// 	cout << s[1] << endl;
+// 	cout << s.front() << endl;
+// 	// s.insert(s.begin() + 1, "second");
+// 	// cout << s[1] << endl;
+// 	// x.insert(x.end(), s.begin(), s.end());
+// }
+// cout << "****************\n";
+// {
+// 	ft::vector<string> s, x;
+// 	s.insert(s.end(), "first");
+// 	cout << s.front() << endl;
+// 	cout << s.back() << endl;
+// 	s.insert(s.end() - 1, "second");
+// 	cout << s[1] << endl;
+// 	cout << s.front() << endl;
+// 	// s.insert(s.begin() + 1, "second");
+// 	// cout << s[1] << endl;
+// 	// x.insert(x.end(), s.begin(), s.end());
+// }
+
 {
-	ft::vector<string> s, x;
-	s.insert(s.end(), "first");
-	cout << s.front() << endl;
-	cout << s.back() << endl;
-	s.insert(s.end() - 1, "second");
-	cout << s[1] << endl;
-	cout << s.front() << endl;
-	// s.insert(s.begin() + 1, "second");
-	// cout << s[1] << endl;
-	// x.insert(x.end(), s.begin(), s.end());
+	std::vector<int> a;
+	std::vector<int> b(20);
+	std::vector<int> c(100000);
+	// cout << a.size() << " - " << a.capacity() << endl;
+	// cout << b.size() << " - " << b.capacity() << endl;
+	a.push_back(1);
+	a.push_back(2);
+	a.push_back(3);
+	std::vector<int> d(a);
+	b = a;
+	cout << a.size() << " - " << a.capacity() << endl;
+	cout << b.size() << " - " << b.capacity() << endl;
+	// cout << c.size() << " - " << c.capacity() << endl;
+	cout << d.size() << " - " << d.capacity() << endl;
 }
+cout << "*****************\n";
+{
+	ft::vector<int> a;
+	ft::vector<int> b(20);
+	ft::vector<int> c(100000);
+	// cout << a.size() << " - " << a.capacity() << endl;
+	// cout << b.size() << " - " << b.capacity() << endl;
+	a.push_back(1);
+	a.push_back(2);
+	a.push_back(3);
+	// cout << "d\n";
+	ft::vector<int> d(a);
+	// cout << "b\n";
+	b = a;
+	cout << a.size() << " - " << a.capacity() << endl;
+	cout << b.size() << " - " << b.capacity() << endl;
+	// cout << c.size() << " - " << c.capacity() << endl;
+	cout << d.size() << " - " << d.capacity() << endl;
+}
+
 
 // {
 // 	std::vector<string> s(10, "hola");
