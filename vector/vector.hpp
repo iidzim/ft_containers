@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/04 18:46:19 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/04 22:14:07 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,24 +289,48 @@ namespace ft{
 
 				int i;
 				int pos = _end - &(*position);
-				if (_size == _capacity && _size == 0)
+				if (_capacity == 0)
 					reserve(1);
 				else if (_size == _capacity)
-					reserve(_size * 2);
+				// else if (_size + 1 >= _capacity)
+					reserve(_capacity * 2);
 				for (i = 0; i < pos; i++)
 					_alloc.construct(_end - i, *(_end - i - 1));
 				_alloc.construct(_end - i, val);
 				_size += 1;
 				_end += 1;
-				return (iterator(_start + pos));
+				return (_start + pos);
 			}
+			
+			// iterator insert (iterator position, const value_type& val){
+
+			// 	int i;
+			// 	int pos = _end - &(*position);
+			// 	if (_capacity == 0)
+			// 		reserve(1);
+			// 	else if (_size + 1 >= _capacity)
+			// 		reserve(_capacity * 2);
+			// 	_end += 1;
+			// 	for (i = 0; i <= pos; i++)
+			// 		_alloc.construct(_end - i - 1, *(_end - i - 2));
+			// 	// if (position < _start)
+			// 	// std::cout << *(_end - i+1) << std::endl;
+			// 	// if (position < _start)
+			// 	// 	_alloc.construct(_end - i+1, 0);
+			// 	// else
+			// 		_alloc.construct(_end - i+1, val);
+			// 	_size += 1;
+			// 	// this->insert(position, 1, val);//?
+			// 	return (iterator(_start + pos));
+			// 	// return (iterator(_end - pos - 1));
+			// }
 
 			void insert (iterator position, size_type nn, const value_type& val){
 
 				int i;
 				int n = static_cast<int>(nn);
 				int pos = _end - &(*position);
-				if (_size == _capacity && _size == 0)
+				if (_size == _capacity && _size== 0)
 					reserve(n);
 				else if (_size + n >= _capacity){
 					if (_size + n > _capacity && n < _size)
@@ -353,7 +377,7 @@ namespace ft{
 				else{
 					pointer h;
 					for (i = 0; i <= pos; i++)
-						_alloc.construct(_end + n - i, *(_end - i));
+						_alloc.construct(_end + n - i - 1, *(_end - i - 1));
 					h = _end + n - i;
 					for (i = 0; i < n; i++)
 						_alloc.construct(h - i, *(last - i - 1));
@@ -415,14 +439,6 @@ namespace ft{
 				std::swap(x._size, _size);
 				std::swap(x._capacity, _capacity);
 				std::swap(x._alloc, _alloc);
-
-				// pointer tmp_start, tmp_end;
-				// tmp_start = x._start;
-				// tmp_end = x._end;
-				// x._start = this->_start;
-				// x._end = this->_end;
-				// this->_start = tmp_start;
-				// this->_end = tmp_end;
 			}
 
 			//? Clear content

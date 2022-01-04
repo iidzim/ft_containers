@@ -44,15 +44,14 @@ std::vector<int> insert_test_1(std::vector<T> vector) {
     std::unique_ptr<B> k4(new B(-1));
     std::vector<A> vv;
     std::vector<B*> v1;
-
     v1.push_back(&(*k2));
     v1.push_back(&(*k3));
     v1.push_back(&(*k4));
-    try { vv.insert(vv.begin(), v1.begin(), v1.end()); }
-    catch (...) {
-    	v.push_back(vv.size());
-    	v.push_back(vv.capacity());
-    }
+    // try { vv.insert(vv.begin(), v1.begin(), v1.end()); }
+    // catch (...) {
+    // 	v.push_back(vv.size());
+    // 	v.push_back(vv.capacity());
+    // }
     return v;
 }
 
@@ -74,11 +73,11 @@ std::vector<int> insert_test_1(_vector<T> vector) {
     v1.push_back(&(*k2));
     v1.push_back(&(*k3));
     v1.push_back(&(*k4));
-    try { vv.insert(vv.begin(), v1.begin(), v1.end()); }
-    catch (...) {
-    	v.push_back(vv.size());
-    	v.push_back(vv.capacity());
-    }
+    // try { vv.insert(vv.begin(), v1.begin(), v1.end()); }
+    // catch (...) {
+    // 	v.push_back(vv.size());
+    // 	v.push_back(vv.capacity());
+    // }
     return v;
 }
 
