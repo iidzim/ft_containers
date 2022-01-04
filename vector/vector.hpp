@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 21:58:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:46:19 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ namespace ft{
 
 			//? Constructs the container with count copies of elements with value
 			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type()){
+				const allocator_type& alloc = allocator_type()):
+				_alloc(alloc), _capacity(0), _size(0), _start(NULL), _end(NULL){
 
-				this->_alloc = alloc;
+				if (n > this->max_size())
+					throw std::length_error("vector");
 				this->_size = this->_capacity = n;
 				if (this->_size > 0)
 				{
@@ -65,11 +67,11 @@ namespace ft{
 			//? Constructs the container with the contents of the range [first, last)
 			template <typename InputIterator>
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), 
-				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()){
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()):
+				_alloc(alloc), _capacity(0), _size(0), _start(NULL), _end(NULL){
 
 				//* The allocator parameter is copied into a private member of the container
 				//* This private copy can then be used for all subsequent storage management
-				this->_alloc = alloc;
 				this->_size = this->_capacity = last - first;
 				//* An initial buffer is allocated using the allocator's allocate function
 				this->_start = this->_alloc.allocate(this->_size);
@@ -79,7 +81,7 @@ namespace ft{
 			}
 
 			//? Copy constructor
-			vector (const vector& x){
+			vector (const vector& x): _capacity(0), _size(0), _start(NULL), _end(NULL){
 				*this = x;
 			}
 
@@ -89,21 +91,19 @@ namespace ft{
 					_alloc.destroy(it);
 				_alloc.deallocate(_start, _capacity);
 				_end = _start;
-				_size = 0;
-				_capacity = 0;
+				_size = _capacity = 0;
 			}
 
 			//? Assigns new contents, replacing its current contents, and modifying its size accordingly.
 			vector& operator= (const vector& x){
-				
+
 				for (int i = 0; i < _size; i++)
 					_alloc.destroy(_start + i);
-				// _alloc.deallocate(_start, _capacity);
+				_alloc.deallocate(_start, _capacity);//!!!! pointer being freed was not allocated
 				_alloc = x._alloc;
 				if (_size < x._size)
 					_capacity = x._size;
 				_size = x._size;
-				// _start = _alloc.allocate(_capacity);
 				_start = _alloc.allocate(_size);
 				_end = _start + _size;
 				for (int i = 0; i < _size; i++)
@@ -417,23 +417,12 @@ namespace ft{
 				std::swap(x._alloc, _alloc);
 
 				// pointer tmp_start, tmp_end;
-				// int tmp_capacity, tmp_size;
-				// Alloc tmp_alloc;
 				// tmp_start = x._start;
 				// tmp_end = x._end;
-				// tmp_size = x._size;
-				// tmp_capacity = x._capacity;
-				// tmp_alloc = x._alloc;
 				// x._start = this->_start;
 				// x._end = this->_end;
-				// x._size = this->_size;
-				// x._capacity = this->_capacity;
-				// x._alloc = this->_alloc;
 				// this->_start = tmp_start;
 				// this->_end = tmp_end;
-				// this->_capacity = tmp_capacity;
-				// this->_size = tmp_size;
-				// this->_alloc = tmp_alloc;
 			}
 
 			//? Clear content

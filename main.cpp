@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/03 22:08:37 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:43:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,33 +502,39 @@ int main()
 // 	cout << "size = " << s.size() << " - capacity = " << s.capacity() << endl;
 // }
 
+// {
+//  	std::vector<int> vector(10, 5);
+//  	std::vector<int> vector2(15, 9);
+// 	cout << "size = " << vector2.size() << " - capacity = " << vector2.capacity() << endl;
+
+// 	vector2 = vector;
+// 	cout << "size = " << vector2.size() << " - capacity = " << vector2.capacity() << endl;
+
+// }
+// cout << "****************\n";
+// {
+//  	ft::vector<int> vector(10, 5);
+//  	ft::vector<int> vector2(15, 9);
+// 	cout << "size = " << vector2.size() << " - capacity = " << vector2.capacity() << endl;
+
+// 	vector2 = vector;
+// 	cout << "size = " << vector2.size() << " - capacity = " << vector2.capacity() << endl;
+
+// }
+
 {
- 	std::vector<int> vector(10);
- 	std::vector<int> v;
-	std::vector<int> tmp0(vector);
-    std::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
-    tmp = tmp2;
-    std::vector<int> tmp3(tmp);
-    std::vector<int> tmp4(tmp.begin(), tmp.end());
-    v.push_back(tmp4.size());
-    v.push_back(tmp4.capacity());
-    v.push_back(tmp[2]);
-    v.push_back(tmp3[2]);
-    v.push_back(tmp4[2]);
+	// std::vector<int> v;
+	// v.assign(1000, 2);
+	// cout << *(v.insert(v.begin()+500, 1)) << endl;
+	
+	// for (int i = 0; i < v.size(); i++)
+	// 	cout << 
+	
+	std::vector<int> v;
+	std::vector<int> c(v);
+	cout << v.capacity() << " - " << v.size() << endl;
+	cout << c.capacity() << " - " << c.size() << endl;
 }
-{
- 	ft::vector<int> vector(10);
- 	ft::vector<int> v;
-	ft::vector<int> tmp0(vector);
-    ft::vector<int> tmp(10000000, 4), tmp2(10000000, 5);
-    tmp = tmp2;
-    ft::vector<int> tmp3(tmp);
-    ft::vector<int> tmp4(tmp.begin(), tmp.end());
-    v.push_back(tmp4.size());
-    v.push_back(tmp4.capacity());
-    v.push_back(tmp[2]);
-    v.push_back(tmp3[2]);
-    v.push_back(tmp4[2]);
-}
+
 	return 0;
 }

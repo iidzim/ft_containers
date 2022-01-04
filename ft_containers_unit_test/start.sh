@@ -11,7 +11,7 @@ then
 elif [[ $1 = -v || $1 = --vector ]]
 then
   cat credits/header
-  clang++ run_vector.cpp && ./a.out
+  clang++ -fsanitize=address run_vector.cpp && ./a.out
 elif [[ $1 = -s || $1 = --set ]]
 then
   cat credits/header
@@ -35,7 +35,7 @@ then
 elif [[ $1 = -b || $1 = --bonus ]]
 then
   cat credits/header
-  clang++ run_vector.cpp && ./a.out
+  clang++ -fsanitize=address run_vector.cpp && ./a.out
   clang++ run_utilities.cpp && ./a.out
   clang++ run_stack.cpp && ./a.out
   clang++ run_map.cpp && ./a.out

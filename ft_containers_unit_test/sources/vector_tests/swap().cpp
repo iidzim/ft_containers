@@ -22,12 +22,12 @@ std::vector<int> swap_test(std::vector<T> vector) {
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
+    g_end1 = timer();
     std::swap(vector, tmp2);
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
     std::swap(vector, tmp4);
-    g_end1 = timer();
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
@@ -55,12 +55,12 @@ std::vector<int> swap_test(_vector<T> vector) {
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
+    g_end2 = timer();
     std::swap(vector, tmp2);
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
     std::swap(vector, tmp4);
-    g_end2 = timer();
     v.push_back(vector[2]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());

@@ -5,8 +5,8 @@
 /*				or comment #include				  */
 /*		if you haven't yet some container		  */
 /**************************************************/
-#define VECTOR			"../../../containers/vector/vector.hpp"
-#define STACK			"../../../containers/stack/stack.hpp"
+#define VECTOR			"../../../vector/vector.hpp"
+#define STACK			"../../../stack/stack.hpp"
 // #define MAP			  	"../../../Map.hpp"
 // #define SET			  	"../../../Set.hpp"
 // #define UTILITIES		"../../../Utility.hpp"
