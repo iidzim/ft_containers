@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/04 22:11:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/05 19:24:22 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,29 +524,29 @@ int main()
     // std::cout << "=--=-==--- " <<*(vector.insert(vector.end() - 8000000, 44)) << "=--=-==--- " << std::endl;
 
 
-{
-	std::vector<int> v;
-	v.assign(10, 2);
-	cout << *(v.insert(v.end()-5, 99)) << endl;
+// {
+// 	std::vector<int> v;
+// 	v.assign(10, 2);
+// 	cout << *(v.insert(v.end()-5, 99)) << endl;
 	
-	for (size_t i = 0; i < v.size(); i++)
-		cout << v[i] << " ";
-	cout << endl;
-	std::cout << v.size() << " * " << v.capacity() << std::endl;
+// 	for (size_t i = 0; i < v.size(); i++)
+// 		cout << v[i] << " ";
+// 	cout << endl;
+// 	std::cout << v.size() << " * " << v.capacity() << std::endl;
 
-}
-cout << "****************\n";
-{
-	ft::vector<int> v;
-	v.assign(10, 2);
-	cout << *(v.insert(v.end()-5, 99)) << endl;
+// }
+// cout << "****************\n";
+// {
+// 	ft::vector<int> v;
+// 	v.assign(10, 2);
+// 	cout << *(v.insert(v.end()-5, 99)) << endl;
 	
-	for (size_t i = 0; i < v.size(); i++)
-		cout << v[i] << " ";
-	cout << endl;
-	std::cout << v.size() << " * " << v.capacity() << std::endl;
+// 	for (size_t i = 0; i < v.size(); i++)
+// 		cout << v[i] << " ";
+// 	cout << endl;
+// 	std::cout << v.size() << " * " << v.capacity() << std::endl;
 
-}
+// }
 
 // {
 // 	std::vector<int> v;
@@ -612,6 +612,53 @@ cout << "****************\n";
 // 	std::cout << b.size() << " * " << b.capacity() << std::endl;
 // }
 
+// {
+// 	std::vector<int> v(10);
+// 	v.insert(v.begin()+5, 5);
+// 	for (size_t i = 0; i < v.size(); i++)
+// 		cout << v[i] << " ";
+// 	cout << endl;
+// }
+// cout << "**************\n";
+// {
+// 	ft::vector<int> v(10);
+// 	v.insert(v.begin()+5, 5);
+// 	for (size_t i = 0; i < v.size(); i++)
+// 		cout << v[i] << " ";
+// 	cout << endl;
+// }
+
+// std::cout << v.size() << " <><><><> " << ft_v.size() << std::endl;
+// std::cout << "here!!!!!!!!!!!!!!!!" << std::endl;
+
+{
+	std::vector<int> a;
+	a.insert(a.begin(), 10, 1);
+	a.insert(a.begin() + a.size(), 2);
+	a.insert(a.end(), 5, 3);
+	// a.insert(a.begin(), 4);
+	// a.insert(a.end() - a.size(), 5);
+	cout << a.size() << " * " << a.capacity() << endl;
+	for (size_t i = 0; i < a.size(); i++)
+		cout << a[i] << " ";
+	cout << endl;
+	
+	cout << "*****************\n";
+
+	ft::vector<int> b;
+	b.insert(b.begin(), 10, 1);
+	b.insert(b.begin() + b.size(), 2);
+	b.insert(b.end(), 5, 3);
+	// b.insert(b.begin(), 4);
+	// b.insert(b.end() - b.size(), 5);
+	cout << b.size() << " * " << b.capacity() << endl;
+	for (size_t i = 0; i < b.size(); i++)
+		cout << b[i] << " ";
+	cout << endl;
+
+	// if (a == b)
+	// 	cout << "ok\n";
+}
 
 
 	return 0;

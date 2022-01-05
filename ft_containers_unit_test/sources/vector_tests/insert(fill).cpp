@@ -8,7 +8,8 @@ std::vector<int> insert_test_2(std::vector<T> vector) {
     tmp.assign(26000000, 1);
     vector.assign(22000000, 1);
     g_start1 = timer();
-    vector.insert(vector.end() - 14000000, tmp.begin(), tmp.end());
+    // vector.insert(vector.end() - 14000000, tmp.begin(), tmp.end());
+    vector.insert(vector.end() - 14000000, 100, 99);
     g_end1 = timer();
     v.push_back(vector[3]);
     v.push_back(vector.size());
@@ -23,7 +24,8 @@ std::vector<int> insert_test_2(_vector<T> vector) {
     tmp.assign(26000000, 1);
     vector.assign(22000000, 1);
     g_start2 = timer();
-    vector.insert(vector.end() - 14000000, tmp.begin(), tmp.end());
+    // vector.insert(vector.end() - 14000000, tmp.begin(), tmp.end());
+    vector.insert(vector.end() - 14000000, 100, 99);
     g_end2 = timer();
     v.push_back(vector[3]);
     v.push_back(vector.size());
