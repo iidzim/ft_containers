@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 15:27:58 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 16:43:38 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,8 @@ namespace ft{
 				int  n = static_cast<int>(nn);
 				int pos = _end - &(*position);
 				if (_capacity == 0){
+					if (nn > max_size())
+						throw std::length_error("vector");
 					_start = _alloc.allocate(n);
 					_end = _start + n;
 					for (int i = 0; i < n; i++)

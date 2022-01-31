@@ -6,13 +6,16 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 20:23:43 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/04 18:38:21 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 18:36:19 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOOLS_HPP
 # define TOOLS_HPP
 #include <type_traits>
+#include "./iterator.hpp"
+#include "./reverse_iterator.hpp"
+
 
 namespace ft{
 
@@ -76,7 +79,25 @@ namespace ft{
 		return (first2 != last2);
 	}
 
+	template <typename iterator>
+	struct iterator_traits{
+	
+		typedef typename iterator::iterator_category	iterator_category;
+		typedef typename iterator::value_type			value_type;
+		typedef typename iterator::difference_type		difference_type;
+		typedef typename iterator::pointer				pointer;
+		typedef typename iterator::reference			reference;
+	};
 
+	template <typename T>
+	struct iterator_traits<T*>{
+
+		typedef std::random_access_iterator_tag	iterator_category;
+		typedef T							value_type;
+		typedef ptrdiff_t					difference_type;
+		typedef T*							pointer;
+		typedef T&							reference;
+	};
 
 }
 

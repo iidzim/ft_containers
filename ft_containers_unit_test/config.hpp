@@ -9,7 +9,7 @@
 #define STACK			"../../../stack/stack.hpp"
 // #define MAP			  	"../../../Map.hpp"
 // #define SET			  	"../../../Set.hpp"
-// #define UTILITIES		"../../../Utility.hpp"
+#define UTILITIES		"../../../tools/tools.hpp"
 
 /* comment this to turn OFF flags (-WWW, -std=98) */
 // #define FLAGS

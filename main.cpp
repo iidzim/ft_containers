@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 15:27:46 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 15:32:19 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -666,9 +666,9 @@ int main()
 	// for (size_t i = 0; i < s.size(); i++)
 	// 	cout << s[i] << " ";
 	// cout << endl;
-	// s.insert(s.begin() + s.size(), "33");
-	// s.insert(s.begin(), "33");
-	s.insert(s.end() , v.begin(), v.end());
+	// s.insert(s.begin( j) + s.size(), "33");
+	s.insert(s.begin()+5, "33");
+	s.insert(s.begin() , v.begin(), v.end());
 	for (size_t i = 0; i < s.size(); i++)
 		cout << s[i] << " ";
 	cout << endl;
@@ -682,8 +682,8 @@ cout << "*********\n";
 	// 	cout << s[i] << " ";
 	// cout << endl;
 	// s.insert(s.begin() + s.size(), "33");
-	// s.insert(s.begin(), "33");
-	s.insert(s.end() , v.begin(), v.end());
+	s.insert(s.begin()+5, "33");
+	s.insert(s.begin() , v.begin(), v.end());
 	for (size_t i = 0; i < s.size(); i++)
 		cout << s[i] << " ";
 	cout << endl;
