@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/05 19:26:04 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 14:37:47 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,22 +171,20 @@ namespace ft{
 			void reserve (size_type n){
 
 				if (n > max_size())
-					throw std::length_error("vector");//!
+					throw std::length_error("vector");
 				if ((int)n < _capacity)
 					return ;
-				else{
-				 	pointer tmp_start, tmp_end;
-					tmp_start = _alloc.allocate(n);
-					tmp_end = tmp_start + _size;
-					for (int i = 0; i < _size; i++)
-						_alloc.construct((tmp_start + i), *(_start + i));
-					for (pointer it = _start; it < _end; it++)
-						_alloc.destroy(it);
-					_alloc.deallocate(_start, _capacity);//? _size
-					_start = tmp_start;
-					_end = tmp_end;
-					_capacity = n;
-				}
+				pointer tmp_start, tmp_end;
+				tmp_start = _alloc.allocate(n);
+				tmp_end = tmp_start + _size;
+				for (int i = 0; i < _size; i++)
+					_alloc.construct((tmp_start + i), *(_start + i));
+				for (pointer it = _start; it < _end; it++)
+					_alloc.destroy(it);
+				_alloc.deallocate(_start, _capacity);
+				_start = tmp_start;
+				_end = tmp_end;
+				_capacity = n;
 			}
 
 			//* Element access ******************************************** //
@@ -289,10 +287,14 @@ namespace ft{
 
 				int i;
 				int pos = _end - &(*position);
-				if (_capacity == 0)
-					reserve(1);
+				if (_capacity == 0){
+					_start = _alloc.allocate(1);
+					_end += 1;
+					_alloc.construct(_start , val);
+					_capacity = _size = 1;
+					return (_start);
+				}
 				else if (_size == _capacity)
-				// else if (_size + 1 >= _capacity)
 					reserve(_capacity * 2);
 				for (i = 0; i < pos; i++)
 					_alloc.construct(_end - i, *(_end - i - 1));
@@ -302,70 +304,10 @@ namespace ft{
 				return (_start + pos);
 			}
 
-			// void insert (iterator position, size_type nn, const value_type& val){
-
-			// 	int i;
-			// 	int n = static_cast<int>(nn);
-			// 	int pos = _end - &(*position);
-			// 	if (_size == _capacity && _size== 0)
-			// 		reserve(n);
-			// 	else if (_size + n >= _capacity){
-			// 		if (_size + n > _capacity && n < _size)
-			// 			reserve(_capacity * 2);
-			// 		else
-			// 			reserve(_size + n);
-			// 	}
-			// 	if (_size == 0){
-			// 		for (i = 0; i < n; i++)
-			// 			_alloc.construct(_start + i, val);
-			// 	}
-			// 	else{
-			// 		pointer h;
-			// 		for (i = 0; i <= pos; i++)
-			// 			_alloc.construct(_end + n - i, *(_end - i));
-			// 		h = _end + n - i;
-			// 		for (i = 0; i < n; i++)
-			// 			_alloc.construct(h - i, val);
-			// 	}
-			// 	_end += n;
-			// 	_size += n;
-			// }
-
-			// void insert (iterator position, size_type nn, const value_type& val){
-
-			// 	int i;
-			// 	int n = static_cast<int>(nn);
-			// 	int pos = _end - &(*position);
-			// 	if (_size == _capacity && _size== 0){
-			// 		_start = _alloc.allocate(n);
-			// 		_end = _start + n;
-			// 		for (int i = 0; i < n; i++)
-			// 			_alloc.construct(_start + i, val);
-			// 		_capacity = n;
-			// 	}
-			// 	else if (_size + n >= _capacity){
-			// 		if (_size + n > _capacity && n < _size)
-			// 			reserve(_capacity * 2);
-			// 		else
-			// 			reserve(_size + n);
-			// 	}
-			// 	if (_size != 0){
-			// 		for (i = 0; i <= pos; i++)//!
-			// 			_alloc.construct(_end + n - i, *(_end - i));
-			// 		pointer h = _end + n - i;
-			// 		for (i = 0; i < n; i++)
-			// 			_alloc.construct(h - i, val);
-			// 		_end += n;
-			// 	}
-			// 	_size += n;
-			// }
-
 			void insert (iterator position, size_type nn, const value_type& val){
 
-				int n = static_cast<int>(nn);
+				int  n = static_cast<int>(nn);
 				int pos = _end - &(*position);
-				pointer position_ =  &(*position);
-				std::cout << pos << std::endl;
 				if (_capacity == 0){
 					_start = _alloc.allocate(n);
 					_end = _start + n;
@@ -378,11 +320,12 @@ namespace ft{
 						reserve(_capacity * 2);
 					else if (_capacity <= _size + n)
 						reserve(_size + n);
-					if (position_ == _end)
-						for (int i = 0; i < pos; i++)
-							_alloc.construct(_end + i, *(position_ + i));
 					for (int i = 0; i < n; i++)
-						_alloc.construct(position_ + i, val);
+						_alloc.construct(_end + i, *(_end - pos + i));
+					for (int i = 0; i < n; i++)
+						_alloc.construct(_end - pos + i, val);
+					_end += n;
+					_size += n;
 				}
 			}
 
@@ -401,11 +344,8 @@ namespace ft{
 					else
 						reserve(_size + n);
 				}
-				if (_size == 0){
-					// for (i = 0; i < n; i++)
-					// 	_alloc.construct(_start + i, *(first + i));
+				if (_size == 0)
 					std::copy(first, last, _start);
-				}
 				else{
 					pointer h;
 					for (i = 0; i <= pos; i++)
@@ -419,16 +359,6 @@ namespace ft{
 			}
 
 			//? Erase elements
-			// iterator erase (iterator position){//!TLE
-
-			// 	pointer pos_ = &(*position);
-			// 	int pos = position - _start;
-			// 	_size -= 1;
-			// 	for (int i = pos; i < _size; i++)
-			// 		_alloc.construct((_start + i), *(_start + i + 1));
-			// 	_end -= 1;
-			// 	return (iterator(pos_));
-			// }
 			iterator erase (iterator position){
 
 				pointer pos_ = &(*position);

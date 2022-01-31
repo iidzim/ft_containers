@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/05 19:24:22 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 14:35:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -631,35 +631,65 @@ int main()
 // std::cout << v.size() << " <><><><> " << ft_v.size() << std::endl;
 // std::cout << "here!!!!!!!!!!!!!!!!" << std::endl;
 
-{
-	std::vector<int> a;
-	a.insert(a.begin(), 10, 1);
-	a.insert(a.begin() + a.size(), 2);
-	a.insert(a.end(), 5, 3);
-	// a.insert(a.begin(), 4);
-	// a.insert(a.end() - a.size(), 5);
-	cout << a.size() << " * " << a.capacity() << endl;
-	for (size_t i = 0; i < a.size(); i++)
-		cout << a[i] << " ";
-	cout << endl;
+// {
+// 	std::vector<int> a;
+// 	a.insert(a.begin(), 10, 1);
+// 	a.insert(a.begin() + a.size(), 2);
+// 	a.insert(a.end(), 5, 3);
+// 	// a.insert(a.begin(), 4);
+// 	// a.insert(a.end() - a.size(), 5);
+// 	cout << a.size() << " * " << a.capacity() << endl;
+// 	for (size_t i = 0; i < a.size(); i++)
+// 		cout << a[i] << " ";
+// 	cout << endl;
 	
-	cout << "*****************\n";
+// 	cout << "*****************\n";
 
-	ft::vector<int> b;
-	b.insert(b.begin(), 10, 1);
-	b.insert(b.begin() + b.size(), 2);
-	b.insert(b.end(), 5, 3);
-	// b.insert(b.begin(), 4);
-	// b.insert(b.end() - b.size(), 5);
-	cout << b.size() << " * " << b.capacity() << endl;
-	for (size_t i = 0; i < b.size(); i++)
-		cout << b[i] << " ";
+// 	ft::vector<int> b;
+// 	b.insert(b.begin(), 10, 1);
+// 	b.insert(b.begin() + b.size(), 2);
+// 	b.insert(b.end(), 5, 3);
+// 	// b.insert(b.begin(), 4);
+// 	// b.insert(b.end() - b.size(), 5);
+// 	cout << b.size() << " * " << b.capacity() << endl;
+// 	for (size_t i = 0; i < b.size(); i++)
+// 		cout << b[i] << " ";
+// 	cout << endl;
+
+// 	// if (a == b)
+// 	// 	cout << "ok\n";
+// }
+
+{
+	std::vector<string> s(10, "o");
+	// std::vector<string> s;
+	cout << s.capacity() << " - " << s.size() << endl;
+	// for (size_t i = 0; i < s.size(); i++)
+	// 	cout << s[i] << " ";
+	// cout << endl;
+	s.insert(s.begin() + 2, 5, "a");
+	// s.insert(s.end()-2, 5, "k");
+	// s.insert(s.end(), 5, "k");
+	cout << s.capacity() << " - " << s.size() << endl;
+	for (size_t i = 0; i < s.size(); i++)
+		cout << s[i] << " ";
 	cout << endl;
-
-	// if (a == b)
-	// 	cout << "ok\n";
 }
-
-
+cout << "**********\n";
+{
+	ft::vector<string> s(10, "o");
+	// ft::vector<string> s;
+	cout << s.capacity() << " - " << s.size() << endl;
+	// for (size_t i = 0; i < s.size(); i++)
+	// 	cout << s[i] << " ";
+	// cout << endl;
+	s.insert(s.begin() + 2, 5, "a");
+	// s.insert(s.end()-2, 5, "k");
+	// s.insert(s.end(), 5, "k");
+	cout << s.capacity() << " - " << s.size() << endl;
+	for (size_t i = 0; i < s.size(); i++)
+		cout << s[i] << " ";
+	cout << endl;
+}
 	return 0;
 }
