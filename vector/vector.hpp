@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 14:37:47 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 15:27:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,7 @@ namespace ft{
 					_capacity = _size = 1;
 					return (_start);
 				}
-				else if (_size == _capacity)
+				if (_size == _capacity)
 					reserve(_capacity * 2);
 				for (i = 0; i < pos; i++)
 					_alloc.construct(_end - i, *(_end - i - 1));
@@ -336,26 +336,26 @@ namespace ft{
 				int i;
 				int pos = _end - &(*position);
 				int n = last - first;
-				if (_size == _capacity && _size == 0)
-					reserve(n);
-				else if (_size + (int)n >= _capacity){
-					if (_size + (int)n > _capacity && (int)n < _size)
-						reserve(_capacity * 2);
-					else
-						reserve(_size + n);
-				}
-				if (_size == 0)
+				if (_capacity == 0){
+					_start = _alloc.allocate(n);
+					_end = _start + n;
 					std::copy(first, last, _start);
+					_size = _capacity = n;
+				}
 				else{
+					if (_size + n > _capacity && n < _size)
+						reserve(_capacity * 2);
+					if (_size + n >= _capacity)
+						reserve(_size + n);
 					pointer h;
 					for (i = 0; i <= pos; i++)
 						_alloc.construct(_end + n - i - 1, *(_end - i - 1));
 					h = _end + n - i;
 					for (i = 0; i < n; i++)
 						_alloc.construct(h - i, *(last - i - 1));
+					_end += n;
+					_size += n;
 				}
-				_end += n;
-				_size += n;
 			}
 
 			//? Erase elements

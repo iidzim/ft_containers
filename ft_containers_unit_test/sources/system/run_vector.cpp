@@ -28,9 +28,9 @@ int main(int argc, char* argv[], char* env[]) {
 	// runFunctionTest("../vector_tests/assign(std iterators).cpp", argv, env);
 	// runFunctionTest("../vector_tests/push_back().cpp", argv, env);
 	// runFunctionTest("../vector_tests/pop_back().cpp", argv, env);
-	// runFunctionTest("../vector_tests/insert(value).cpp", argv, env);
+	runFunctionTest("../vector_tests/insert(value).cpp", argv, env);
 	runFunctionTest("../vector_tests/insert(fill).cpp", argv, env);
-	// runFunctionTest("../vector_tests/insert(range).cpp", argv, env);
+	runFunctionTest("../vector_tests/insert(range).cpp", argv, env);
 	runFunctionTest("../vector_tests/insert(std iterators).cpp", argv, env);
 	// runFunctionTest("../vector_tests/erase(value).cpp", argv, env);
 	// runFunctionTest("../vector_tests/erase(range).cpp", argv, env);

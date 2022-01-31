@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 14:35:46 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/01/31 15:27:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,74 +29,41 @@ using std::cout;
 using std::endl;
 using std::string;
 
-// // int main(void){
 
-// // 	ft::vector<int> first1;                                // empty vector of ints
-// // 	ft::vector<int> second1(3, 100);                       // four ints with value 100
-// // 	std::cout << second1.size() << " - " << second1.capacity() << std::endl;
-// // 	for (int i = 0; i < second1.size(); i++)
-// // 		std::cout << second1[i] << " ";
-// // 	std::cout << std::endl;
-// // 	ft::vector<int> third(second1);
-// // 	std::cout << "copy constructor -> ";
-// // 	for (int i = 0; i < third.size(); i++)
-// // 		std::cout << third[i] << " ";
-// // 	std::cout << std::endl;
-// // 	// third.reserve(10);
-// // 	// std::cout << "assignment operator -> ";
-// // 	// first1 = third;
-// // 	// for (int i = 0; i < first1.size(); i++)
-// // 	// 	std::cout << first1[i] << " ";
-// // 	ft::vector<int> third1(second1.begin(),second1.end());   // iterating through second
-// // 	// ft::vector<int> fourth (third);                       // a copy of third
-// // 	// the iterator constructor can also be used to construct from arrays:
-// // 	// ft::vector<int> fifth1 (myints, myints + sizeof(myints) / sizeof(int) );
-// // 	// std::cout << "The contents of fifth are:";
-// // 	// for (ft::vector<int>::iterator it = fifth1.begin(); it != fifth1.end(); ++it)
-// // 		// std::cout << ' ' << *it;
-// // 	// std::cout << '\n';
+// #include <type_traits>
 
-// // 	return 0;
-// // }
+// // 1. the return type (bool) is only valid if T is an integral type:
+// template <typename T>
+// typename std::enable_if<std::is_integral<T>::value,bool>::type
+//   is_odd (T i) {return bool(i%2);}
 
+// // 2. the second template argument is only valid if T is an integral type:
+// template < class T,
+//            class = typename std::enable_if<std::is_integral<T>::value>::type>
+// bool is_even (T i) {return !bool(i%2);}
 
-// // // ****************************
+// int main() {
 
-// // // #include <iostream>
-// // // #include <type_traits>
+//   short int i = 1;    // code does not compile if type of i is not integral
 
-// // // // 1. the return type (bool) is only valid if T is an integral type:
-// // // template <typename T>
-// // // typename std::enable_if<std::is_integral<T>::value,bool>::type
-// // //   is_odd (T i) {return bool(i%2);}
+//   std::cout << std::boolalpha;
+//   std::cout << "i is odd: " << is_odd(i) << std::endl;
+//   std::cout << "i is even: " << is_even(i) << std::endl;
 
-// // // // 2. the second template argument is only valid if T is an integral type:
-// // // template < class T,
-// // //            class = typename std::enable_if<std::is_integral<T>::value>::type>
-// // // bool is_even (T i) {return !bool(i%2);}
+//   return 0;
+// }
 
-// // // int main() {
+// #include <iostream>
+// #include <type_traits>
 
-// // //   short int i = 1;    // code does not compile if type of i is not integral
-
-// // //   std::cout << std::boolalpha;
-// // //   std::cout << "i is odd: " << is_odd(i) << std::endl;
-// // //   std::cout << "i is even: " << is_even(i) << std::endl;
-
-// // //   return 0;
-// // // }
-
-// // // #include <iostream>
-// // // #include <type_traits>
-
-// // // int main() {
-// // //   std::cout << std::boolalpha;
-// // //   std::cout << "is_integral:" << std::endl;
-// // //   std::cout << "char: " << ft::is_integral<char>::value << std::endl;
-// // //   std::cout << "int: " << ft::is_integral<int>::value << std::endl;
-// // //   std::cout << "float: " << ft::is_integral<float>::value << std::endl;
-// // //   return 0;
-// // // }
+// int main() {
+//   std::cout << std::boolalpha;
+//   std::cout << "is_integral:" << std::endl;
+//   std::cout << "char: " << ft::is_integral<char>::value << std::endl;
+//   std::cout << "int: " << ft::is_integral<int>::value << std::endl;
+//   std::cout << "float: " << ft::is_integral<float>::value << std::endl;
+//   return 0;
+// }
 
 
 int main()
@@ -660,36 +627,68 @@ int main()
 // 	// 	cout << "ok\n";
 // }
 
-{
-	std::vector<string> s(10, "o");
+// {//? insert fill
+	// std::vector<string> s(10, "o");
 	// std::vector<string> s;
-	cout << s.capacity() << " - " << s.size() << endl;
+	// cout << s.capacity() << " - " << s.size() << endl;
 	// for (size_t i = 0; i < s.size(); i++)
 	// 	cout << s[i] << " ";
 	// cout << endl;
-	s.insert(s.begin() + 2, 5, "a");
+	// s.insert(s.begin() + 2, 5, "a");
 	// s.insert(s.end()-2, 5, "k");
 	// s.insert(s.end(), 5, "k");
-	cout << s.capacity() << " - " << s.size() << endl;
-	for (size_t i = 0; i < s.size(); i++)
-		cout << s[i] << " ";
-	cout << endl;
-}
-cout << "**********\n";
-{
-	ft::vector<string> s(10, "o");
+	// cout << s.capacity() << " - " << s.size() << endl;
+	// for (size_t i = 0; i < s.size(); i++)
+		// cout << s[i] << " ";
+	// cout << endl;
+// }
+// cout << "**********\n";
+// {
+	// ft::vector<string> s(10, "o");
 	// ft::vector<string> s;
-	cout << s.capacity() << " - " << s.size() << endl;
+	// cout << s.capacity() << " - " << s.size() << endl;
 	// for (size_t i = 0; i < s.size(); i++)
 	// 	cout << s[i] << " ";
 	// cout << endl;
-	s.insert(s.begin() + 2, 5, "a");
+	// s.insert(s.begin() + 2, 5, "a");
 	// s.insert(s.end()-2, 5, "k");
 	// s.insert(s.end(), 5, "k");
-	cout << s.capacity() << " - " << s.size() << endl;
+	// cout << s.capacity() << " - " << s.size() << endl;
+	// for (size_t i = 0; i < s.size(); i++)
+		// cout << s[i] << " ";
+	// cout << endl;
+// }
+
+{
+	std::vector<string> v(10, "1");
+	std::vector<string> s(5, "2");
+	// std::vector<string> s;
+	// for (size_t i = 0; i < s.size(); i++)
+	// 	cout << s[i] << " ";
+	// cout << endl;
+	// s.insert(s.begin() + s.size(), "33");
+	// s.insert(s.begin(), "33");
+	s.insert(s.end() , v.begin(), v.end());
 	for (size_t i = 0; i < s.size(); i++)
 		cout << s[i] << " ";
 	cout << endl;
 }
+cout << "*********\n";
+{
+	ft::vector<string> v(10, "1");
+	ft::vector<string> s(5, "2");
+	// ft::vector<string> s;
+	// for (size_t i = 0; i < s.size(); i++)
+	// 	cout << s[i] << " ";
+	// cout << endl;
+	// s.insert(s.begin() + s.size(), "33");
+	// s.insert(s.begin(), "33");
+	s.insert(s.end() , v.begin(), v.end());
+	for (size_t i = 0; i < s.size(); i++)
+		cout << s[i] << " ";
+	cout << endl;
+}
+
+
 	return 0;
 }
