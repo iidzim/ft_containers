@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 20:23:43 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 18:36:19 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:13:30 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define TOOLS_HPP
 #include <type_traits>
 #include "./iterator.hpp"
-#include "./reverse_iterator.hpp"
 
 
 namespace ft{
 
+	//* enable if
 	//? Note SFINAE at work here. When we make the call do_stuff(<int var>), the compiler selects
 	//? the first overload: since the condition std::is_integral<int> is true, the specialization
 	//? of struct enable_if for true is used, and its internal type is set to int.
@@ -49,36 +49,7 @@ namespace ft{
 	template <> struct is_integral<unsigned long int>{ static const bool value = true; };
 	template <> struct is_integral<unsigned long long int>{ static const bool value = true; };
 
-	//************
-
-	template <typename InputIterator1, typename InputIterator2>
-	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2){
-
-		while (first1 != last1) {
-  			if (!(*first1 == *first2))   
-  				return (false);
-  			++first1;
-			++first2;
-  		}
-  		return (true);
-	}
-
-
-	template <class InputIterator1, class InputIterator2>
-	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
-	{
-		while (first1 != last1)
-		{
-			if (first2 == last2 || *first2 < *first1)
-				return (false);
-			else if (*first1 < *first2)
-				return (true);
-			++first1;
-			++first2;
-		}
-		return (first2 != last2);
-	}
-
+	//* iterator traits
 	template <typename iterator>
 	struct iterator_traits{
 	
@@ -99,7 +70,85 @@ namespace ft{
 		typedef T&							reference;
 	};
 
-}
+	//* equal
+	template <typename InputIterator1, typename InputIterator2>
+	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2){
 
+		while (first1 != last1) {
+  			if (!(*first1 == *first2))   
+  				return (false);
+  			++first1;
+			++first2;
+  		}
+  		return (true);
+	}
+
+	//* lexicographical_compare
+	template <class InputIterator1, class InputIterator2>
+	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || *first2 < *first1)
+				return (false);
+			else if (*first1 < *first2)
+				return (true);
+			++first1;
+			++first2;
+		}
+		return (first2 != last2);
+	}
+
+	//* pair
+	template <typename T1, typename T2>
+	struct pair{
+
+		typedef T1 first_type;
+		typedef T2 second_type;
+
+		//? Constructs a pair object
+		pair(void): first(), second(){}
+
+		pair (const first_type& a, const second_type& b): first(a), second(b){}
+
+		template<typename U, typename V>
+		pair (const pair<U,V>& pr){ *this = pr; }
+
+		//? Assign contents
+		pair& operator= (const pair& pr){
+
+			this->first = pr.first;
+			this->second = pr.second;
+			return (*this);
+		}
+
+		first_type	first;
+		second_type	second;
+	};
+
+	//? Relational operators for pair
+	template <typename T1, typename T2>
+	bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return lhs.first == rhs.first && lhs.second == rhs.second; }
+
+	template <typename T1, typename T2>
+	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return !(lhs == rhs); }
+
+	template <typename T1, typename T2>
+	bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ 
+		return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second);
+	}
+
+	template <typename T1, typename T2>
+	bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return !(rhs > lhs); }
+
+	template <typename T1, typename T2>
+	bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return (rhs < lhs); }
+
+	template <typename T1, typename T2>
+	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return !(lhs < rhs); }
+
+
+	//* make_pair
+}
 
 #endif

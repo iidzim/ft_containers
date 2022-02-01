@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 16:43:38 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 10:54:49 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,8 +406,8 @@ namespace ft{
 
 			//* Allocator ************************************************* //
 
-			//? Returns a copy of the allocator object associated with the vector
-			allocator_type get_allocator() const{ return (this->_alloc); }
+			//? Returns a copy of the allocator object associated with the vector 
+			allocator_type get_allocator() const{ return (this->_alloc); } //!!!!!!!!!!!!!! copy 
 
 		private:
 			Alloc		_alloc;

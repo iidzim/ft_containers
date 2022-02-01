@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 15:32:19 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:21:12 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -659,36 +659,55 @@ int main()
 	// cout << endl;
 // }
 
-{
-	std::vector<string> v(10, "1");
-	std::vector<string> s(5, "2");
-	// std::vector<string> s;
-	// for (size_t i = 0; i < s.size(); i++)
-	// 	cout << s[i] << " ";
-	// cout << endl;
-	// s.insert(s.begin( j) + s.size(), "33");
-	s.insert(s.begin()+5, "33");
-	s.insert(s.begin() , v.begin(), v.end());
-	for (size_t i = 0; i < s.size(); i++)
-		cout << s[i] << " ";
-	cout << endl;
-}
-cout << "*********\n";
-{
-	ft::vector<string> v(10, "1");
-	ft::vector<string> s(5, "2");
-	// ft::vector<string> s;
-	// for (size_t i = 0; i < s.size(); i++)
-	// 	cout << s[i] << " ";
-	// cout << endl;
-	// s.insert(s.begin() + s.size(), "33");
-	s.insert(s.begin()+5, "33");
-	s.insert(s.begin() , v.begin(), v.end());
-	for (size_t i = 0; i < s.size(); i++)
-		cout << s[i] << " ";
-	cout << endl;
-}
+// {
+// 	std::vector<string> v(10, "1");
+// 	std::vector<string> s(5, "2");
+// 	// std::vector<string> s;
+// 	// for (size_t i = 0; i < s.size(); i++)
+// 	// 	cout << s[i] << " ";
+// 	// cout << endl;
+// 	// s.insert(s.begin( j) + s.size(), "33");
+// 	s.insert(s.begin()+5, "33");
+// 	s.insert(s.begin() , v.begin(), v.end());
+// 	for (size_t i = 0; i < s.size(); i++)
+// 		cout << s[i] << " ";
+// 	cout << endl;
+// }
+// cout << "*********\n";
+// {
+// 	ft::vector<string> v(10, "1");
+// 	ft::vector<string> s(5, "2");
+// 	// ft::vector<string> s;
+// 	// for (size_t i = 0; i < s.size(); i++)
+// 	// 	cout << s[i] << " ";
+// 	// cout << endl;
+// 	// s.insert(s.begin() + s.size(), "33");
+// 	s.insert(s.begin()+5, "33");
+// 	s.insert(s.begin() , v.begin(), v.end());
+// 	for (size_t i = 0; i < s.size(); i++)
+// 		cout << s[i] << " ";
+// 	cout << endl;
+// }
 
+
+	ft::pair<int, float> p1;
+	ft::pair<int, float> p2(1, 0.2659);
+	ft::pair<int, float> p3(p2);
+	ft::pair<string, int> p4;
+	
+	p1.first = 5;
+	p1.second = 3.1416;
+	
+	cout << " pair | first | second\n";
+	cout << "p1: " << p1.first << ", " << p1.second << endl;
+	cout << "p2: " << p2.first << ", " << p2.second << endl;
+	cout << "p3: " << p3.first << ", " << p3.second << endl;
+	cout << "p4: " << p4.first << ", " << p4.second << endl;
+
+	p4.first = "testtest";
+	p4.second = 2147483647;
+
+	cout << "p4: " << p4.first << ", " << p4.second << endl;
 
 	return 0;
 }

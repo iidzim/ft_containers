@@ -6,14 +6,14 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/01/31 18:35:41 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 09:59:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 #include <iostream>
-#include "./iterator_traits.hpp"
+#include "./tools.hpp"
 #include "./iterator.hpp"
 
 namespace ft{

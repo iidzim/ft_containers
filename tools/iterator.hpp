@@ -6,19 +6,18 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 00:56:30 by iidzim            #+#    #+#             */
-/*   Updated: 2021/12/21 11:12:21 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 09:59:44 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
-#include "./iterator_traits.hpp"
+#include "./tools.hpp"
 #include <memory>
 
 namespace ft{
 
 	template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
-	// template <typename T>
 	struct iterator {
 
 		//* Category to which the iterator belongs to (input, output, forward, bidirectionnal, rnadom_access)
