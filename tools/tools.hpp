@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 20:23:43 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/01 13:13:30 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:36:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,9 @@ namespace ft{
 	template <typename T1, typename T2>
 	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){ return !(lhs < rhs); }
 
-
 	//* make_pair
+	template <typename T1, typename T2>
+	pair<T1,T2> make_pair (T1 x, T2 y){ return pair<T1, T2>(x, y); }
 }
 
 #endif
