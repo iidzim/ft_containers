@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/04 13:49:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/04 18:25:13 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ namespace ft{
 				return (false);
 			}
 
+			//? return the min value in the tree
 			node<T> min(node<T> root){
 
 				while (root != NULL)
@@ -75,11 +76,23 @@ namespace ft{
 				return (root);
 			}
 
+			//? return the max value in the tree
 			node<T> max(node<T> root){
 
 				while (root != NULL)
 					root = root.right_node;
 				return (root);
+			}
+
+			bool search (node<T> root, T data){
+				if (root == NULL)
+					return false;
+				else if (root.data == data)
+					return true;
+				else if (root.data > data)
+					return search(root.left_node, data);
+				else // (root.data < data)
+					return search(root.right_node, data);
 			}
 
 		private:
@@ -169,7 +182,7 @@ namespace ft{
 			node<T> right_rotation(node<T> n){}
 			node<T> left_rotation(node<T> n){}
 
-			void print_bst(const std::string& prefix, const node<T>* n, bool is_left){
+			void display(const std::string& prefix, const node<T>* n, bool is_left){
 
 				if (n != NULL){
 					std::cout << prefix;
@@ -177,19 +190,19 @@ namespace ft{
 					//? print the value of the node
 					std::cout << n->data << std::endl;
 					//? next level tree left & right branch
-					print_bst(prefix + (is_left ? "|L	" : "	"), n->left_node, true);
-					print_bst(prefix + (is_left ? "|R	" : "	"), n->right_node, false); 
+					display(prefix + (is_left ? "|L	" : "	"), n->left_node, true);
+					display(prefix + (is_left ? "|R	" : "	"), n->right_node, false);
 				}
 			}
 
-			void print_bst(const node<T>* n){
-				print_bst("", n, false);
+			void display(const node<T>* n){
+				display("", n, false);
 			}
 	};
 
 
-	template < typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<ft::pair<const Key,T> > >
-	class map{};
+	// template < typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<ft::pair<const Key,T> > >
+	// class map{};
 
 };
 
@@ -218,6 +231,9 @@ namespace ft{
 	//! leftright rotation  *update height and bf child node first then the parent node*
 	//! rightLeft rotation  *update height and bf child node first then the parent node*
 //* display the tree
+	//? level order traversal
+
+
 //* remove node..
 //* check if the value E [min, max] -> locate the node
 //* 3 cases
@@ -234,13 +250,4 @@ namespace ft{
 // use min max functions instead (easy node removal)
 //* update height and bf
 
-//* bool search (node root, T data){
-//*			if (root == NULL)
-//*				return false;
-//*			else if (root.data == data)
-//*				return true;
-//*			else if (root.data > data)
-//*				return search(root.left_node, data);
-//*			else // (root.data < data)
-//*				return search(root.right_node, data);
-//* }
+
