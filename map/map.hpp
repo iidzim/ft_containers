@@ -6,18 +6,19 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/03 18:56:40 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/04 13:49:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 
+#include <iostream>
 #include <functional>
 #include <memory>
 #include <stdexcept>
 #include <algorithm>
-#include "tools.hpp"
+#include "../tools/tools.hpp"
 
 namespace ft{
 
@@ -41,14 +42,16 @@ namespace ft{
 			int height(void){
 				if (_root == NULL)
 					return (0);
-				return _root.height;
+				return _root->height;
 			}
 
 			//? the number of nodes in the tree
 			int size(void){ return _nbr_node; }
 	
 			bool is_empty(void){
-				_nbr_node == 0 ? return true : return false;
+				if (_nbr_node == 0)
+					return true;
+				return false;
 			}
 
 			bool exist(T value){
@@ -63,6 +66,20 @@ namespace ft{
 					return (true);
 				}
 				return (false);
+			}
+
+			node<T> min(node<T> root){
+
+				while (root != NULL)
+					root = root.left_node;
+				return (root);
+			}
+
+			node<T> max(node<T> root){
+
+				while (root != NULL)
+					root = root.right_node;
+				return (root);
 			}
 
 		private:
@@ -85,9 +102,9 @@ namespace ft{
 				return (true);
 			}
 
-			node insert(node n, T value){
+			node<T> insert(node<T> n, T value){
 
-				if (node == NULL){
+				if (n == NULL){
 					_root = _alloc_node.allocate(1);
 					_root->data = _alloc.allocate(1);
 					_alloc.construct(_root->data, value);
@@ -98,26 +115,26 @@ namespace ft{
 				int diff = _comp(value, n.value);
 				//? Insert node in left subtree
 				if (diff < 0)
-					n.left_node = insert(node.left_node, value);
+					n.left_node = insert(n.left_node, value);
 				//? Insert node in right subtree
 				else
-					n.right_node = insert(node.right_node, value);
+					n.right_node = insert(n.right_node, value);
 				// //? Update balance factor and height values.
-    			update(node);
+    			update(n);
     			// //? Re-balance tree.
-    			// return balance(node);
+    			return balance(n);
 			}
 
-			void update(node n){
+			void update(node<T> n){
 
 				int left_height, right_height;
 				left_height = (n.left_node == NULL) ? -1 : n->left_node.height;
 				right_height = (n.right_node == NULL) ? -1 : n->right_node.height;
 				n.height = std::max(right_height, left_height) + 1;
-				node.bf = right_height - left_height;
+				n.bf = right_height - left_height;
 			}
 
-			node balance(node n){
+			node<T> balance(node<T> n){
 
 				//? left heavy subtree
 				if (n.bf == -2){
@@ -141,30 +158,38 @@ namespace ft{
 				return (n);
 			}
 
-			node leftleft_case(node n){
+			node<T> leftleft_case(node<T> n){
 				return right_rotation(n);				
 			}
 
-			node leftright_case(node n){}
-			node rightright_case(node n){}
-			node rightleft_case(node n){}
+			node<T> leftright_case(node<T> n){}
+			node<T> rightright_case(node<T> n){}
+			node<T> rightleft_case(node<T> n){}
 
-			node right_rotation(node n){
+			node<T> right_rotation(node<T> n){}
+			node<T> left_rotation(node<T> n){}
 
-				node parent = n.left_node;
-				n.left_node = parent.right_node;
-				//todo  to be continued
+			void print_bst(const std::string& prefix, const node<T>* n, bool is_left){
+
+				if (n != NULL){
+					std::cout << prefix;
+					std::cout << (is_left ? "├──" : "└──");
+					//? print the value of the node
+					std::cout << n->data << std::endl;
+					//? next level tree left & right branch
+					print_bst(prefix + (is_left ? "|L	" : "	"), n->left_node, true);
+					print_bst(prefix + (is_left ? "|R	" : "	"), n->right_node, false); 
+				}
 			}
 
-			node left_rotation(node n){}
-
+			void print_bst(const node<T>* n){
+				print_bst("", n, false);
+			}
 	};
 
 
 	template < typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<ft::pair<const Key,T> > >
-	class map{
-		
-	};
+	class map{};
 
 };
 
@@ -208,3 +233,14 @@ namespace ft{
 ////(didn't figured out how to update the min and the max value yet)
 // use min max functions instead (easy node removal)
 //* update height and bf
+
+//* bool search (node root, T data){
+//*			if (root == NULL)
+//*				return false;
+//*			else if (root.data == data)
+//*				return true;
+//*			else if (root.data > data)
+//*				return search(root.left_node, data);
+//*			else // (root.data < data)
+//*				return search(root.right_node, data);
+//* }
