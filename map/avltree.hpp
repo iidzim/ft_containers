@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/05 18:52:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/05 18:57:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ namespace ft{
 					std::cout << "1>> " << n->left_node->data  << " - difff = " << diff << "\n";
 					n->left_node = remove(n->left_node, value);
 				}
-				else if (diff == 0 && n->right_node->data == value){
+				else if (diff == 0 && n->right_node->data == value){ //!! read memory access n->right_node->data
 					std::cout << "2 >> " << n->right_node->data << "\n";
 					n->right_node = remove(n->right_node, value);
 				}
