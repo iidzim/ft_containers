@@ -126,8 +126,7 @@ Node *deleteNode(Node *root, int key) {
   else if (key > root->key)
     root->right = deleteNode(root->right, key);
   else {
-    if ((root->left == NULL) ||
-      (root->right == NULL)) {
+    if ((root->left == NULL) || (root->right == NULL)) {
       Node *temp = root->left ? root->left : root->right;
       if (temp == NULL) {
         temp = root;
