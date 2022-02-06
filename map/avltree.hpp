@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 13:46:35 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/06 15:55:45 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ namespace ft{
 		node* right_node;
 	};
 
-	template <typename T, typename Compare = std::less<typename T::first_type>, typename Alloc_node = std::allocator<ft::node<T> >, 
-		typename Alloc = std::allocator <T> >
+	template <typename T, typename Compare = std::less<typename T::first_type>,
+		typename Alloc_node = std::allocator<ft::node<T> >, typename Alloc = std::allocator <T> >
 	class avltree{
 
 		typedef typename T::first_type	key_type;
@@ -75,7 +75,7 @@ namespace ft{
 				return (false);
 			}
 
-			//? return the min value in the tree
+			//? return the min pair in the tree
 			T min(node_type *root){
 
 				while (root->left_node != NULL)
@@ -83,7 +83,7 @@ namespace ft{
 				return (root->data);
 			}
 
-			//? return the max value in the tree
+			//? return the max pair in the tree
 			T max(node_type *root){
 
 				while (root->right_node != NULL)
@@ -246,7 +246,9 @@ namespace ft{
 						delete tmp;
 						return (_root);
 					}
-					//? choose the successor from the subtree with the greatest hight (± tree balanced)
+					//* The successor is either the smallest value in the right subtree
+					//* or the largest value in the left subtree.
+					//? choose the successor from the subtree with the greatest height (~ tree balanced)
 					else if (n->left_node != NULL && n->right_node != NULL){
 						if (n->left_node->height >= n->right_node->height){
 							T successor = max(n->left_node);
@@ -288,7 +290,7 @@ namespace ft{
 			Alloc       _alloc;
 			int         _nbr_node;
 	};
-	
+
 }
 
 #endif
