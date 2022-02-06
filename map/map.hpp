@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/05 17:36:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/06 11:18:59 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ namespace ft{
 	//! rightLeft rotation  *update height and bf child node first then the parent node*
 //* display the tree
 	//? level order traversal
-
-////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
-
 //* remove node..
 //* 3 cases
 	//! case1: the node is a leaf
@@ -64,6 +61,10 @@ namespace ft{
 //* update nbr_node value after each insertion
 // use min max functions instead (easy node removal)
 //* update height and bf
-//* implemetation of 3 types of traversal : preorder, inorder, postorder
 
+////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
+
+//* implemetation of 3 types of traversal : preorder, inorder, postorder
+//* replace node->data with pair
+//* bidirectionnal iterator
 

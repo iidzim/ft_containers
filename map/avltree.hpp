@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 11:17:50 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/06 13:46:35 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ namespace ft{
 		node* right_node;
 	};
 
-	template <typename T, typename Compare = std::less<T>, typename Alloc_node = std::allocator<ft::node<T> >, 
+	template <typename T, typename Compare = std::less<typename T::first_type>, typename Alloc_node = std::allocator<ft::node<T> >, 
 		typename Alloc = std::allocator <T> >
 	class avltree{
 
-		typedef T		value_type;
+		typedef typename T::first_type	key_type;
+		typedef typename T::second_type	value_type;
 		typedef node<T> node_type;
 
 		public:
@@ -60,14 +61,14 @@ namespace ft{
 				return false;
 			}
 
-			bool exist(value_type value){
+			bool exist(T value){
 				return exist(_root, value);
 			}
 
-			bool insert(value_type value){
+			bool insert(T data){
 
-				if (!exist(_root, value)){
-					_root = insert(_root, value);
+				if (!exist(_root, data)){
+					_root = insert(_root, data);
 					_nbr_node += 1;
 					return (true);
 				}
@@ -75,7 +76,7 @@ namespace ft{
 			}
 
 			//? return the min value in the tree
-			value_type min(node_type *root){
+			T min(node_type *root){
 
 				while (root->left_node != NULL)
 					root = root->left_node;
@@ -83,22 +84,23 @@ namespace ft{
 			}
 
 			//? return the max value in the tree
-			value_type max(node_type *root){
+			T max(node_type *root){
 
 				while (root->right_node != NULL)
 					root = root->right_node;
 				return (root->data);
 			}
 
-			bool search (node_type root, value_type data){
+			bool search (node_type root, key_type key){
+
 				if (root == NULL)
 					return false;
-				else if (root.data == data)
+				else if (root.data.first == key)
 					return true;
-				else if (root.data > data)
-					return search(root.left_node, data);
+				else if (root.data.first > key)
+					return search(root.left_node, key);
 				else
-					return search(root.right_node, data);
+					return search(root.right_node, key);
 			}
 
 			void display(const node_type* n){
@@ -109,10 +111,10 @@ namespace ft{
 				return (_root);
 			}
 
-			bool remove(value_type value){
+			bool remove(T data){
 
-				if (exist(_root, value)){
-					_root = remove(_root, value);
+				if (exist(_root, data)){
+					_root = remove(_root, data);
 					_nbr_node -= 1;
 					return (true);
 				}
@@ -121,40 +123,40 @@ namespace ft{
 
 		private:
 
-			bool exist(node_type *n, value_type value){
+			bool exist(node_type *n, T data){
 
 				if (n == NULL)
 					return (false);
-				int diff = _comp(value, n->data);
-				if (n->data == value)
+				int diff = _comp(data.first, n->data.first);
+				if (n->data.first == data.first)
 					return (true);
 				if (diff == true)
-					return exist(n->left_node, value);
+					return exist(n->left_node, data);
 				if (diff == false)
-					return exist(n->right_node, value);
+					return exist(n->right_node, data);
 				return (true);
 			}
 
-			node_type* insert(node_type *n, value_type value){
+			node_type* insert(node_type *n, T data){
 
 				if (n == NULL){
 					_root = _alloc_node.allocate(1);
 					// _root->data = _alloc.allocate(1);
-					_alloc.construct(&_root->data, value);
+					_alloc.construct(&_root->data, data);
 					_root->height = _root->bf = 0;
 					_root->left_node = _root->right_node = _root->parent_node = NULL;
 					return (_root);
 				}
-				int diff = _comp(value, n->data);
+				int diff = _comp(data.first, n->data.first);
 				if (diff == true) // Insert node in left subtree
-					n->left_node = insert(n->left_node, value);
+					n->left_node = insert(n->left_node, data);
 				else // Insert node in right subtree
-					n->right_node = insert(n->right_node, value);
+					n->right_node = insert(n->right_node, data);
 				update(n);	// Update balance factor and height values
 				// return (n); // unbalanced bstree
 				return balance(n); // Re-balance tree
 			}
-			
+
 			void update(node_type *n){
 
 				int left_height, right_height;
@@ -226,15 +228,15 @@ namespace ft{
 				return (new_parent);
 			}
 
-			node_type* remove(node_type *n, value_type value){
+			node_type* remove(node_type *n, T data){
 
 				if (n == NULL)
 					return (NULL);
-				int diff = _comp(value, n->data);
+				int diff = _comp(data.first, n->data.first);
 				if (diff > 0)
-					n->left_node = remove(n->left_node, value);
-				else if (diff == 0 && n->right_node != NULL && n->data != value)
-					n->right_node = remove(n->right_node, value);
+					n->left_node = remove(n->left_node, data);
+				else if (diff == 0 && n->right_node != NULL && n->data.first != data.first)
+					n->right_node = remove(n->right_node, data);
 				else{
 					if ((n->left_node != NULL && n->right_node == NULL) ||
 							(n->left_node == NULL && n->right_node != NULL)){
@@ -244,15 +246,15 @@ namespace ft{
 						delete tmp;
 						return (_root);
 					}
-					//? choose th successor from the subtree with the greatest hight (± tree balanced)
+					//? choose the successor from the subtree with the greatest hight (± tree balanced)
 					else if (n->left_node != NULL && n->right_node != NULL){
 						if (n->left_node->height >= n->right_node->height){
-							value_type successor = max(n->left_node);
+							T successor = max(n->left_node);
 							n->data = successor;
 							n->left_node = remove(n->left_node, successor);
 						}
 						else{
-							value_type successor = min(n->right_node);
+							T successor = min(n->right_node);
 							n->data = successor;
 							n->right_node = remove(n->right_node, successor);
 						}
@@ -272,7 +274,7 @@ namespace ft{
 					std::cout << prefix;
 					std::cout << (is_left ? "├L──" : "└R──");
 					//? print the value of the node
-					std::cout << n->data << std::endl;
+					std::cout << n->data.first << std::endl;
 					//? next level tree left & right branch
 					display(prefix + (is_left ? "|	" : "	"), n->left_node, true);
 					display(prefix + (is_left ? "|	" : "	"), n->right_node, false);
