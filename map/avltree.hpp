@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 11:08:36 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/06 11:17:50 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft{
 					return true;
 				else if (root.data > data)
 					return search(root.left_node, data);
-				else // (root.data < data)
+				else
 					return search(root.right_node, data);
 			}
 
@@ -151,7 +151,7 @@ namespace ft{
 				else // Insert node in right subtree
 					n->right_node = insert(n->right_node, value);
 				update(n);	// Update balance factor and height values
-				// return (n);
+				// return (n); // unbalanced bstree
 				return balance(n); // Re-balance tree
 			}
 			
@@ -231,21 +231,13 @@ namespace ft{
 				if (n == NULL)
 					return (NULL);
 				int diff = _comp(value, n->data);
-				std::cout << "diff = " << diff << std::endl;
-				if (diff > 0){
-					std::cout << "1 --> " << n->left_node->data  << " - difff = " << diff << "\n";
+				if (diff > 0)
 					n->left_node = remove(n->left_node, value);
-				}
-				else if (diff == 0 && n->right_node != NULL && n->data != value){
-					std::cout << "2 --> " << n->right_node->data << "\n";
+				else if (diff == 0 && n->right_node != NULL && n->data != value)
 					n->right_node = remove(n->right_node, value);
-				}
 				else{
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					std::cout << "3\n";
 					if ((n->left_node != NULL && n->right_node == NULL) ||
-						(n->left_node == NULL && n->right_node != NULL)){
-						std::cout << "here\n";
+							(n->left_node == NULL && n->right_node != NULL)){
 						node_type *tmp = (n->left_node != NULL) ? n->left_node : n->right_node;
 						_root = tmp;
 						tmp = NULL;
@@ -254,24 +246,18 @@ namespace ft{
 					}
 					//? choose th successor from the subtree with the greatest hight (± tree balanced)
 					else if (n->left_node != NULL && n->right_node != NULL){
-						std::cout << "left node height = " << n->left_node->height << std::endl;
-						std::cout << "right node height = " << n->right_node->height << std::endl;
 						if (n->left_node->height >= n->right_node->height){
 							value_type successor = max(n->left_node);
-							std::cout << "successor = " << successor << std::endl;
 							n->data = successor;
 							n->left_node = remove(n->left_node, successor);
 						}
 						else{
-							std::cout << "++++++++++++++" << "\n";
 							value_type successor = min(n->right_node);
-							std::cout << "successor = " << successor << std::endl;
 							n->data = successor;
 							n->right_node = remove(n->right_node, successor);
 						}
 					}
-					else{// (n->left_node == NULL && n->right_node == NULL){
-						std::cout << "ennddd"  << "\n";
+					else{ // n->left_node == NULL && n->right_node == NULL
 						delete n;
 						return (NULL);
 					}	

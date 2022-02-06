@@ -25,7 +25,8 @@ int main(void){
     // t.remove(61);
     // t.remove(53);
     // t.remove(23);
-    t.remove(13);
+    // t.remove(13);
     // t.remove(33);
+    // t.remove(9);
     t.display(t.get_root());
 }
