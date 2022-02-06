@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/05 18:57:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/06 10:35:59 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,28 +228,22 @@ namespace ft{
 
 			node_type* remove(node_type *n, value_type value){
 
-				std::cout << " ********* " << n->data << "\n";
-				
 				if (n == NULL)
 					return (NULL);
 				int diff = _comp(value, n->data);
 				std::cout << "diff = " << diff << std::endl;
 				if (diff > 0){
-					std::cout << "1>> " << n->left_node->data  << " - difff = " << diff << "\n";
+					std::cout << "1 --> " << n->left_node->data  << " - difff = " << diff << "\n";
 					n->left_node = remove(n->left_node, value);
 				}
-				else if (diff == 0 && n->right_node->data == value){ //!! read memory access n->right_node->data
-					std::cout << "2 >> " << n->right_node->data << "\n";
+				else if (diff == 0 && n->right_node != NULL){
+					std::cout << "2 --> " << n->right_node->data << "\n";
 					n->right_node = remove(n->right_node, value);
 				}
 				else{
+					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					std::cout << "3\n";
-					if (n->left_node == NULL && n->right_node == NULL){
-						std::cout << "ennddd"  << "\n";
-						delete n;
-						return (NULL);
-					}
-					else if ((n->left_node != NULL && n->right_node == NULL) ||
+					if ((n->left_node != NULL && n->right_node == NULL) ||
 						(n->left_node == NULL && n->right_node != NULL)){
 						std::cout << "here\n";
 						node_type *tmp = (n->left_node != NULL) ? n->left_node : n->right_node;
@@ -258,7 +252,7 @@ namespace ft{
 						return (_root);
 					}
 					//? choose th successor from the subtree with the greatest hight (± tree balanced)
-					else{
+					else if (n->left_node != NULL && n->right_node != NULL){
 						std::cout << "++++++++++++++" << "\n";
 						if (n->left_node->height > n->right_node->height){
 							value_type successor = max(n->left_node);
@@ -270,6 +264,11 @@ namespace ft{
 							n->data = successor;
 							n->right_node = remove(n->right_node, successor);
 						}
+					}
+					else{// (n->left_node == NULL && n->right_node == NULL){
+						std::cout << "ennddd"  << "\n";
+						delete n;
+						return (NULL);
 					}	
 				}
 				update(n);

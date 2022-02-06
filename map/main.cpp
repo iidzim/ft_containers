@@ -18,6 +18,10 @@ int main(void){
     t.insert(9);
     t.display(t.get_root());
     std::cout << "\n\n*************\n\n";
-    t.remove(11);
+    // t.remove(8);
+    // t.remove(11);
+    // t.remove(21);
+    // t.remove(61);
+    t.remove(53);
     t.display(t.get_root());
 }
