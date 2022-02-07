@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/07 11:38:05 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/07 14:43:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ namespace ft{
 		node* left_node;
 		node* right_node;
 	};
+
+	// template <typename Type> struct rebind {
+	// 	typedef allocator<Type> other;
+	// };
 
 	template <typename T, typename Compare = std::less<typename T::first_type>,
 		typename Alloc_node = std::allocator<ft::node<T> >, typename Alloc = std::allocator <T> >

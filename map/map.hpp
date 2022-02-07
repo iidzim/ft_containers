@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/07 11:41:11 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/07 18:56:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ namespace ft{
 		private:
 			key_compare		_comp;
 			allocator_type	_alloc;
-			int				_nbr_node;
+			
 			
 			
 	};
@@ -211,4 +211,8 @@ namespace ft{
 
 //* allocator::rebind
 //* bidirectionnal iterator
-
+	//? iterate over tree -> inorder traversal (ascending order)
+	//? save current_pos (or node) and avl_tree
+	//? implement post || pre & increment || decrement
+	//? equality/inequality operators
+//* implement constructor and insert for map class using avl_tree member functions
