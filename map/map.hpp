@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 18:50:56 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/07 11:41:11 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ namespace ft{
 		typename Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{
 
-		typedef Key																ket_type;
-		typedef T																mapped_value;
+		typedef size_t															size_type;
+		typedef Key																key_type;
+		typedef T																mapped_type;
 		typedef ft::pair<const Key,T>											value_type;
 		typedef Compare															key_compare;
 		// * typedef value_compare; https://www.cplusplus.com/reference/map/map/value_comp/
@@ -124,7 +125,7 @@ namespace ft{
 			key_compare key_comp() const;
 
 			//? Return value comparison object
-			value_compare value_comp() const;
+			//! value_compare value_comp() const; line29
 
 			//* Operations ************************************************* //
 
@@ -204,11 +205,10 @@ namespace ft{
 // use min max functions instead
 //* update height and bf
 //* replace node->data with pair
+//* update parent_node for each node after insert and remove
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
-//* update parent_node for each node after insert and remove
 //* allocator::rebind
 //* bidirectionnal iterator
-//* implemetation of 3 types of traversal : preorder, inorder, postorder
 

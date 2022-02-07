@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 15:55:45 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/07 11:38:05 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ namespace ft{
 
 			avltree(void): _nbr_node(0), _root() {}
 			~avltree(void){}
+
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
 			int height(void){
 				if (_root == NULL)
@@ -121,6 +122,18 @@ namespace ft{
 				return (false);
 			}
 
+			void print_parent(node_type* n){
+
+    			if(n->left_node != NULL)
+    			    print_parent(n->left_node);
+    			if(n->right_node != NULL)
+    			    print_parent(n->right_node);
+    			if(n->parent_node != NULL)
+    			    std::cout << "Parent of " << n->data.first << " is " << n->parent_node->data.first << std::endl;
+    			else
+    			    std::cout << "The root node is " << n->data.first << std::endl;
+			}
+
 		private:
 
 			bool exist(node_type *n, T data){
@@ -148,13 +161,18 @@ namespace ft{
 					return (_root);
 				}
 				int diff = _comp(data.first, n->data.first);
-				if (diff == true) // Insert node in left subtree
-					n->left_node = insert(n->left_node, data);
-				else // Insert node in right subtree
-					n->right_node = insert(n->right_node, data);
+				if (diff == true){
+					node_type* lnode = insert(n->left_node, data);
+					n->left_node = lnode;
+					lnode->parent_node = n;
+				}
+				else{
+					node_type* rnode = insert(n->right_node, data);
+					n->right_node = rnode;
+					rnode->parent_node = n;
+				}
 				update(n);	// Update balance factor and height values
-				// return (n); // unbalanced bstree
-				return balance(n); // Re-balance tree
+				return balance(n);
 			}
 
 			void update(node_type *n){
@@ -188,6 +206,7 @@ namespace ft{
 				}
 				// we return node without any rotation if |bf| < 1
 				return (n);
+				// return (inorder_traversal(n));
 			}
 
 			node_type* leftleft_case(node_type* n){
@@ -213,6 +232,8 @@ namespace ft{
 				node_type *new_parent = n->left_node;
 				n->left_node = new_parent->right_node;
 				new_parent->right_node = n;
+				new_parent->parent_node = n->parent_node;
+				n->parent_node = new_parent;
 				update(n);
 				update(new_parent);
 				return (new_parent);
@@ -223,6 +244,8 @@ namespace ft{
 				node_type *new_parent = n->right_node;
 				n->right_node = new_parent->left_node;
 				new_parent->left_node = n;
+				new_parent->parent_node = n->parent_node;
+				n->parent_node = new_parent;
 				update(n);
 				update(new_parent);
 				return (new_parent);

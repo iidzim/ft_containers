@@ -1,4 +1,4 @@
-#include "map.hpp"
+#include "avltree.hpp"
 
 int main(void){
     ft::pair<int, std::string> p33(33, "ok");
@@ -22,19 +22,30 @@ int main(void){
     t.insert(p9);
     t.insert(p23);
     t.display(t.get_root());
-    std::cout << "size = " << t.size() << std::endl;
+    // std::cout << "size = " << t.size() << std::endl;
     std::cout << "\n*************\n";
-    std::cout << std::boolalpha;
-    std::cout << t.exist(p61) << std::endl;
-    t.remove(p8);
-    t.remove(p11);
-    t.remove(p21);
-    t.remove(p61);
+    // std::cout << std::boolalpha;
+    // std::cout << t.exist(p61) << std::endl;
+    // t.remove(p8);
+    // t.remove(p11);
+    // t.remove(p21);
+    // t.remove(p61);
     // t.remove(p53);
     // t.remove(p23);
     // t.remove(p13);
     // t.remove(p33);
     // t.remove(p9);
-    std::cout << "size = " << t.size() << std::endl << std::endl;
-    t.display(t.get_root());
+    // std::cout << "size = " << t.size() << std::endl << std::endl;
+    t.print_parent(t.get_root());
+    // t.display(t.get_root());
 }
+
+/*
+inorder(root->left);
+        printf("Node : %d, ", root->key);
+        if (root->parent == NULL)
+          printf("Parent : NULL \n");
+        else
+          printf("Parent : %d \n", root->parent->key);
+        inorder(root->right);
+*/
