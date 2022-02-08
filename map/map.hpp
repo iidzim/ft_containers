@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/07 18:56:46 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/08 18:56:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MAP_HPP
 
 #include "avltree.hpp"
+#include "../tools/biterator.hpp"
+#include "../tools/reverse_iterator.hpp"
+
 
 namespace ft{
 
@@ -32,85 +35,136 @@ namespace ft{
 		typedef typename allocator_type::const_reference						const_reference;
 		typedef typename allocator_type::pointer								pointer;
 		typedef typename allocator_type::const_pointer							const_pointer;
-		typedef typename ft::iterator<std::bidirectional_iterator_tag, T>		iterator;
-		typedef typename ft::iterator<std::bidirectional_iterator_tag, const T>	const_iterator;
-		typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+		typedef typename ft::biterator<std::bidirectional_iterator_tag, T>		biterator;
+		typedef typename ft::biterator<std::bidirectional_iterator_tag, const T>	const_biterator;
+		typedef typename ft::reverse_iterator<biterator>							reverse_iterator;
+		typedef typename ft::reverse_iterator<const_biterator>					const_reverse_iterator;
+
+		typedef typename ft::node<T> 											node_type;
+		typedef typename ft::avltree<ft::node<T> > 								tree_type;
+
 
 
 		public:
 
 			//? Constructs a map container object
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
-			
-			map (const map& x);
-			
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+				_alloc(alloc), _comp(comp), _tree(NULL){}
+
+			map (const map& x):_tree(NULL) { *this = x; }
+
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type());
+				const allocator_type& alloc = allocator_type()): _alloc(alloc), _comp(comp), _tree(NULL){}
 
 			//? Map destructor
 			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
-			~map();
+			~map(void){}
 
 			//? Copy container content
-			map& operator= (const map& x);
+			map& operator= (const map& x){
+
+				_alloc = x._alloc;
+				_comp = x._comp;
+				//! memory allocation for tree
+				return (*this);
+			}
 
 			//* iterators ************************************************ //
 
 			//? Returns an iterator referring to the first element in the map container
-			iterator begin();
-			const_iterator begin() const;
+			biterator begin(){
+
+				node_type* start = _tree->_root;
+				while (start->left_node != NULL)
+					start = start->_left;
+				return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
+			}
+			const_biterator begin() const{
+
+				node_type* start = _tree->_root;
+				while (start->left_node != NULL)
+					start = start->_left;
+				return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
+			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
-			iterator end();
-			const_iterator end() const;
+			biterator end()
+			{
+				node_type* end = _tree->_root;
+				while (end->right_node != NULL)
+					end = end->right_node;
+				
+				return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
+			}
+
+			const_biterator end() const
+			{
+				node_type* end = _tree->_root;
+				while (end->right_node != NULL)
+					end = end->right_node;
+				
+				return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
+			}
 
 			//? Return reverse iterator to reverse beginning
-			reverse_iterator rbegin();
-			const_reverse_iterator rbegin() const;
+			reverse_iterator rbegin(){ return reverse_biterator(this->end()); };
+			const_reverse_iterator rbegin() const { return reverse_biterator(this->end()); }
 
 			//? Return reverse iterator to reverse end
-			reverse_iterator rend();
-			const_reverse_iterator rend() const;
+			reverse_iterator rend(){ return reverse_biterator(this->begin()); }
+			const_reverse_iterator rend() const { return reverse_biterator(this->begin()); }
 
 			//* Capacity ************************************************** //
 
 			//? Test whether container is empty
-			bool empty() const{
-				if (_nbr_node == 0)
-					return (true);
-				return (false);
-			}
+			bool empty() const{ return _tree->is_empty(); }
 
 			//? Return container size
-			size_type size() const { return _nbr_node; }
+			size_type size() const { return _tree->size(); }
 
 			//? Return maximum size
-			size_type max_size() const { return (_alloc.max_size()); }
+			size_type max_size() const { return _alloc.max_size(); }
 
 			//* Element access ******************************************** //
 
 			//? Access element
 			// A call to this function is equivalent to: (*((this->insert(make_pair(k,mapped_type()))).first)).second
-			mapped_type& operator[] (const key_type& k);
+			mapped_type& operator[] (const key_type& k){
+				return _tree->search(k);
+			}
 
 			//* Modifiers ************************************************* //
 
 			//? Insert elements
-			pair<iterator,bool> insert (const value_type& val);
+			// biterator insert (const value_type& val);
+			pair<biterator,bool> insert (const value_type& val)
+			{
+				node_type* n;
+				if (_tree->exist(val)){
+					n = find(val);
+					return make_pair(biterator(n, _tree), false);
+				}
+				n = insert(val);
+				return make_pair(biterator(n, _tree), true);
+			}
 
-			iterator insert (iterator position, const value_type& val);
+			biterator insert (biterator position, const value_type& val){
+
+				node_type* n;
+				n = insert(val);
+				return biterator(n, _tree);
+			}
 
 			template <class InputIterator>
   			void insert (InputIterator first, InputIterator last);
 
 			//? Erase elements
-			void erase (iterator position);
+			void erase (biterator position){ remove(position._ptr); }
 
-			size_type erase (const key_type& k);
+			size_type erase (const key_type& k){ return remove(k); }
 
-			void erase (iterator first, iterator last);
+			void erase (biterator first, biterator last);
 
 			//? Swap content
 			void swap (map& x);
@@ -132,23 +186,23 @@ namespace ft{
 			//? Get iterator to element
 			// Searches the container for an element with a key equivalent to k
 			// and returns an iterator to it if found, otherwise it returns an iterator to map::end.
-			iterator find (const key_type& k);
-			const_iterator find (const key_type& k) const;
+			biterator find (const key_type& k);
+			const_biterator find (const key_type& k) const;
 
 			//? Searches the container for elements with a key equivalent to k and returns the number of matches
 			size_type count (const key_type& k) const;
 
 			//? Return iterator to lower bound
-			iterator lower_bound (const key_type& k);
-			const_iterator lower_bound (const key_type& k) const;
+			biterator lower_bound (const key_type& k);
+			const_biterator lower_bound (const key_type& k) const;
 
 			//? Return iterator to upper bound
-			iterator upper_bound (const key_type& k);
-			const_iterator upper_bound (const key_type& k) const;
+			biterator upper_bound (const key_type& k);
+			const_biterator upper_bound (const key_type& k) const;
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-			pair<iterator,iterator>             equal_range (const key_type& k);
+			pair<const_biterator,const_biterator> equal_range (const key_type& k) const;
+			pair<biterator,biterator>             equal_range (const key_type& k);
 
 			//* Allocator ************************************************* //
 
@@ -158,12 +212,13 @@ namespace ft{
 		private:
 			key_compare		_comp;
 			allocator_type	_alloc;
-			
+			tree_type		*_tree;
 			
 			
 	};
+};
 
-}
+
 
 
 #endif
@@ -206,13 +261,15 @@ namespace ft{
 //* update height and bf
 //* replace node->data with pair
 //* update parent_node for each node after insert and remove
-
-////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
-
-//* allocator::rebind
+//* overload operator= node
 //* bidirectionnal iterator
 	//? iterate over tree -> inorder traversal (ascending order)
 	//? save current_pos (or node) and avl_tree
 	//? implement post || pre & increment || decrement
-	//? equality/inequality operators
-//* implement constructor and insert for map class using avl_tree member functions
+	//? equality/inequality operators - friend 
+
+////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
+
+//* implement map member functions
+//* test bidirectional iterator
+//* allocator::rebind

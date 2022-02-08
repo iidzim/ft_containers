@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/07 14:43:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/08 18:40:01 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ namespace ft{
 		node* parent_node;
 		node* left_node;
 		node* right_node;
+
+		bool operator== (const node& rhs) const{
+			return (data == rhs.data && bf == rhs.bf && height == rhs.height
+				&& left_node == rhs.left_node && right_node == rhs.right_node
+					&& parent_node == rhs.parent_node);
+		}
 	};
 
 	// template <typename Type> struct rebind {
@@ -70,14 +76,14 @@ namespace ft{
 				return exist(_root, value);
 			}
 
-			bool insert(T data){
+			node_type* insert(T data){
 
 				if (!exist(_root, data)){
 					_root = insert(_root, data);
 					_nbr_node += 1;
-					return (true);
+					return (_root);
 				}
-				return (false);
+				return (NULL);
 			}
 
 			//? return the min pair in the tree
@@ -96,16 +102,12 @@ namespace ft{
 				return (root->data);
 			}
 
-			bool search (node_type root, key_type key){
+			value_type search(key_type key){
+				return search(_root, key);
+			}
 
-				if (root == NULL)
-					return false;
-				else if (root.data.first == key)
-					return true;
-				else if (root.data.first > key)
-					return search(root.left_node, key);
-				else
-					return search(root.right_node, key);
+			node_type* find(T p){
+				return find(_root, p.first);
 			}
 
 			void display(const node_type* n){
@@ -116,14 +118,14 @@ namespace ft{
 				return (_root);
 			}
 
-			bool remove(T data){
+			int remove(key_type key){
 
-				if (exist(_root, data)){
-					_root = remove(_root, data);
+				if (exist(_root, key)){
+					_root = remove(_root, key);
 					_nbr_node -= 1;
-					return (true);
+					return (1);
 				}
-				return (false);
+				return (0);
 			}
 
 			void print_parent(node_type* n){
@@ -139,6 +141,30 @@ namespace ft{
 			}
 
 		private:
+
+			node_type* find(node_type root, key_type key){
+
+				if (root == NULL)
+					return (NULL);
+				else if (root.data.first == key)
+					return (root.data);
+				else if (root.data.first > key)
+					return find(root.left_node, key);
+				else
+					return find(root.right_node, key);
+			}
+
+			value_type search (node_type root, key_type key){
+
+				if (root == NULL)
+					return (NULL);
+				else if (root.data.first == key)
+					return (root.data.second);
+				else if (root.data.first > key)
+					return search(root.left_node, key);
+				else
+					return search(root.right_node, key);
+			}
 
 			bool exist(node_type *n, T data){
 
@@ -255,15 +281,15 @@ namespace ft{
 				return (new_parent);
 			}
 
-			node_type* remove(node_type *n, T data){
+			node_type* remove(node_type *n, key_type key){
 
 				if (n == NULL)
 					return (NULL);
-				int diff = _comp(data.first, n->data.first);
+				int diff = _comp(key, n->data.first);
 				if (diff > 0)
-					n->left_node = remove(n->left_node, data);
-				else if (diff == 0 && n->right_node != NULL && n->data.first != data.first)
-					n->right_node = remove(n->right_node, data);
+					n->left_node = remove(n->left_node, key);
+				else if (diff == 0 && n->right_node != NULL && n->data.first != key)
+					n->right_node = remove(n->right_node, key);
 				else{
 					if ((n->left_node != NULL && n->right_node == NULL) ||
 							(n->left_node == NULL && n->right_node != NULL)){
