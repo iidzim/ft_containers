@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 16:23:51 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 17:52:27 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ namespace ft{
 
 	// template <typename Key, typename T, typename Compare = std::less<Key>,
 	// 	typename Alloc = std::allocator<ft::pair<const Key,T> > >
+	// typename Alloc_node = std::allocator<ft::node<T> >, 
 	template <typename T, typename Compare = std::less<typename T::first_type>,
-		typename Alloc_node = std::allocator<ft::node<T> >, typename Alloc = std::allocator <T> >
+		typename Alloc = std::allocator <T> >
 	class avltree{
 
 		// // ? typename _A::template rebind<_Ty>::other
-		// // typedef typename _Alloc::template rebind<_Ty>::other _Alty;
+		// typedef typename _Alloc::template rebind<_Ty>::other _Alty;
 
 		typedef typename T::first_type	key_type;
 		typedef typename T::second_type	value_type;
 		typedef node<T> node_type;
-		// typedef typename Alloc::template rebind<node_type>::other Alloc_node;
+		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 		// typedef Key								key_type;
 		// typedef T								value_type;
@@ -119,8 +120,8 @@ namespace ft{
 			}
 
 			// node_type* find(pair_type p){
-			node_type* find(T p){
-				return find(_root, p.first);
+			node_type* find_(T p){
+				return find_(_root, p.first);
 			}
 
 			void display(const node_type* n){
@@ -155,16 +156,16 @@ namespace ft{
 
 		private:
 
-			node_type* find(node_type root, key_type key){
+			node_type* find_(node_type *root, key_type key){
 
 				if (root == NULL)
 					return (NULL);
-				else if (root.data.first == key)
-					return (root.data);
-				else if (root.data.first > key)
-					return find(root.left_node, key);
+				else if (root->data.first == key)
+					return (root);
+				else if (root->data.first > key)
+					return find_(root->left_node, key);
 				else
-					return find(root.right_node, key);
+					return find_(root->right_node, key);
 			}
 
 			value_type search (node_type root, key_type key){

@@ -67,6 +67,10 @@ int main(void){
 {
 	ft::map<int, int> m;
 	ft::map<int, int>::biterator it;
+	ft::pair<int, int> p33(33, 33);
+
+
+	m.insert(p33);
 
 }
 

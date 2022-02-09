@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 15:48:04 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 18:06:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,38 @@ namespace ft{
 		typename Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{
 
-		typedef size_t																size_type;
-		typedef Key																	key_type;
-		typedef T																	mapped_type;
-		typedef ft::pair<const Key,T>												value_type;
-		typedef Compare																key_compare;
-		// * typedef value_compare; https://www.cplusplus.com/reference/map/map/value_comp/
-		typedef Alloc																allocator_type;
-		typedef typename allocator_type::reference									reference;
-		typedef typename allocator_type::const_reference							const_reference;
-		typedef typename allocator_type::pointer									pointer;
-		typedef typename allocator_type::const_pointer								const_pointer;
-		typedef typename ft::biterator<std::bidirectional_iterator_tag, T>			biterator;
-		typedef typename ft::biterator<std::bidirectional_iterator_tag, const T>	const_biterator;
-		typedef typename ft::reverse_iterator<biterator>							reverse_iterator;
-		typedef typename ft::reverse_iterator<const_biterator>						const_reverse_iterator;
-
-		typedef typename ft::node<ft::pair<const Key,T> > 							node_type;
-		typedef typename ft::avltree<ft::node<ft::pair<const Key,T> > >				tree_type;
-
-
 		public:
+
+			typedef size_t																size_type;
+			typedef Key																	key_type;
+			typedef T																	mapped_type;
+			typedef ft::pair<const Key,T>												value_type;
+			typedef Compare																key_compare;
+			// * typedef value_compare; https://www.cplusplus.com/reference/map/map/value_comp/
+			typedef Alloc																allocator_type;
+			typedef typename allocator_type::reference									reference;
+			typedef typename allocator_type::const_reference							const_reference;
+			typedef typename allocator_type::pointer									pointer;
+			typedef typename allocator_type::const_pointer								const_pointer;
+			typedef typename ft::biterator<std::bidirectional_iterator_tag, value_type>			biterator;
+			typedef typename ft::biterator<std::bidirectional_iterator_tag, const value_type>	const_biterator;
+			typedef typename ft::reverse_iterator<biterator>							reverse_iterator;
+			typedef typename ft::reverse_iterator<const_biterator>						const_reverse_iterator;
+
+			typedef typename ft::node<ft::pair<const Key,T> > 							node_type;
+			typedef typename ft::avltree<ft::pair<const Key,T>, Compare, Alloc >				tree_type;
+
+
 
 			//? Constructs a map container object
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
-				_alloc(alloc), _comp(comp), _tree(NULL){}
+				_alloc(alloc), _comp(comp), _tree(){}
 
-			map (const map& x):_tree(NULL) { *this = x; }
+			map (const map& x):_tree() { *this = x; }
 
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()): _alloc(alloc), _comp(comp), _tree(NULL){}
+				const allocator_type& alloc = allocator_type()): _alloc(alloc), _comp(comp), _tree(){}
 
 			//? Map destructor
 			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
@@ -66,7 +67,7 @@ namespace ft{
 
 				_alloc = x._alloc;
 				_comp = x._comp;
-				//! memory allocation for tree
+				// 
 				return (*this);
 			}
 
@@ -75,14 +76,14 @@ namespace ft{
 			// // ? Returns an iterator referring to the first element in the map container
 			// biterator begin(){
 
-			// 	node_type* start = _tree->_root;
+			// 	node_type* start = _tree._root;
 			// 	while (start->left_node != NULL)
 			// 		start = start->_left;
 			// 	return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
 			// }
 			// const_biterator begin() const{
 
-			// 	node_type* start = _tree->_root;
+			// 	node_type* start = _tree._root;
 			// 	while (start->left_node != NULL)
 			// 		start = start->_left;
 			// 	return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
@@ -91,7 +92,7 @@ namespace ft{
 			// //? Returns an iterator referring to the past-the-end element in the map container
 			// biterator end()
 			// {
-			// 	node_type* end = _tree->_root;
+			// 	node_type* end = _tree._root;
 			// 	while (end->right_node != NULL)
 			// 		end = end->right_node;
 
@@ -100,7 +101,7 @@ namespace ft{
 
 			// const_biterator end() const
 			// {
-			// 	node_type* end = _tree->_root;
+			// 	node_type* end = _tree._root;
 			// 	while (end->right_node != NULL)
 			// 		end = end->right_node;
 				
@@ -118,10 +119,10 @@ namespace ft{
 			//* Capacity ************************************************** //
 
 			//? Test whether container is empty
-			bool empty() const{ return _tree->is_empty(); }
+			bool empty() const{ return _tree.is_empty(); }
 
 			//? Return container size
-			size_type size() const { return _tree->size(); }
+			size_type size() const { return _tree.size(); }
 
 			//? Return maximum size
 			size_type max_size() const { return _alloc.max_size(); }
@@ -131,7 +132,7 @@ namespace ft{
 			//? Access element
 			// A call to this function is equivalent to: (*((this->insert(make_pair(k,mapped_type()))).first)).second
 			mapped_type& operator[] (const key_type& k){
-				return _tree->search(k);
+				return _tree.search(k);
 			}
 
 			//* Modifiers ************************************************* //
@@ -141,30 +142,33 @@ namespace ft{
 			pair<biterator,bool> insert (const value_type& val)
 			{
 				node_type* n;
-				if (_tree->exist(val)){
-					n = find(val);
-					return make_pair(biterator(n, _tree), false);
+				if (_tree.exist(val)){
+					n = _tree.find_(val);
+					biterator it (n, &_tree);
+					return make_pair(it, false);
 				}
-				n = insert(val);
-				return make_pair(biterator(n, _tree), true);
+				n = _tree.insert(val);
+				biterator it (n, &_tree);
+				return make_pair(it, true);
 			}
 
 			biterator insert (biterator position, const value_type& val){
 
 				node_type* n;
-				n = insert(val);
-				return biterator(n, _tree);
+				n = _tree.insert(val);
+				// biterator it (n, &_tree);
+				return biterator(n, &_tree);
 			}
 
 			template <class InputIterator>
   			void insert (InputIterator first, InputIterator last);
 
-			//? Erase elements
-			void erase (biterator position){ remove(position._ptr); }
+			// //? Erase elements
+			// void erase (biterator position){ remove(position._ptr); }
 
-			size_type erase (const key_type& k){ return remove(k); }
+			// size_type erase (const key_type& k){ return remove(k); }
 
-			void erase (biterator first, biterator last);
+			// void erase (biterator first, biterator last);
 
 			//? Swap content
 			void swap (map& x);
@@ -212,7 +216,7 @@ namespace ft{
 		private:
 			key_compare		_comp;
 			allocator_type	_alloc;
-			tree_type		*_tree;
+			tree_type		_tree; //!
 			
 			
 	};
