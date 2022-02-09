@@ -1,8 +1,4 @@
-### ft_containers
-
-## ToDo 
-* avl tree √
-* bidirectionnal iterator
+## ft_containers
 
 
 # NOTION:
