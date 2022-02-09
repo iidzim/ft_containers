@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/08 18:56:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 15:48:04 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MAP_HPP
 
 #include "avltree.hpp"
+#include "../tools/tools.hpp"
 #include "../tools/biterator.hpp"
 #include "../tools/reverse_iterator.hpp"
 
@@ -24,25 +25,24 @@ namespace ft{
 		typename Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{
 
-		typedef size_t															size_type;
-		typedef Key																key_type;
-		typedef T																mapped_type;
-		typedef ft::pair<const Key,T>											value_type;
-		typedef Compare															key_compare;
+		typedef size_t																size_type;
+		typedef Key																	key_type;
+		typedef T																	mapped_type;
+		typedef ft::pair<const Key,T>												value_type;
+		typedef Compare																key_compare;
 		// * typedef value_compare; https://www.cplusplus.com/reference/map/map/value_comp/
-		typedef Alloc															allocator_type;
-		typedef typename allocator_type::reference								reference;
-		typedef typename allocator_type::const_reference						const_reference;
-		typedef typename allocator_type::pointer								pointer;
-		typedef typename allocator_type::const_pointer							const_pointer;
-		typedef typename ft::biterator<std::bidirectional_iterator_tag, T>		biterator;
+		typedef Alloc																allocator_type;
+		typedef typename allocator_type::reference									reference;
+		typedef typename allocator_type::const_reference							const_reference;
+		typedef typename allocator_type::pointer									pointer;
+		typedef typename allocator_type::const_pointer								const_pointer;
+		typedef typename ft::biterator<std::bidirectional_iterator_tag, T>			biterator;
 		typedef typename ft::biterator<std::bidirectional_iterator_tag, const T>	const_biterator;
 		typedef typename ft::reverse_iterator<biterator>							reverse_iterator;
-		typedef typename ft::reverse_iterator<const_biterator>					const_reverse_iterator;
+		typedef typename ft::reverse_iterator<const_biterator>						const_reverse_iterator;
 
-		typedef typename ft::node<T> 											node_type;
-		typedef typename ft::avltree<ft::node<T> > 								tree_type;
-
+		typedef typename ft::node<ft::pair<const Key,T> > 							node_type;
+		typedef typename ft::avltree<ft::node<ft::pair<const Key,T> > >				tree_type;
 
 
 		public:
@@ -72,48 +72,48 @@ namespace ft{
 
 			//* iterators ************************************************ //
 
-			//? Returns an iterator referring to the first element in the map container
-			biterator begin(){
+			// // ? Returns an iterator referring to the first element in the map container
+			// biterator begin(){
 
-				node_type* start = _tree->_root;
-				while (start->left_node != NULL)
-					start = start->_left;
-				return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
-			}
-			const_biterator begin() const{
+			// 	node_type* start = _tree->_root;
+			// 	while (start->left_node != NULL)
+			// 		start = start->_left;
+			// 	return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
+			// }
+			// const_biterator begin() const{
 
-				node_type* start = _tree->_root;
-				while (start->left_node != NULL)
-					start = start->_left;
-				return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
-			}
+			// 	node_type* start = _tree->_root;
+			// 	while (start->left_node != NULL)
+			// 		start = start->_left;
+			// 	return biterator<std::bidirectional_iterator_tag, value_type>(start, _tree);
+			// }
 
-			//? Returns an iterator referring to the past-the-end element in the map container
-			biterator end()
-			{
-				node_type* end = _tree->_root;
-				while (end->right_node != NULL)
-					end = end->right_node;
+			// //? Returns an iterator referring to the past-the-end element in the map container
+			// biterator end()
+			// {
+			// 	node_type* end = _tree->_root;
+			// 	while (end->right_node != NULL)
+			// 		end = end->right_node;
+
+			// 	return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
+			// }
+
+			// const_biterator end() const
+			// {
+			// 	node_type* end = _tree->_root;
+			// 	while (end->right_node != NULL)
+			// 		end = end->right_node;
 				
-				return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
-			}
+			// 	return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
+			// }
 
-			const_biterator end() const
-			{
-				node_type* end = _tree->_root;
-				while (end->right_node != NULL)
-					end = end->right_node;
-				
-				return ++(biterator<std::bidirectional_iterator_tag, value_type>(n, _tree));
-			}
+			// //? Return reverse iterator to reverse beginning
+			// reverse_iterator rbegin(){ return reverse_biterator(this->end()); };
+			// const_reverse_iterator rbegin() const { return reverse_biterator(this->end()); }
 
-			//? Return reverse iterator to reverse beginning
-			reverse_iterator rbegin(){ return reverse_biterator(this->end()); };
-			const_reverse_iterator rbegin() const { return reverse_biterator(this->end()); }
-
-			//? Return reverse iterator to reverse end
-			reverse_iterator rend(){ return reverse_biterator(this->begin()); }
-			const_reverse_iterator rend() const { return reverse_biterator(this->begin()); }
+			// //? Return reverse iterator to reverse end
+			// reverse_iterator rend(){ return reverse_biterator(this->begin()); }
+			// const_reverse_iterator rend() const { return reverse_biterator(this->begin()); }
 
 			//* Capacity ************************************************** //
 
@@ -273,3 +273,4 @@ namespace ft{
 //* implement map member functions
 //* test bidirectional iterator
 //* allocator::rebind
+//* enable_if

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/08 16:38:55 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 16:11:16 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ namespace ft{
 		}
 		reference operator* () const { return (_ptr->data); }
 		pointer operator-> () { return (&_ptr->data); }
-		friend bool operator== (const biterator& lhs, const biterator& rhs) { return _ptr == rhs._ptr; }
-		friend bool operator!= (const biterator& lhs, const biterator& rhs) { return (!(*this == rhs)); }
+		friend bool operator== (const biterator& lhs, const biterator& rhs) { return lhs._ptr == rhs._ptr; }
+		friend bool operator!= (const biterator& lhs, const biterator& rhs) { return (!(lhs == rhs)); }
 
 		biterator& operator++ (){
 

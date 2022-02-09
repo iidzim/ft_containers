@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 10:32:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 16:23:51 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,29 @@ namespace ft{
 		}
 	};
 
-	// template <typename Type> struct rebind {
-	// 	typedef allocator<Type> other;
-	// };
-
+	// template <typename Key, typename T, typename Compare = std::less<Key>,
+	// 	typename Alloc = std::allocator<ft::pair<const Key,T> > >
 	template <typename T, typename Compare = std::less<typename T::first_type>,
 		typename Alloc_node = std::allocator<ft::node<T> >, typename Alloc = std::allocator <T> >
 	class avltree{
 
+		// // ? typename _A::template rebind<_Ty>::other
+		// // typedef typename _Alloc::template rebind<_Ty>::other _Alty;
+
 		typedef typename T::first_type	key_type;
 		typedef typename T::second_type	value_type;
 		typedef node<T> node_type;
+		// typedef typename Alloc::template rebind<node_type>::other Alloc_node;
+
+		// typedef Key								key_type;
+		// typedef T								value_type;
+		// typedef ft::pair<const Key,T>			pair_type;
+		// typedef typename ft::node<pair_type >	node_type;
+		// typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 		public:
 
-			avltree(void): _nbr_node(0), _root() {}
+			avltree(void): _nbr_node(0), _root(){}
 			~avltree(void){}
 
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
@@ -72,10 +80,12 @@ namespace ft{
 				return false;
 			}
 
+			// bool exist(pair_type value){
 			bool exist(T value){
 				return exist(_root, value);
 			}
 
+			// node_type* insert(pair_type data){
 			node_type* insert(T data){
 
 				if (!exist(_root, data)){
@@ -87,6 +97,7 @@ namespace ft{
 			}
 
 			//? return the min pair in the tree
+			// pair_type min(node_type *root){
 			T min(node_type *root){
 
 				while (root->left_node != NULL)
@@ -95,6 +106,7 @@ namespace ft{
 			}
 
 			//? return the max pair in the tree
+			// pair_type max(node_type *root){
 			T max(node_type *root){
 
 				while (root->right_node != NULL)
@@ -106,6 +118,7 @@ namespace ft{
 				return search(_root, key);
 			}
 
+			// node_type* find(pair_type p){
 			node_type* find(T p){
 				return find(_root, p.first);
 			}
@@ -130,14 +143,14 @@ namespace ft{
 
 			void print_parent(node_type* n){
 
-    			if(n->left_node != NULL)
-    			    print_parent(n->left_node);
-    			if(n->right_node != NULL)
-    			    print_parent(n->right_node);
-    			if(n->parent_node != NULL)
-    			    std::cout << "Parent of " << n->data.first << " is " << n->parent_node->data.first << std::endl;
-    			else
-    			    std::cout << "The root node is " << n->data.first << std::endl;
+				if(n->left_node != NULL)
+					print_parent(n->left_node);
+				if(n->right_node != NULL)
+					print_parent(n->right_node);
+				if(n->parent_node != NULL)
+					std::cout << "Parent of " << n->data.first << " is " << n->parent_node->data.first << std::endl;
+				else
+					std::cout << "The root node is " << n->data.first << std::endl;
 			}
 
 		private:
@@ -166,6 +179,7 @@ namespace ft{
 					return search(root.right_node, key);
 			}
 
+			// bool exist(node_type *n, pair_type data){
 			bool exist(node_type *n, T data){
 
 				if (n == NULL)
@@ -194,6 +208,7 @@ namespace ft{
 				return (true);
 			}
 
+			// node_type* insert(node_type *n, pair_type data){
 			node_type* insert(node_type *n, T data){
 
 				if (n == NULL){

@@ -1,5 +1,4 @@
-#include "avltree.hpp"
-#include "../tools/tools.hpp"
+#include "map.hpp"
 
 #include <map>
 #include <iterator>
@@ -15,7 +14,7 @@ int main(void){
 	ft::pair<int, std::string> p9(9, "ok");
 	ft::pair<int, std::string> p23(23, "ok");
 
-	ft::avltree<ft::pair<int, std::string> > t;
+	ft::avltree<int, std::string > t;
 	t.insert(p33);
 	t.insert(p13);
 	t.insert(p53);
@@ -46,23 +45,31 @@ int main(void){
 
 // int main(void){
 
-// 	std::map<int, int> m;
-// 	std::pair<int, int> p33(33, 33);
-// 	std::pair<int, int> p13(13, 13);
-// 	std::pair<int, int> p53(53, 53);
-//  	std::pair<int, int> p11(11, 11);
-// 	std::pair<int, int> p61(61, 61);
-// 	std::pair<int, int> p21(21, 21);
-// 	std::map<int, int>::iterator it = m.begin();
+// 	// std::map<int, int> m;
+// 	// std::pair<int, int> p33(33, 33);
+// 	// std::pair<int, int> p13(13, 13);
+// 	// std::pair<int, int> p53(53, 53);
+//  	// std::pair<int, int> p11(11, 11);
+// 	// std::pair<int, int> p61(61, 61);
+// 	// std::pair<int, int> p21(21, 21);
+// 	// std::map<int, int>::iterator it = m.begin();
 
-// 	m.insert(it, p33);
-// 	m.insert(p13);
-// 	m.insert(p53);
-// 	m.insert(p11);
-// 	m.insert(p21);
+// 	// m.insert(it, p33);
+// 	// m.insert(p13);
+// 	// m.insert(p53);
+// 	// m.insert(p11);
+// 	// m.insert(p21);
 
-//     std::cout << m[33] << std::endl;
-//     std::cout << m[21] << std::endl;
-// 	std::cout << it << std::endl;
+//     // std::cout << m[33] << std::endl;
+//     // std::cout << m[21] << std::endl;
+// 	// std::cout << it << std::endl;
+
+// {
+// 	ft::map<int, int> m;
+// 	ft::map<int, int>::biterator it;
+
+// }
+
+
 // 	return (0);
 // }
