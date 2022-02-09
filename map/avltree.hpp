@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/08 18:40:01 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/09 10:32:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,20 @@ namespace ft{
 				return (true);
 			}
 
+			bool exist(node_type *n, key_type key){
+
+				if (n == NULL)
+					return (false);
+				int diff = _comp(key, n->data.first);
+				if (n->data.first == key)
+					return (true);
+				if (diff == true)
+					return exist(n->left_node, key);
+				if (diff == false)
+					return exist(n->right_node, key);
+				return (true);
+			}
+
 			node_type* insert(node_type *n, T data){
 
 				if (n == NULL){
@@ -306,12 +320,12 @@ namespace ft{
 						if (n->left_node->height >= n->right_node->height){
 							T successor = max(n->left_node);
 							n->data = successor;
-							n->left_node = remove(n->left_node, successor);
+							n->left_node = remove(n->left_node, successor.first);
 						}
 						else{
 							T successor = min(n->right_node);
 							n->data = successor;
-							n->right_node = remove(n->right_node, successor);
+							n->right_node = remove(n->right_node, successor.first);
 						}
 					}
 					else{ // n->left_node == NULL && n->right_node == NULL
