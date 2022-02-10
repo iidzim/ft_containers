@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 17:52:27 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/10 12:12:13 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft{
 	template <typename T>
 	struct node
 	{
-		T data; //? type must be comparable
+		T data; //? pair<U, V>
 		int bf; //? balance factor
 		int height; //? height of this node in the tree
 		node* parent_node;
@@ -39,28 +39,17 @@ namespace ft{
 		}
 	};
 
-	// template <typename Key, typename T, typename Compare = std::less<Key>,
-	// 	typename Alloc = std::allocator<ft::pair<const Key,T> > >
-	// typename Alloc_node = std::allocator<ft::node<T> >, 
 	template <typename T, typename Compare = std::less<typename T::first_type>,
 		typename Alloc = std::allocator <T> >
 	class avltree{
-
-		// // ? typename _A::template rebind<_Ty>::other
-		// typedef typename _Alloc::template rebind<_Ty>::other _Alty;
 
 		typedef typename T::first_type	key_type;
 		typedef typename T::second_type	value_type;
 		typedef node<T> node_type;
 		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
-		// typedef Key								key_type;
-		// typedef T								value_type;
-		// typedef ft::pair<const Key,T>			pair_type;
-		// typedef typename ft::node<pair_type >	node_type;
-		// typedef typename Alloc::template rebind<node_type>::other Alloc_node;
-
 		public:
+			node_type   *_root;
 
 			avltree(void): _nbr_node(0), _root(){}
 			~avltree(void){}
@@ -98,7 +87,6 @@ namespace ft{
 			}
 
 			//? return the min pair in the tree
-			// pair_type min(node_type *root){
 			T min(node_type *root){
 
 				while (root->left_node != NULL)
@@ -107,7 +95,6 @@ namespace ft{
 			}
 
 			//? return the max pair in the tree
-			// pair_type max(node_type *root){
 			T max(node_type *root){
 
 				while (root->right_node != NULL)
@@ -119,7 +106,6 @@ namespace ft{
 				return search(_root, key);
 			}
 
-			// node_type* find(pair_type p){
 			node_type* find_(T p){
 				return find_(_root, p.first);
 			}
@@ -128,9 +114,9 @@ namespace ft{
 				display("", n, false);
 			}
 
-			node_type* get_root(void){
-				return (_root);
-			}
+			// node_type* get_root(void){
+			// 	return (_root);
+			// }
 
 			int remove(key_type key){
 
@@ -180,7 +166,6 @@ namespace ft{
 					return search(root.right_node, key);
 			}
 
-			// bool exist(node_type *n, pair_type data){
 			bool exist(node_type *n, T data){
 
 				if (n == NULL)
@@ -209,7 +194,6 @@ namespace ft{
 				return (true);
 			}
 
-			// node_type* insert(node_type *n, pair_type data){
 			node_type* insert(node_type *n, T data){
 
 				if (n == NULL){
@@ -266,7 +250,6 @@ namespace ft{
 				}
 				// we return node without any rotation if |bf| < 1
 				return (n);
-				// return (inorder_traversal(n));
 			}
 
 			node_type* leftleft_case(node_type* n){
@@ -367,7 +350,6 @@ namespace ft{
 			}
 
 
-			node_type   *_root;
 			Compare     _comp;
 			Alloc_node  _alloc_node;
 			Alloc       _alloc;

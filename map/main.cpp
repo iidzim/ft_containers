@@ -24,7 +24,7 @@
 // 	t.insert(p8);
 // 	t.insert(p9);
 // 	t.insert(p23);
-// 	t.display(t.get_root());
+// 	t.display(t._root);
 // 	// std::cout << "size = " << t.size() << std::endl;
 // 	std::cout << "\n*************\n";
 // 	// std::cout << std::boolalpha;
@@ -39,8 +39,8 @@
 // 	// t.remove(33);
 // 	// t.remove(9);
 // 	// std::cout << "size = " << t.size() << std::endl << std::endl;
-// 	t.print_parent(t.get_root());
-// 	t.display(t.get_root());
+// 	t.print_parent(t._root);
+// 	t.display(t._root);
 // }
 
 int main(void){
@@ -70,7 +70,9 @@ int main(void){
 	ft::pair<int, int> p33(33, 33);
 
 
-	m.insert(p33);
+	// m.insert(p33);
+	it = m.begin();
+	// it = m.end();
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 18:03:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/10 12:30:56 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft{
 
 		biterator(void): _ptr(), _tree() {}
 		biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
-		biterator(const biterator& b){ *this = b; }
+		biterator(const biterator& b): _ptr(), _tree() { *this = b; }
 		~biterator(void){}
 		biterator& operator=(const biterator& b){
 			_ptr = b._ptr;
