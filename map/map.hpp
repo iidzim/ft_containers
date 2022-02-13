@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/13 16:10:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 19:40:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "../tools/tools.hpp"
 #include "../tools/biterator.hpp"
 #include "../tools/reverse_iterator.hpp"
-
 
 namespace ft{
 
@@ -32,7 +31,7 @@ namespace ft{
 			typedef T																			mapped_type;
 			typedef ft::pair<const Key,T>														value_type;
 			typedef Compare																		key_compare;
-			// typedef value_compare;
+			//* typedef value_compare https://www.cplusplus.com/reference/map/map/value_comp/;
 			typedef Alloc																		allocator_type;
 			typedef typename allocator_type::reference											reference;
 			typedef typename allocator_type::const_reference									const_reference;
@@ -48,27 +47,31 @@ namespace ft{
 
 
 			//? Constructs a map container object
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _tree(){}
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+				 _comp(comp), _alloc(alloc), _tree(){}
 
 			map (const map& x): _tree() { *this = x; }
 
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _tree(){
-					(void)first;
-					(void)last;
-				}
+
+					while (first != last){
+						_tree.insert(*first);
+						++first;	
+					}
+			}
 
 			//? Map destructor
 			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
-			~map(void){}
+			~map(void){ _tree.clear(_tree._root); }
 
 			//? Copy container content
 			map& operator= (const map& x){
 
 				_alloc = x._alloc;
 				_comp = x._comp;
-				// 
+				_tree = x._tree;
 				return (*this);
 			}
 
@@ -80,48 +83,28 @@ namespace ft{
 				node_type* start = _tree._root;
 				while (start->left_node != NULL)
 					start = start->left_node;
-				biterator it(start, &_tree);
-				return (it);
+				return (biterator(start, &_tree));
 			}
 			const_biterator begin() const{
 
 				node_type* start = _tree._root;
 				while (start->left_node != NULL)
 					start = start->left_node;
-				biterator it(start, &_tree);
-				return (it);
+				return (biterator(start, &_tree));
+
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
-			biterator end()
-			{
-				// node_type* end = _tree._root;
-				// while (end->right_node != NULL)
-				// 	end = end->right_node;
-				// biterator it(end, &_tree);
-				// return (++it);
-				biterator it(NULL, &_tree);
-				return (it);
-			}
-
-			const_biterator end() const
-			{
-				// node_type* end = _tree._root;
-				// while (end->right_node != NULL)
-				// 	end = end->right_node;
-				// biterator it(end, &_tree);
-				// return (++it);
-				biterator it(NULL, &_tree);
-				return (it);
-			}
+			biterator end() { return (biterator(NULL, &_tree)); }
+			const_biterator end() const { return (biterator(NULL, &_tree)); }
 
 			//? Return reverse iterator to reverse beginning
-			reverse_iterator rbegin(){ return reverse_biterator(this->end()); };
-			const_reverse_iterator rbegin() const { return reverse_biterator(this->end()); }
+			reverse_iterator rbegin(){ return (reverse_iterator(this->end())); }
+			const_reverse_iterator rbegin() const { return (reverse_iterator(this->end())); }
 
 			//? Return reverse iterator to reverse end
-			reverse_iterator rend(){ return reverse_biterator(this->begin()); }
-			const_reverse_iterator rend() const { return reverse_biterator(this->begin()); }
+			reverse_iterator rend(){ return (reverse_iterator(this->begin())); }
+			const_reverse_iterator rend() const { return (reverse_iterator(this->begin())); }
 
 			//* Capacity ************************************************** //
 
@@ -165,19 +148,30 @@ namespace ft{
 				(void)position;
 				node_type* n;
 				n = _tree.insert(val);
-				biterator it (n, &_tree);
 				return biterator(n, &_tree);
 			}
 
 			template <class InputIterator>
-  			void insert (InputIterator first, InputIterator last);
+  			void insert (InputIterator first, InputIterator last){
+
+				while (first != last){
+					insert(*first);
+					++first;
+				}
+			}
 
 			//? Erase elements
 			void erase (biterator position){ remove(position._ptr); }
 
 			size_type erase (const key_type& k){ return remove(k); }
 
-			// void erase (biterator first, biterator last);
+			void erase (biterator first, biterator last){
+
+				while (first != last){
+					remove(first._ptr);
+					++first;
+				}
+			}
 
 			//? Swap content
 			void swap (map& x);
@@ -192,18 +186,44 @@ namespace ft{
 			key_compare key_comp() const;
 
 			//? Return value comparison object
-			//! value_compare value_comp() const; line29
+			value_compare value_comp() const;
 
 			//* Operations ************************************************* //
 
 			//? Get iterator to element
 			// Searches the container for an element with a key equivalent to k
 			// and returns an iterator to it if found, otherwise it returns an iterator to map::end.
-			biterator find (const key_type& k);
-			const_biterator find (const key_type& k) const;
+			biterator find (const key_type& k){
+
+				node_type* n;
+				if (this->count(k)){
+					n = _tree.find_(k);
+					return biterator(n, &_tree);
+				}
+				else
+					return biterator(NULL, &_tree);
+			}
+			const_biterator find (const key_type& k) const{
+
+				node_type* n;
+				if (this->count(k)){
+					n = _tree.find_(k);
+					return biterator(n, &_tree);
+				}
+				else
+					return biterator(NULL, &_tree);
+			}
+
+			//* Two keys are considered equivalent if the container's comparison object returns false reflexively
+			//* (i.e., no matter the order in which the elements are passed as arguments).
 
 			//? Searches the container for elements with a key equivalent to k and returns the number of matches
-			size_type count (const key_type& k) const;
+			size_type count (const key_type& k) const{
+
+				if (_tree.exist(k))
+					return (1);
+				return (0);
+			}
 
 			//? Return iterator to lower bound
 			biterator lower_bound (const key_type& k);
@@ -227,7 +247,7 @@ namespace ft{
 		private:
 			key_compare		_comp;
 			allocator_type	_alloc;
-			tree_type		_tree; //!
+			tree_type		_tree;
 			
 			
 	};
@@ -283,9 +303,29 @@ namespace ft{
 	//? implement post || pre & increment || decrement
 	//? equality/inequality operators - friend 
 //* allocator::rebind
+//* test bidirectional iterator
+//* reverse iterator
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
 //* implement map member functions
-//* test bidirectional iterator
+	//! operator= & destructor   - avltree class -
+		//? assignment operator for avltree class 
+		//? implement create node function
+		//? clear avltree
+	//! swap
+	//! observers
+	
+
+//* value compare
 //* enable_if
+
+
+//ToDo------ Canonical form		./5
+//ToDo------ Iterators			./4
+//ToDo------ Capacity			./3
+//ToDo------ Element access		./1
+//ToDo------ Modifiers			./8
+//ToDo------ Observers			./2
+//ToDo------ Operations			./5
+//ToDo------ Allocator			./1

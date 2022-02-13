@@ -76,9 +76,6 @@ int main(void){
  	ft::pair<int, std::string> p39(39, "F");
  	ft::pair<int, std::string> p45(45, "G");
 
-
-
-
 	m.insert(p33);
 	m.insert(p13);
 	m.insert(p53);
@@ -90,81 +87,83 @@ int main(void){
 	m.get_tree().display(m.get_tree()._root);
 
 	it = m.begin();
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
-	++it;
-	std::cout << it->first << std::endl;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// std::cout << it->first << std::endl;
 
 
 	ite = m.end();
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
-	--ite;
-	std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
 
-	ft::map<int, std::string>::biterator cp(ite);
-	eq = ite;
-	std::cout << eq->first << std::endl;
-	std::cout << cp->first << std::endl;
+	// ft::map<int, std::string>::biterator cp(ite);
+	// eq = ite;
+	// std::cout << eq->first << std::endl;
+	// std::cout << cp->first << std::endl;
+
+	ft::map<int, std::string>::reverse_iterator rit = m.rbegin();
+	std::cout << rit->first << std::endl;
+	ft::map<int, std::string>::reverse_iterator rite = m.rend();
+	--rite;
+	std::cout << rite->first << std::endl;
+	
+}
+
+{
+	std::map<int, std::string> m;
+	std::map<int, std::string>::iterator it, ite, eq;
+	std::pair<int, std::string> p33(33, "A");
+	std::pair<int, std::string> p13(13, "B");
+	std::pair<int, std::string> p53(53, "C");
+ 	std::pair<int, std::string> p11(11, "D");
+ 	std::pair<int, std::string> p64(64, "Z");
+ 	std::pair<int, std::string> p40(40, "E");
+ 	std::pair<int, std::string> p39(39, "F");
+ 	std::pair<int, std::string> p45(45, "G");
+
+	m.insert(p33);
+	m.insert(p13);
+	m.insert(p53);
+	m.insert(p11);
+	m.insert(p64);
+	m.insert(p40);
+	m.insert(p39);
+	m.insert(p45);
+
+	std::map<int, std::string>::reverse_iterator rit = m.rbegin();
+	std::cout << "--> " << rit->first << std::endl;
+	std::map<int, std::string>::reverse_iterator rite = m.rend();
+	--rite;
+	std::cout << "--> " << rite->first << std::endl;
+
 
 }
-// {
-// 	ft::map<std::string, std::string> m;
-// 	ft::map<std::string, std::string>::biterator it;
-// 	ft::pair<std::string, std::string> p33("a", "b");
-
-
-// 	m.insert(p33);
-// 	std::cout << m["a"] << std::endl;
-
-// 	// it = m.begin();
-// 	// it = m.end();
-
-// }
-
-// {
-// 	std::map<int, int> m;
-// 	std::map<int, int>::iterator it;
-// 	std::pair<int, int> p33(33, 33);
-// 	std::pair<int, int> p13(13, 13);
-// 	std::pair<int, int> p53(53, 53);
-//  	std::pair<int, int> p11(11, 11);
-
-// 	it = m.begin();
-// 	m.insert(p33);
-// 	m.insert(p13);
-// 	m.insert(p53);
-// 	m.insert(p11);
-// 	std::cout << m[33] << std::endl;
-// 	std::cout << m[13] << std::endl;
-// 	std::cout << m[53] << std::endl;
-
-// 	// it = m.end();
-
-// }
 
 
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/13 15:41:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 19:23:10 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,37 @@ namespace ft{
 		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 		public:
-			node_type   *_root;
 
-			avltree(void): _root(), _nbr_node(0){}
+			avltree(void): _nbr_node(0), _root(){}
 			~avltree(void){}
+			avltree& operator=(const avltree& t){
+
+				// clear(t._root);
+				_comp = t._comp;
+				_alloc = t._alloc;
+				_alloc_node = t._alloc_node;
+				_nbr_node = t._nbr_node;
+				create_node(t._root);
+				return (*this);
+			}
+
+			void create_node(node_type *x){
+
+				//? recursive function to allocate, construct and insert data
+				// _root = _alloc_node.allocate(1);
+				// _root->data = _alloc.allocate(1);
+				// _alloc.construct(_root->data, t._root->data);
+			}
+
+			void clear(node_type* root){
+
+				while (root != NULL){
+
+					// _alloc.destroy();
+					clear(root->left_node);
+					clear(root->right_node);
+				}
+			}
 
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
 			int height(void){
@@ -70,12 +97,10 @@ namespace ft{
 				return false;
 			}
 
-			// bool exist(pair_type value){
 			bool exist(T value){
 				return exist(_root, value);
 			}
 
-			// node_type* insert(pair_type data){
 			node_type* insert(T data){
 
 				if (!exist(_root, data)){
@@ -354,6 +379,10 @@ namespace ft{
 			Alloc_node  _alloc_node;
 			Alloc       _alloc;
 			int         _nbr_node;
+			
+		public:
+			node_type   *_root;
+
 	};
 
 }
