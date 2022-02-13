@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/10 12:12:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 15:41:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ namespace ft{
 	class avltree{
 
 		typedef typename T::first_type	key_type;
-		typedef typename T::second_type	value_type;
+		typedef typename T::second_type	mapped_value;
 		typedef node<T> node_type;
 		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 		public:
 			node_type   *_root;
 
-			avltree(void): _nbr_node(0), _root(){}
+			avltree(void): _root(), _nbr_node(0){}
 			~avltree(void){}
 
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
@@ -102,7 +102,7 @@ namespace ft{
 				return (root->data);
 			}
 
-			value_type search(key_type key){
+			mapped_value* search(key_type& key){
 				return search(_root, key);
 			}
 
@@ -154,16 +154,16 @@ namespace ft{
 					return find_(root->right_node, key);
 			}
 
-			value_type search (node_type root, key_type key){
+			mapped_value* search (node_type *root, key_type& key){
 
 				if (root == NULL)
-					return (NULL);
-				else if (root.data.first == key)
-					return (root.data.second);
-				else if (root.data.first > key)
-					return search(root.left_node, key);
+					return (0);
+				else if (root->data.first == key)
+					return (&(root->data.second));
+				else if (root->data.first > key)
+					return search(root->left_node, key);
 				else
-					return search(root.right_node, key);
+					return search(root->right_node, key);
 			}
 
 			bool exist(node_type *n, T data){

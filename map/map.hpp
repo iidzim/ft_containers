@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/10 12:36:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 16:10:13 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,37 @@ namespace ft{
 
 		public:
 
-			typedef size_t																size_type;
-			typedef Key																	key_type;
-			typedef T																	mapped_type;
-			typedef ft::pair<const Key,T>												value_type;
-			typedef Compare																key_compare;
-			// * typedef value_compare; https://www.cplusplus.com/reference/map/map/value_comp/
-			typedef Alloc																allocator_type;
-			typedef typename allocator_type::reference									reference;
-			typedef typename allocator_type::const_reference							const_reference;
-			typedef typename allocator_type::pointer									pointer;
-			typedef typename allocator_type::const_pointer								const_pointer;
+			typedef size_t																		size_type;
+			typedef Key																			key_type;
+			typedef T																			mapped_type;
+			typedef ft::pair<const Key,T>														value_type;
+			typedef Compare																		key_compare;
+			// typedef value_compare;
+			typedef Alloc																		allocator_type;
+			typedef typename allocator_type::reference											reference;
+			typedef typename allocator_type::const_reference									const_reference;
+			typedef typename allocator_type::pointer											pointer;
+			typedef typename allocator_type::const_pointer										const_pointer;
 			typedef typename ft::biterator<std::bidirectional_iterator_tag, value_type>			biterator;
 			typedef typename ft::biterator<std::bidirectional_iterator_tag, const value_type>	const_biterator;
-			typedef typename ft::reverse_iterator<biterator>							reverse_iterator;
-			typedef typename ft::reverse_iterator<const_biterator>						const_reverse_iterator;
+			typedef typename ft::reverse_iterator<biterator>									reverse_iterator;
+			typedef typename ft::reverse_iterator<const_biterator>								const_reverse_iterator;
 
-			typedef typename ft::node<ft::pair<const Key,T> > 							node_type;
-			typedef typename ft::avltree<ft::pair<const Key,T>, Compare, Alloc >		tree_type;
+			typedef typename ft::node<ft::pair<const Key,T> > 									node_type;
+			typedef typename ft::avltree<ft::pair<const Key,T> >								tree_type;
 
 
 			//? Constructs a map container object
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(){}
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _tree(){}
 
 			map (const map& x): _tree() { *this = x; }
 
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()): _tree(){}
+				const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _tree(){
+					(void)first;
+					(void)last;
+				}
 
 			//? Map destructor
 			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
@@ -92,19 +95,23 @@ namespace ft{
 			//? Returns an iterator referring to the past-the-end element in the map container
 			biterator end()
 			{
-				node_type* end = _tree._root;
-				while (end->right_node != NULL)
-					end = end->right_node;
-				biterator it(end, &_tree);
+				// node_type* end = _tree._root;
+				// while (end->right_node != NULL)
+				// 	end = end->right_node;
+				// biterator it(end, &_tree);
+				// return (++it);
+				biterator it(NULL, &_tree);
 				return (it);
 			}
 
 			const_biterator end() const
 			{
-				node_type* end = _tree._root;
-				while (end->right_node != NULL)
-					end = end->right_node;
-				biterator it(end, &_tree);
+				// node_type* end = _tree._root;
+				// while (end->right_node != NULL)
+				// 	end = end->right_node;
+				// biterator it(end, &_tree);
+				// return (++it);
+				biterator it(NULL, &_tree);
 				return (it);
 			}
 
@@ -132,7 +139,8 @@ namespace ft{
 			//? Access element
 			// A call to this function is equivalent to: (*((this->insert(make_pair(k,mapped_type()))).first)).second
 			mapped_type& operator[] (const key_type& k){
-				return _tree.search(k);
+				mapped_type *v = _tree.search(k);
+				return (*v);
 			}
 
 			//* Modifiers ************************************************* //
@@ -145,15 +153,16 @@ namespace ft{
 				if (_tree.exist(val)){
 					n = _tree.find_(val);
 					biterator it (n, &_tree);
-					return make_pair(it, false);
+					return ft::make_pair(it, false);
 				}
 				n = _tree.insert(val);
 				biterator it (n, &_tree);
-				return make_pair(it, true);
+				return ft::make_pair(it, true);
 			}
 
 			biterator insert (biterator position, const value_type& val){
 
+				(void)position;
 				node_type* n;
 				n = _tree.insert(val);
 				biterator it (n, &_tree);
@@ -163,10 +172,10 @@ namespace ft{
 			template <class InputIterator>
   			void insert (InputIterator first, InputIterator last);
 
-			// //? Erase elements
-			// void erase (biterator position){ remove(position._ptr); }
+			//? Erase elements
+			void erase (biterator position){ remove(position._ptr); }
 
-			// size_type erase (const key_type& k){ return remove(k); }
+			size_type erase (const key_type& k){ return remove(k); }
 
 			// void erase (biterator first, biterator last);
 
@@ -211,7 +220,9 @@ namespace ft{
 			//* Allocator ************************************************* //
 
 			//? Returns a copy of the allocator object associated with the map
-			allocator_type get_allocator() const;
+			allocator_type get_allocator() const { return _alloc; }
+
+			tree_type& get_tree(void){ return _tree; }
 
 		private:
 			key_compare		_comp;

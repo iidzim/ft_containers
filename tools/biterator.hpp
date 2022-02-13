@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/10 12:30:56 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 16:09:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft{
 
 		biterator(void): _ptr(), _tree() {}
 		biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
-		biterator(const biterator& b): _ptr(), _tree() { *this = b; }
+		biterator(const biterator& b){ *this = b; }
 		~biterator(void){}
 		biterator& operator=(const biterator& b){
 			_ptr = b._ptr;
@@ -85,8 +85,10 @@ namespace ft{
 				_ptr = _tree->_root;
 				if (_ptr == NULL)
 					throw std::underflow_error("iterator");
-				else
-					_ptr = _ptr->right_node;
+				else{
+					while (_ptr->right_node != NULL)
+						_ptr = _ptr->right_node;
+				}
 			}
 			else{
 				if (_ptr->left_node != NULL){
@@ -103,6 +105,7 @@ namespace ft{
 					_ptr = new_parent;
 				}
 			}
+			return (*this);
 		}
 
 		biterator  operator-- (int){
