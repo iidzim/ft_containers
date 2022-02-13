@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/13 19:40:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/13 20:48:42 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,10 @@ namespace ft{
 			}
 
 			//? Return iterator to lower bound
-			biterator lower_bound (const key_type& k);
+			biterator lower_bound (const key_type& k){
+
+				
+			}
 			const_biterator lower_bound (const key_type& k) const;
 
 			//? Return iterator to upper bound
@@ -322,9 +325,9 @@ namespace ft{
 
 
 //ToDo------ Canonical form		./5
-//ToDo------ Iterators			./4
-//ToDo------ Capacity			./3
-//ToDo------ Element access		./1
+//ToDo------ Iterators			4/4
+//ToDo------ Capacity			3/3
+//ToDo------ Element access		1/1
 //ToDo------ Modifiers			./8
 //ToDo------ Observers			./2
 //ToDo------ Operations			./5
