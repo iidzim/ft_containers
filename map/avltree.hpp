@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 15:57:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 18:21:26 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ namespace ft{
 
 			int remove_(key_type key){
 
+				// std::cout << key << std::endl;
 				if (exist(_root, key)){
 					_root = remove_(_root, key);
 					_nbr_node -= 1;
@@ -361,12 +362,14 @@ namespace ft{
 					else if (n->left_node != NULL && n->right_node != NULL){
 						if (n->left_node->height >= n->right_node->height){
 							T successor = max(n->left_node);
-							n->data = successor;
+							// n->data = successor;
+							_alloc.construct(&n->data, successor);
 							n->left_node = remove_(n->left_node, successor.first);
 						}
 						else{
 							T successor = min(n->right_node);
-							n->data = successor;
+							// n->data = successor;
+							_alloc.construct(&n->data, successor);
 							n->right_node = remove_(n->right_node, successor.first);
 						}
 					}

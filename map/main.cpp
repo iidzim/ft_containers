@@ -146,15 +146,18 @@ int main(void){
 	// std::cout << rite->first << std::endl;
 
 
-	// ft::map<int, std::string>::biterator itlow, itup;
-	// itlow = m.lower_bound(13);
-	// std::cout << "lower_bound --> " << itlow->first << std::endl;
-	// itup = m.upper_bound(53);
-	// std::cout << "upper_bound --> " << itup->first << std::endl;
+	ft::map<int, std::string>::biterator itlow, itup;
+	itlow = m.lower_bound(13);
+	std::cout << "lower_bound --> " << itlow->first << std::endl;
+	itup = m.upper_bound(53);
+	std::cout << "upper_bound --> " << itup->first << std::endl;
 
-	// m.erase(itlow, itup);
+	std::cout << m.size() << std::endl;
+	m.erase(itlow, itup);
+	std::cout << m.size() << std::endl;
+	std::cout << "\n///////////////////////////////////////////////////\n";
+	m.get_tree().display(m.get_tree()._root);
 	// m.erase(13);
-	// std::cout << m.size() << std::endl;
 
 
 
@@ -164,10 +167,10 @@ int main(void){
 
 	// m.get_tree().display(m.get_tree()._root);
 
-	ft::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
-	p = m.equal_range(42);
-	std::cout << p.first->first << " - " << p.first->second << std::endl;
-	std::cout << p.second->first << " - " << p.second->second << std::endl;
+	// ft::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
+	// p = m.equal_range(42);
+	// std::cout << p.first->first << " - " << p.first->second << std::endl;
+	// std::cout << p.second->first << " - " << p.second->second << std::endl;
 
 }
 
@@ -199,10 +202,15 @@ int main(void){
 // 	// std::cout << "--> " << rite->first << std::endl;
 
 	std::map<int, std::string>::iterator itlow, itup;
-// 	itlow = m.lower_bound(13);
-// 	std::cout << "lower_bound = " << itlow->first << std::endl;
-	itup = m.upper_bound(42);
+	itlow = m.lower_bound(13);
+	std::cout << "lower_bound = " << itlow->first << std::endl;
+	itup = m.upper_bound(53);
 	std::cout << "upper_bound = " << itup->first << std::endl;
+
+	std::cout << m.size() << std::endl;
+	m.erase(itlow, itup);
+	std::cout << m.size() << std::endl;
+	// m.erase(13);
 
 // 	// m.erase(itlow, itup);
 // 	std::cout << m.size() << std::endl;
@@ -212,10 +220,10 @@ int main(void){
 // 	std::cout << "count = " << m.count(33) << std::endl;
 
 
-	std::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
-	p = m.equal_range(42);
-	std::cout << p.first->first << " - " << p.first->second << std::endl;
-	std::cout << p.second->first << " - " << p.second->second << std::endl;
+	// std::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
+	// p = m.equal_range(42);
+	// std::cout << p.first->first << " - " << p.first->second << std::endl;
+	// std::cout << p.second->first << " - " << p.second->second << std::endl;
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 16:48:07 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 18:35:01 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,16 @@ namespace ft{
 
 				while (first != last){
 					// erase(first);
+					std::cout << first.get_ptr()->data.first << " - ";
 					_tree.remove_(first.get_ptr()->data.first);
-					++first;
+					// if (_comp(first.get_ptr()->data.first, 40) <= 0){
+						std::cout << "\n***********************\n";
+						_tree.display(_tree._root);
+						std::cout << "\n***********************\n";
+					// }
+					first++;
 				}
+				std::cout << "\n";
 			}
 
 			//? Swap content
@@ -338,7 +345,6 @@ namespace ft{
 
 
 
-
 #endif
 
 ////////////////////////////ToDo
@@ -388,16 +394,19 @@ namespace ft{
 //* allocator::rebind
 //* test bidirectional iterator
 //* reverse iterator
+//* find & count
+//* lower_bound & upper_bound
+
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
 //* implement map member functions
+	//! equal_range 
+	//! erase
 	//! operator= & destructor   - avltree class -
 		//? assignment operator for avltree class 
 		//? implement create node function
 		//? clear avltree
-	//! swap
-	//! observers
 
 //* value compare
 //* enable_if
