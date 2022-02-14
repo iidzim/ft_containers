@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/13 20:48:42 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 11:39:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ namespace ft{
 
 			//? Map destructor
 			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
-			~map(void){ _tree.clear(_tree._root); }
+			~map(void){}// _tree.clear(_tree._root); }
 
 			//? Copy container content
 			map& operator= (const map& x){
@@ -161,14 +161,15 @@ namespace ft{
 			}
 
 			//? Erase elements
-			void erase (biterator position){ remove(position._ptr); }
+			void erase (biterator position){ remove(position.get_ptr()->data.first); }
 
 			size_type erase (const key_type& k){ return remove(k); }
 
 			void erase (biterator first, biterator last){
 
 				while (first != last){
-					remove(first._ptr);
+					// erase(first);
+					remove(first.get_ptr()->data.first);
 					++first;
 				}
 			}
@@ -186,7 +187,7 @@ namespace ft{
 			key_compare key_comp() const;
 
 			//? Return value comparison object
-			value_compare value_comp() const;
+			// value_compare value_comp() const; // typedef value compare
 
 			//* Operations ************************************************* //
 
@@ -228,13 +229,78 @@ namespace ft{
 			//? Return iterator to lower bound
 			biterator lower_bound (const key_type& k){
 
-				
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(this->rbegin()->first, k) > 0){
+					std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+					return biterator(NULL, NULL);
+				}
+				else{
+					biterator it = this->begin(), ite = this->end();
+					while (--ite != it){
+						if (_comp(k, ite->first) <= 0){
+							if (_comp(ite->first, k) > 0)
+								++ite;
+							return (ite);
+						}
+					}
+				}
+				return biterator(NULL, NULL);
 			}
-			const_biterator lower_bound (const key_type& k) const;
+
+			const_biterator lower_bound (const key_type& k) const{
+
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(this->rbegin()->first, k) > 0){
+					std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+					return biterator(NULL, NULL);
+				}
+				else{
+					biterator it = this->begin(), ite = this->end();
+					while (--ite != it){
+						if (_comp(k, ite->first) <= 0){
+							if (_comp(ite->first, k) > 0)
+								++ite;
+							return (ite);
+						}
+					}
+				}
+				return biterator(NULL, NULL);
+			}
 
 			//? Return iterator to upper bound
-			biterator upper_bound (const key_type& k);
-			const_biterator upper_bound (const key_type& k) const;
+			biterator upper_bound (const key_type& k){
+
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(k, this->rbegin()->first) > 0){
+					biterator it = this->begin(), ite = this->end();
+					while (it != ite){
+						if (_comp(k, it->first) > 0)
+							return (it);
+						it++;
+					}
+				}
+				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+				return biterator(NULL, NULL);
+			}
+
+			const_biterator upper_bound (const key_type& k) const{
+
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(k, this->rbegin()->first) > 0){
+					biterator it = this->begin(), ite = this->end();
+					while (it != ite){
+						if (_comp(k, it->first) > 0)
+							return (it);
+						it++;
+					}
+				}
+				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+				return biterator(NULL, NULL);
+			}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
 			pair<const_biterator,const_biterator> equal_range (const key_type& k) const;
@@ -318,7 +384,6 @@ namespace ft{
 		//? clear avltree
 	//! swap
 	//! observers
-	
 
 //* value compare
 //* enable_if

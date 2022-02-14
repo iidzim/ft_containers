@@ -127,12 +127,23 @@ int main(void){
 	// std::cout << eq->first << std::endl;
 	// std::cout << cp->first << std::endl;
 
-	ft::map<int, std::string>::reverse_iterator rit = m.rbegin();
-	std::cout << rit->first << std::endl;
-	ft::map<int, std::string>::reverse_iterator rite = m.rend();
-	--rite;
-	std::cout << rite->first << std::endl;
-	
+	// ft::map<int, std::string>::reverse_iterator rit = m.rbegin();
+	// std::cout << rit->first << std::endl;
+	// ft::map<int, std::string>::reverse_iterator rite = m.rend();
+	// --rite;
+	// std::cout << rite->first << std::endl;
+
+	ft::map<int, std::string>::biterator itlow, itup;
+	itlow = m.lower_bound(13);
+	std::cout << "lower_bound --> " << itlow->first << std::endl;
+	itup = m.upper_bound(53);
+	std::cout << "upper_bound --> " << itup->first << std::endl;
+
+	m.erase(itlow, itup);
+	std::cout << m.size() << std::endl;
+
+	m.get_tree().display(m.get_tree()._root);
+
 }
 
 {
@@ -156,12 +167,20 @@ int main(void){
 	m.insert(p39);
 	m.insert(p45);
 
-	std::map<int, std::string>::reverse_iterator rit = m.rbegin();
-	std::cout << "--> " << rit->first << std::endl;
-	std::map<int, std::string>::reverse_iterator rite = m.rend();
-	--rite;
-	std::cout << "--> " << rite->first << std::endl;
+	// std::map<int, std::string>::reverse_iterator rit = m.rbegin();
+	// std::cout << "--> " << rit->first << std::endl;
+	// std::map<int, std::string>::reverse_iterator rite = m.rend();
+	// --rite;
+	// std::cout << "--> " << rite->first << std::endl;
 
+	std::map<int, std::string>::iterator itlow, itup;
+	itlow = m.lower_bound(13);
+	std::cout << "lower_bound = " << itlow->first << std::endl;
+	itup = m.upper_bound(53);
+	std::cout << "upper_bound = " << itup->first << std::endl;
+
+	m.erase(itlow, itup);
+	std::cout << m.size() << std::endl;
 
 }
 

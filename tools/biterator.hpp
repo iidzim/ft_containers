@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/13 16:09:29 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 11:35:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ namespace ft{
 			--(*this);
 			return (tmp);
 		}
+
+		node_type* get_ptr(void) { return _ptr; }
 
 		private:
 			node_type *_ptr;	// points to the node denoting our current position within that tree
