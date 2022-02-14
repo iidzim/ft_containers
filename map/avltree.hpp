@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 09:37:01 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 13:43:28 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ namespace ft{
 			}
 
 			//? the number of nodes in the tree
-			int size(void){ return _nbr_node; }
+			int size(void) const { return _nbr_node; }
 	
 			bool is_empty(void){
 				if (_nbr_node == 0)
@@ -97,8 +97,12 @@ namespace ft{
 				return false;
 			}
 
-			bool exist(T value){
+			bool exist (T value) const {
 				return exist(_root, value);
+			}
+
+			bool exist (key_type key) const {
+				return exist(_root, key);
 			}
 
 			node_type* insert(T data){
@@ -135,6 +139,10 @@ namespace ft{
 				return find_(_root, p.first);
 			}
 
+			node_type* find_(key_type key){
+				return find_(_root, key);
+			}
+
 			void display(const node_type* n){
 				display("", n, false);
 			}
@@ -143,15 +151,25 @@ namespace ft{
 			// 	return (_root);
 			// }
 
-			int remove(key_type key){
+			int remove_(key_type key){
 
 				if (exist(_root, key)){
-					_root = remove(_root, key);
+					_root = remove_(_root, key);
 					_nbr_node -= 1;
 					return (1);
 				}
 				return (0);
 			}
+
+			// int remove_(node_type* n){
+
+			// 	if (exist(_root, n->data.first)){
+			// 		_root = remove_(_root, n->data.first);
+			// 		_nbr_node -= 1;
+			// 		return (1);
+			// 	}
+			// 	return (0);
+			// }
 
 			void print_parent(node_type* n){
 
@@ -191,7 +209,7 @@ namespace ft{
 					return search(root->right_node, key);
 			}
 
-			bool exist(node_type *n, T data){
+			bool exist(node_type *n, T data) const {
 
 				if (n == NULL)
 					return (false);
@@ -205,7 +223,7 @@ namespace ft{
 				return (true);
 			}
 
-			bool exist(node_type *n, key_type key){
+			bool exist(node_type *n, key_type key) const {
 
 				if (n == NULL)
 					return (false);
@@ -319,15 +337,15 @@ namespace ft{
 				return (new_parent);
 			}
 
-			node_type* remove(node_type *n, key_type key){
+			node_type* remove_(node_type *n, key_type key){
 
 				if (n == NULL)
 					return (NULL);
 				int diff = _comp(key, n->data.first);
 				if (diff > 0)
-					n->left_node = remove(n->left_node, key);
+					n->left_node = remove_(n->left_node, key);
 				else if (diff == 0 && n->right_node != NULL && n->data.first != key)
-					n->right_node = remove(n->right_node, key);
+					n->right_node = remove_(n->right_node, key);
 				else{
 					if ((n->left_node != NULL && n->right_node == NULL) ||
 							(n->left_node == NULL && n->right_node != NULL)){
@@ -344,12 +362,12 @@ namespace ft{
 						if (n->left_node->height >= n->right_node->height){
 							T successor = max(n->left_node);
 							n->data = successor;
-							n->left_node = remove(n->left_node, successor.first);
+							n->left_node = remove_(n->left_node, successor.first);
 						}
 						else{
 							T successor = min(n->right_node);
 							n->data = successor;
-							n->right_node = remove(n->right_node, successor.first);
+							n->right_node = remove_(n->right_node, successor.first);
 						}
 					}
 					else{ // n->left_node == NULL && n->right_node == NULL

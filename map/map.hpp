@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 11:39:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 13:49:55 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ namespace ft{
 			//* Capacity ************************************************** //
 
 			//? Test whether container is empty
-			bool empty() const{ return _tree.is_empty(); }
+			bool empty(void) const{ return _tree.is_empty(); }
 
 			//? Return container size
-			size_type size() const { return _tree.size(); }
+			size_type size(void) const { return _tree.size(); }
 
 			//? Return maximum size
-			size_type max_size() const { return _alloc.max_size(); }
+			size_type max_size(void) const { return _alloc.max_size(); }
 
 			//* Element access ******************************************** //
 
@@ -161,15 +161,15 @@ namespace ft{
 			}
 
 			//? Erase elements
-			void erase (biterator position){ remove(position.get_ptr()->data.first); }
+			void erase (biterator position){ _tree.remove_(position.get_ptr()->data.first); }
 
-			size_type erase (const key_type& k){ return remove(k); }
+			size_type erase (const key_type& k){ return _tree.remove_(k); }
 
 			void erase (biterator first, biterator last){
 
 				while (first != last){
 					// erase(first);
-					remove(first.get_ptr()->data.first);
+					_tree.remove_(first.get_ptr()->data.first);
 					++first;
 				}
 			}
@@ -197,22 +197,23 @@ namespace ft{
 			biterator find (const key_type& k){
 
 				node_type* n;
-				if (this->count(k)){
+				if (_tree.exist(k)){
 					n = _tree.find_(k);
 					return biterator(n, &_tree);
 				}
 				else
-					return biterator(NULL, &_tree);
+					return biterator(NULL, NULL);
 			}
+
 			const_biterator find (const key_type& k) const{
 
 				node_type* n;
-				if (this->count(k)){
+				if (_tree.exist(k)){
 					n = _tree.find_(k);
 					return biterator(n, &_tree);
 				}
 				else
-					return biterator(NULL, &_tree);
+					return biterator(NULL, NULL);
 			}
 
 			//* Two keys are considered equivalent if the container's comparison object returns false reflexively
@@ -303,7 +304,12 @@ namespace ft{
 			}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
-			pair<const_biterator,const_biterator> equal_range (const key_type& k) const;
+			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
+
+				const_biterator b1, b2;
+				
+			}
+
 			pair<biterator,biterator>             equal_range (const key_type& k);
 
 			//* Allocator ************************************************* //
@@ -393,7 +399,7 @@ namespace ft{
 //ToDo------ Iterators			4/4
 //ToDo------ Capacity			3/3
 //ToDo------ Element access		1/1
-//ToDo------ Modifiers			./8
+//ToDo------ Modifiers			3/8
 //ToDo------ Observers			./2
-//ToDo------ Operations			./5
+//ToDo------ Operations			4/5
 //ToDo------ Allocator			./1

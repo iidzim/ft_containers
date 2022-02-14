@@ -139,8 +139,15 @@ int main(void){
 	itup = m.upper_bound(53);
 	std::cout << "upper_bound --> " << itup->first << std::endl;
 
-	m.erase(itlow, itup);
+	// m.erase(itlow, itup);
+	// m.erase(13);
 	std::cout << m.size() << std::endl;
+
+
+
+	ft::map<int, std::string>::biterator itf = m.find(45);
+	std::cout << "find ->----- " << itf->first << std::endl;
+	std::cout << "count = " << m.count(33) << std::endl;
 
 	m.get_tree().display(m.get_tree()._root);
 
@@ -179,8 +186,12 @@ int main(void){
 	itup = m.upper_bound(53);
 	std::cout << "upper_bound = " << itup->first << std::endl;
 
-	m.erase(itlow, itup);
+	// m.erase(itlow, itup);
 	std::cout << m.size() << std::endl;
+
+	std::map<int, std::string>::iterator itf = m.find(45);
+	std::cout << "find ->----- " << itf->first << std::endl;
+	std::cout << "count = " << m.count(33) << std::endl;
 
 }
 
