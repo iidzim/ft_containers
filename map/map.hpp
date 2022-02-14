@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 13:49:55 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 16:48:07 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,13 +304,21 @@ namespace ft{
 			}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
-			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
+			pair<biterator,biterator> equal_range (const key_type& k){
 
-				const_biterator b1, b2;
-				
+				node_type* n;
+				if (_tree.exist(k)){
+					n = _tree.find_(k);
+					biterator it(n, &_tree);
+					biterator ite = this->end();
+					if (it == --ite)
+						return ft::make_pair(it, biterator(0, NULL));
+					return ft::make_pair(it, ++it);
+				}
+				return ft::make_pair(upper_bound(k), upper_bound(k));
 			}
 
-			pair<biterator,biterator>             equal_range (const key_type& k);
+			pair<const_biterator,const_biterator> equal_range (const key_type& k) const;
 
 			//* Allocator ************************************************* //
 

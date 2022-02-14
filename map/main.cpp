@@ -86,7 +86,7 @@ int main(void){
 	m.insert(p45);
 	m.get_tree().display(m.get_tree()._root);
 
-	it = m.begin();
+	// it = m.begin();
 	// std::cout << it->first << std::endl;
 	// ++it;
 	// std::cout << it->first << std::endl;
@@ -101,10 +101,15 @@ int main(void){
 	// ++it;
 	// std::cout << it->first << std::endl;
 	// ++it;
+	// std::cout << it->first << std::endl;
+	// ++it;
+	// ++it;
+	// // ++it;
 	// std::cout << it->first << std::endl;
 
+	// std::cout << "*****************\n";
 
-	ite = m.end();
+	// ite = m.end();
 	// --ite;
 	// std::cout << ite->first << std::endl;
 	// --ite;
@@ -119,6 +124,9 @@ int main(void){
 	// std::cout << ite->first << std::endl;
 	// --ite;
 	// std::cout << ite->first << std::endl;
+	// --ite;
+	// std::cout << ite->first << std::endl;
+	// --ite;
 	// --ite;
 	// std::cout << ite->first << std::endl;
 
@@ -132,24 +140,34 @@ int main(void){
 	// ft::map<int, std::string>::reverse_iterator rite = m.rend();
 	// --rite;
 	// std::cout << rite->first << std::endl;
+	// --rite;
+	// std::cout << rite->first << std::endl;
+	// --rite;
+	// std::cout << rite->first << std::endl;
 
-	ft::map<int, std::string>::biterator itlow, itup;
-	itlow = m.lower_bound(13);
-	std::cout << "lower_bound --> " << itlow->first << std::endl;
-	itup = m.upper_bound(53);
-	std::cout << "upper_bound --> " << itup->first << std::endl;
+
+	// ft::map<int, std::string>::biterator itlow, itup;
+	// itlow = m.lower_bound(13);
+	// std::cout << "lower_bound --> " << itlow->first << std::endl;
+	// itup = m.upper_bound(53);
+	// std::cout << "upper_bound --> " << itup->first << std::endl;
 
 	// m.erase(itlow, itup);
 	// m.erase(13);
-	std::cout << m.size() << std::endl;
+	// std::cout << m.size() << std::endl;
 
 
 
-	ft::map<int, std::string>::biterator itf = m.find(45);
-	std::cout << "find ->----- " << itf->first << std::endl;
-	std::cout << "count = " << m.count(33) << std::endl;
+	// ft::map<int, std::string>::biterator itf = m.find(45);
+	// std::cout << "find ->----- " << itf->first << std::endl;
+	// std::cout << "count = " << m.count(33) << std::endl;
 
-	m.get_tree().display(m.get_tree()._root);
+	// m.get_tree().display(m.get_tree()._root);
+
+	ft::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
+	p = m.equal_range(42);
+	std::cout << p.first->first << " - " << p.first->second << std::endl;
+	std::cout << p.second->first << " - " << p.second->second << std::endl;
 
 }
 
@@ -174,24 +192,30 @@ int main(void){
 	m.insert(p39);
 	m.insert(p45);
 
-	// std::map<int, std::string>::reverse_iterator rit = m.rbegin();
-	// std::cout << "--> " << rit->first << std::endl;
-	// std::map<int, std::string>::reverse_iterator rite = m.rend();
-	// --rite;
-	// std::cout << "--> " << rite->first << std::endl;
+// 	// std::map<int, std::string>::reverse_iterator rit = m.rbegin();
+// 	// std::cout << "--> " << rit->first << std::endl;
+// 	// std::map<int, std::string>::reverse_iterator rite = m.rend();
+// 	// --rite;
+// 	// std::cout << "--> " << rite->first << std::endl;
 
 	std::map<int, std::string>::iterator itlow, itup;
-	itlow = m.lower_bound(13);
-	std::cout << "lower_bound = " << itlow->first << std::endl;
-	itup = m.upper_bound(53);
+// 	itlow = m.lower_bound(13);
+// 	std::cout << "lower_bound = " << itlow->first << std::endl;
+	itup = m.upper_bound(42);
 	std::cout << "upper_bound = " << itup->first << std::endl;
 
-	// m.erase(itlow, itup);
-	std::cout << m.size() << std::endl;
+// 	// m.erase(itlow, itup);
+// 	std::cout << m.size() << std::endl;
 
-	std::map<int, std::string>::iterator itf = m.find(45);
-	std::cout << "find ->----- " << itf->first << std::endl;
-	std::cout << "count = " << m.count(33) << std::endl;
+// 	std::map<int, std::string>::iterator itf = m.find(45);
+// 	std::cout << "find ->----- " << itf->first << std::endl;
+// 	std::cout << "count = " << m.count(33) << std::endl;
+
+
+	std::pair<std::map<int , std::string>::iterator, std::map<int, std::string>::iterator> p;
+	p = m.equal_range(42);
+	std::cout << p.first->first << " - " << p.first->second << std::endl;
+	std::cout << p.second->first << " - " << p.second->second << std::endl;
 
 }
 

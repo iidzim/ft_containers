@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 20:23:43 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/09 17:58:06 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 16:45:31 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,13 @@ namespace ft{
 		pair (const first_type& a, const second_type& b): first(a), second(b){}
 
 		template<typename U, typename V>
-		pair (const pair<U,V>& pr): first(pr.first), second(pr.second){}
+		pair (const pair<U,V>& pr): first(), second(){ *this = pr; }
 
 		//? Assign contents
 		pair& operator= (const pair& pr){
 
-			this->first = pr.first;
-			this->second = pr.second;
+			first = pr.first;
+			second = pr.second;
 			return (*this);
 		}
 
