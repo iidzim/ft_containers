@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 19:27:01 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 19:29:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ namespace ft{
 		node* parent_node;
 		node* left_node;
 		node* right_node;
-
-		// node& operator=(const node& n){
-
-		// 	data = n.data;
-		// 	bf = n.bf;
-		// 	height = n.height;
-		// 	parent_node = n.parent_node;
-		// 	left_node = n.left_node;
-		// 	right_node = n.right_node;
-		// 	return (*this);
-		// }
 
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
@@ -70,12 +59,11 @@ namespace ft{
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
 				_nbr_node = t._nbr_node;
-				// _root = t._root;
-				_root = create_node(_root, t._root);
+				_root = assign_tree(_root, t._root);
 				return (*this);
 			}
 
-			node_type* create_node(node_type* lhs, node_type* rhs){
+			node_type* assign_tree(node_type* lhs, node_type* rhs){
 
 				if (lhs == NULL){
 					lhs = _alloc_node.allocate(1);
@@ -89,16 +77,16 @@ namespace ft{
 				}
 				int diff = _comp(rhs->data.first, lhs->data.first);
 				if (diff == true){
-					node_type* lnode = create_node(lhs->left_node, rhs);
+					node_type* lnode = assign_tree(lhs->left_node, rhs);
 					lhs->left_node = lnode;
 					lnode->parent_node = lhs;
 				}
 				else{
-					node_type* rnode = create_node(lhs->right_node, rhs);
+					node_type* rnode = assign_tree(lhs->right_node, rhs);
 					lhs->right_node = rnode;
 					rnode->parent_node = lhs;
 				}
-				update(lhs);	// Update balance factor and height values
+				update(lhs);
 				return balance(lhs);
 			}
 

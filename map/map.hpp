@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 19:26:38 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 19:31:54 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ namespace ft{
 
 			//? Removes all elements from the map container
 			//(which are destroyed), leaving the container with a size of 0.
-			void clear();
+			void clear(){ _tree.clear(); }
 
 			//* Observers ************************************************* //
 
@@ -471,29 +471,3 @@ namespace ft{
 //ToDo------ Observers			./2
 //ToDo------ Operations			5/5
 //ToDo------ Allocator			1/1
-
-
-
-// node_type* insert(node_type *n, T data){
-
-// 	if (n == NULL){
-// 		_root = _alloc_node.allocate(1);
-// 		_alloc.construct(&_root->data, data);
-// 		_root->height = _root->bf = 0;
-// 		_root->left_node = _root->right_node = _root->parent_node = NULL;
-// 		return (_root);
-// 	}
-// 	int diff = _comp(data.first, n->data.first);
-// 	if (diff == true){
-// 		node_type* lnode = insert(n->left_node, data);
-// 		n->left_node = lnode;
-// 		lnode->parent_node = n;
-// 	}
-// 	else{
-// 		node_type* rnode = insert(n->right_node, data);
-// 		n->right_node = rnode;
-// 		rnode->parent_node = n;
-// 	}
-// 	update(n);	// Update balance factor and height values
-// 	return balance(n);
-// }
