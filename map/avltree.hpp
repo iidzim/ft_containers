@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 18:47:44 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 17:36:28 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,37 @@ namespace ft{
 			~avltree(void){}
 			avltree& operator=(const avltree& t){
 
-				// clear(t._root);
+				clear(t._root);
 				_comp = t._comp;
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
 				_nbr_node = t._nbr_node;
-				// create_node(t._root);
+				create_nodes(t._root);
 				return (*this);
 			}
 
-			// void create_node(node_type *x){
+			void create_nodes(node_type *x){
 
 				//? recursive function to allocate, construct and insert data
-				// _root = _alloc_node.allocate(1);
-				// _root->data = _alloc.allocate(1);
-				// _alloc.construct(_root->data, t._root->data);
-			// }
+				_root = _alloc_node.allocate(1);
+				_root->data = _alloc.allocate(1);
+				_alloc.construct(_root->data, x->_root->data);
+				_root->bf = x->bf;
+				_root->height = x->height;
+				_root->left_node = x->left_node;
+				_root->right_node = x->right_node;
+				create_nodes(x->left_node);
+				create_nodes(x->right_node);
+			}
 
-			// void clear(node_type* root){
+			void clear(node_type* root){
 
-			// 	while (root != NULL){
-
-			// 		// _alloc.destroy();
-			// 		clear(root->left_node);
-			// 		clear(root->right_node);
-			// 	}
-			// }
+				while (root != NULL){
+					_alloc.destroy(root);
+					clear(root->left_node);
+					clear(root->right_node);
+				}
+			}
 
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
 			int height(void){
@@ -91,7 +96,7 @@ namespace ft{
 			//? the number of nodes in the tree
 			int size(void) const { return _nbr_node; }
 	
-			bool is_empty(void){
+			bool is_empty(void) const {
 				if (_nbr_node == 0)
 					return true;
 				return false;

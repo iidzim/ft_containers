@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 15:28:27 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 17:56:55 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "avltree.hpp"
 #include "../tools/tools.hpp"
+#include "../vector/vector.hpp"
 #include "../tools/biterator.hpp"
 #include "../tools/reverse_iterator.hpp"
 
@@ -71,7 +72,7 @@ namespace ft{
 
 				_alloc = x._alloc;
 				_comp = x._comp;
-				_tree = x._tree;
+				_tree = x._tree; //! implement assignment operator for avl tree
 				return (*this);
 			}
 
@@ -129,7 +130,6 @@ namespace ft{
 			//* Modifiers ************************************************* //
 
 			//? Insert elements
-			// biterator insert (const value_type& val);
 			pair<biterator,bool> insert (const value_type& val)
 			{
 				node_type* n;
@@ -167,17 +167,13 @@ namespace ft{
 
 			void erase (biterator first, biterator last){
 
+				ft::vector<int> v;
 				while (first != last){
-
-					// erase(first);
-					// std::cout << first.get_ptr()->data.first << " - ";
-					_tree.remove_(first.get_ptr()->data.first);
-					// std::cout << "\n***********************\n";
-					// _tree.display(_tree._root);
-					// std::cout << "\n***********************\n";
+					v.push_back(first.get_ptr()->data.first);
 					first++;
 				}
-				// std::cout << "\n";
+				for (ft::vector<int>::iterator it = v.begin(); it < v.end(); it++)
+					_tree.remove_(*it);
 			}
 
 			//? Swap content
@@ -355,22 +351,36 @@ namespace ft{
 
 	//? Relational operators
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		if (lhs.size() != rhs.size())
+			return false;
+		return(ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(lhs == rhs));
+	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(rhs < lhs));
+	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator>  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (rhs < lhs);
+	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+	bool operator>= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
+		return (!(lhs < rhs));
+	}
 
 	//? swap
 	template <class Key, class T, class Compare, class Alloc>
@@ -430,29 +440,32 @@ namespace ft{
 //* test bidirectional iterator
 //* reverse iterator
 //* find & count
-//* lower_bound & upper_bound
+//* lower_bound & upper_bound & equal range
+//! test insert
+//! fix erase(range)
 
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
-//* find the missing node !!!!
+//! copy constructor
+
 //* implement map member functions
-	//! equal_range 
-	//! erase
 	//! operator= & destructor   - avltree class -
-		//? assignment operator for avltree class 
+		//? assignment operator for avltree class
 		//? implement create node function
 		//? clear avltree
-
+	//! swap
+	//! observers
 //* value compare
+//* non member functions
 //* enable_if
 
 
-//ToDo------ Canonical form		./5
+//ToDo------ Canonical form		3/5
 //ToDo------ Iterators			4/4
 //ToDo------ Capacity			3/3
 //ToDo------ Element access		1/1
-//ToDo------ Modifiers			3/8
+//ToDo------ Modifiers			6/8
 //ToDo------ Observers			./2
-//ToDo------ Operations			4/5
-//ToDo------ Allocator			./1
+//ToDo------ Operations			5/5
+//ToDo------ Allocator			1/1
