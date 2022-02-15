@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 17:36:28 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 19:27:01 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ namespace ft{
 		node* parent_node;
 		node* left_node;
 		node* right_node;
+
+		// node& operator=(const node& n){
+
+		// 	data = n.data;
+		// 	bf = n.bf;
+		// 	height = n.height;
+		// 	parent_node = n.parent_node;
+		// 	left_node = n.left_node;
+		// 	right_node = n.right_node;
+		// 	return (*this);
+		// }
 
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
@@ -59,32 +70,39 @@ namespace ft{
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
 				_nbr_node = t._nbr_node;
-				create_nodes(t._root);
+				// _root = t._root;
+				_root = create_node(_root, t._root);
 				return (*this);
 			}
 
-			void create_nodes(node_type *x){
+			node_type* create_node(node_type* lhs, node_type* rhs){
 
-				//? recursive function to allocate, construct and insert data
-				_root = _alloc_node.allocate(1);
-				_root->data = _alloc.allocate(1);
-				_alloc.construct(_root->data, x->_root->data);
-				_root->bf = x->bf;
-				_root->height = x->height;
-				_root->left_node = x->left_node;
-				_root->right_node = x->right_node;
-				create_nodes(x->left_node);
-				create_nodes(x->right_node);
-			}
-
-			void clear(node_type* root){
-
-				while (root != NULL){
-					_alloc.destroy(root);
-					clear(root->left_node);
-					clear(root->right_node);
+				if (lhs == NULL){
+					lhs = _alloc_node.allocate(1);
+					_alloc.construct(&lhs->data, rhs->data);
+					lhs->height = rhs->height;
+					lhs->bf = rhs->bf;
+					lhs->left_node = rhs->left_node;
+					lhs->right_node = rhs->right_node;
+					lhs->parent_node = rhs->parent_node;
+					return (lhs);
 				}
+				int diff = _comp(rhs->data.first, lhs->data.first);
+				if (diff == true){
+					node_type* lnode = create_node(lhs->left_node, rhs);
+					lhs->left_node = lnode;
+					lnode->parent_node = lhs;
+				}
+				else{
+					node_type* rnode = create_node(lhs->right_node, rhs);
+					lhs->right_node = rnode;
+					rnode->parent_node = lhs;
+				}
+				update(lhs);	// Update balance factor and height values
+				return balance(lhs);
 			}
+
+			//* Capacity ************************************************** //
 
 			//? The height of a rooted tree is the number of edges between the tree's root and its furthest leaf
 			int height(void){
@@ -102,22 +120,14 @@ namespace ft{
 				return false;
 			}
 
+			//* Operations ************************************************* //
+
 			bool exist (T value) const {
 				return exist(_root, value);
 			}
 
 			bool exist (key_type key) const {
 				return exist(_root, key);
-			}
-
-			node_type* insert(T data){
-
-				if (!exist(_root, data)){
-					_root = insert(_root, data);
-					_nbr_node += 1;
-					return (_root);
-				}
-				return (NULL);
 			}
 
 			//? return the min pair in the tree
@@ -148,13 +158,17 @@ namespace ft{
 				return find_(_root, key);
 			}
 
-			void display(const node_type* n){
-				display("", n, false);
-			}
+			//* Modifiers ************************************************* //
 
-			// node_type* get_root(void){
-			// 	return (_root);
-			// }
+			node_type* insert(T data){
+
+				if (!exist(_root, data)){
+					_root = insert(_root, data);
+					_nbr_node += 1;
+					return (_root);
+				}
+				return (NULL);
+			}
 
 			int remove_(key_type key){
 
@@ -164,6 +178,16 @@ namespace ft{
 					return (1);
 				}
 				return (0);
+			}
+
+			void clear(void){
+				clear(_root);
+			}
+
+			//* Print Content ************************************************* //
+
+			void display(const node_type* n){
+				display("", n, false);
 			}
 
 			void print_parent(node_type* n){
@@ -179,6 +203,8 @@ namespace ft{
 			}
 
 		private:
+
+			//* Operations ************************************************* //
 
 			node_type* find_(node_type *root, key_type key){
 
@@ -232,11 +258,12 @@ namespace ft{
 				return (true);
 			}
 
+			//* Modifiers ************************************************* //
+
 			node_type* insert(node_type *n, T data){
 
 				if (n == NULL){
 					_root = _alloc_node.allocate(1);
-					// _root->data = _alloc.allocate(1);
 					_alloc.construct(&_root->data, data);
 					_root->height = _root->bf = 0;
 					_root->left_node = _root->right_node = _root->parent_node = NULL;
@@ -257,9 +284,65 @@ namespace ft{
 				return balance(n);
 			}
 
+			node_type* remove_(node_type *n, key_type key){
+
+				if (n == NULL)
+					return (NULL);
+				int diff = _comp(key, n->data.first);
+				if (diff > 0)
+					n->left_node = remove_(n->left_node, key);
+				else if (diff == 0 && n->right_node != NULL && n->data.first != key)
+					n->right_node = remove_(n->right_node, key);
+				else{
+					if ((n->left_node != NULL && n->right_node == NULL) ||
+							(n->left_node == NULL && n->right_node != NULL)){
+						node_type *tmp = (n->left_node != NULL) ? n->left_node : n->right_node;
+						_root = tmp;
+						tmp = NULL;
+						delete tmp;
+						return (_root);
+					}
+					//* The successor is either the smallest value in the right subtree
+					//* or the largest value in the left subtree.
+					//? choose the successor from the subtree with the greatest height (~ tree balanced)
+					else if (n->left_node != NULL && n->right_node != NULL){
+						if (n->left_node->height >= n->right_node->height){
+							T successor = max(n->left_node);
+							// n->data = successor;
+							_alloc.construct(&n->data, successor);
+							n->left_node = remove_(n->left_node, successor.first);
+						}
+						else{
+							T successor = min(n->right_node);
+							// n->data = successor;
+							_alloc.construct(&n->data, successor);
+							n->right_node = remove_(n->right_node, successor.first);
+						}
+					}
+					else{ // n->left_node == NULL && n->right_node == NULL
+						delete n;
+						return (NULL);
+					}	
+				}
+				update(n);
+				return (balance(n));
+			}
+
+			void clear(node_type* root){
+
+				if (root != NULL){
+					_alloc.destroy(&(root->data));
+					clear(root->left_node);
+					clear(root->right_node);
+					_alloc_node.deallocate(root, 1); //! heap-use-after-free
+				}
+			}
+			//* Rotations ************************************************* //
+
 			void update(node_type *n){
 
 				int left_height, right_height;
+
 				left_height = (n->left_node == NULL) ? -1 : n->left_node->height;
 				right_height = (n->right_node == NULL) ? -1 : n->right_node->height;
 				n->height = std::max(right_height, left_height) + 1;
@@ -332,49 +415,7 @@ namespace ft{
 				return (new_parent);
 			}
 
-			node_type* remove_(node_type *n, key_type key){
-
-				if (n == NULL)
-					return (NULL);
-				int diff = _comp(key, n->data.first);
-				if (diff > 0)
-					n->left_node = remove_(n->left_node, key);
-				else if (diff == 0 && n->right_node != NULL && n->data.first != key)
-					n->right_node = remove_(n->right_node, key);
-				else{
-					if ((n->left_node != NULL && n->right_node == NULL) ||
-							(n->left_node == NULL && n->right_node != NULL)){
-						node_type *tmp = (n->left_node != NULL) ? n->left_node : n->right_node;
-						_root = tmp;
-						tmp = NULL;
-						delete tmp;
-						return (_root);
-					}
-					//* The successor is either the smallest value in the right subtree
-					//* or the largest value in the left subtree.
-					//? choose the successor from the subtree with the greatest height (~ tree balanced)
-					else if (n->left_node != NULL && n->right_node != NULL){
-						if (n->left_node->height >= n->right_node->height){
-							T successor = max(n->left_node);
-							// n->data = successor;
-							_alloc.construct(&n->data, successor);
-							n->left_node = remove_(n->left_node, successor.first);
-						}
-						else{
-							T successor = min(n->right_node);
-							// n->data = successor;
-							_alloc.construct(&n->data, successor);
-							n->right_node = remove_(n->right_node, successor.first);
-						}
-					}
-					else{ // n->left_node == NULL && n->right_node == NULL
-						delete n;
-						return (NULL);
-					}	
-				}
-				update(n);
-				return (balance(n));
-			}
+			//* Print Tree ************************************************* //
 
 			void display(const std::string& prefix, const node_type* n, bool is_left){
 

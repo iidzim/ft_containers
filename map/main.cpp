@@ -13,15 +13,15 @@
 // 	// ft::pair<int, std::string> p8(8, "ok");
 // 	// ft::pair<int, std::string> p9(9, "ok");
 // 	// ft::pair<int, std::string> p23(23, "ok");
-	// ft::pair<int, std::string> p33(33, "A");
-	// ft::pair<int, std::string> p13(13, "B");
-	// ft::pair<int, std::string> p53(53, "C");
- 	// ft::pair<int, std::string> p11(11, "D");
- 	// ft::pair<int, std::string> p64(64, "Z");
- 	// ft::pair<int, std::string> p40(40, "E");
- 	// ft::pair<int, std::string> p39(39, "F");
- 	// ft::pair<int, std::string> p45(45, "G");
-	// ft::avltree<ft::pair<int, std::string> > t;
+// 	ft::pair<int, std::string> p33(33, "A");
+// 	ft::pair<int, std::string> p13(13, "B");
+// 	ft::pair<int, std::string> p53(53, "C");
+//  	ft::pair<int, std::string> p11(11, "D");
+//  	ft::pair<int, std::string> p64(64, "Z");
+//  	ft::pair<int, std::string> p40(40, "E");
+//  	ft::pair<int, std::string> p39(39, "F");
+//  	ft::pair<int, std::string> p45(45, "G");
+// 	ft::avltree<ft::pair<int, std::string> > t;
 // 	// t.insert(p33);
 // 	// t.insert(p13);
 // 	// t.insert(p53);
@@ -45,15 +45,19 @@
 // 	std::cout << "\n*************\n";
 // 	// std::cout << std::boolalpha;
 // 	// std::cout << t.exist(p61) << std::endl;
-// 	t.remove_(13);
-// 	t.remove_(33);
-// 	t.remove_(39);
-// 	t.remove_(40);
-// 	t.remove_(45);
-// 	t.remove_(53);
+// 	// t.remove_(13);
+// 	// t.remove_(33);
+// 	// t.remove_(39);
+// 	// t.remove_(40);
+// 	// t.remove_(45);
+// 	// t.remove_(53);
 // 	// std::cout << "size = " << t.size() << std::endl << std::endl;
-// 	t.print_parent(t._root);
-// 	t.display(t._root);
+// 	// t.print_parent(t._root);
+// 	// t.display(t._root);
+
+// 	ft::avltree<ft::pair<int, std::string> > test(t);
+// 	test.display(test._root);
+
 // }
 
 int main(void){
@@ -84,6 +88,10 @@ int main(void){
 	m.insert(p45);
 	m.get_tree().display(m.get_tree()._root);
 
+	ft::map<int, std::string> test = m;
+	test.get_tree().display(test.get_tree()._root);
+
+
 	//* opertaor[]
 	// std::cout << m[13] << " - " << m[39] << " - " << m[64] << std::endl;
 
@@ -92,15 +100,20 @@ int main(void){
 	// std::cout << std::boolalpha;
 	// std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
 
-	//* insert(range)
+
+	// ft::map<int, std::string>::const_biterator cit = m.begin();
+	// std::cout << cit->first << std::endl;
+
+
+	// //* insert(range)
 	// ft::map<int, std::string>::biterator ot = m.begin(), ote = m.end();
 	// ++ot;
 	// ++ot;
 	// --ote;
 	// --ote;
 	// --ote;
-	// std::cout << ot->first << std::endl;
-	// std::cout << ote->first << std::endl;
+	// // std::cout << ot->first << std::endl;
+	// // std::cout << ote->first << std::endl;
 	// ft::map<int, std::string> test(ot, ote);
 	// test.get_tree().display(test.get_tree()._root);
 
@@ -109,8 +122,9 @@ int main(void){
 	// else
 	// 	std::cout << "not equal" << std::endl;
 
-	//! copy constructor (assignment operator)
-	// ft::map<int, std::string> test1(m); 
+	// //! copy constructor (assignment operator)
+	// ft::map<int, std::string> test1(m);
+	// // ft::map<int, std::string> test1(test);
 	// test1.get_tree().display(test1.get_tree()._root);
 
 	//* insert with hint
@@ -181,16 +195,16 @@ int main(void){
 	// std::cout << rite->first << std::endl;
 
 	//* lower_bound & upper bound
-	ft::map<int, std::string>::biterator itlow, itup;
-	itlow = m.lower_bound(13);
+	// ft::map<int, std::string>::biterator itlow, itup;
+	// itlow = m.lower_bound(13);
 	// std::cout << "lower_bound --> " << itlow->first << std::endl;
-	itup = m.upper_bound(53);
+	// itup = m.upper_bound(53);
 	// std::cout << "upper_bound --> " << itup->first << std::endl;
 
 	//* erase
-	std::cout << "size before = " << m.size() << std::endl;
-	m.erase(itlow, itup);
-	std::cout << "size after = " << m.size() << std::endl;
+	// std::cout << "size before = " << m.size() << std::endl;
+	// m.erase(itlow, itup);
+	// std::cout << "size after = " << m.size() << std::endl;
 	// m.erase(13);
 	// m.erase(64);
 	// m.erase(itlow);
@@ -207,7 +221,7 @@ int main(void){
 	// std::cout << p.first->first << " - " << p.first->second << std::endl;
 	// std::cout << p.second->first << " - " << p.second->second << std::endl;
 
-	m.get_tree().display(m.get_tree()._root);
+	// m.get_tree().display(m.get_tree()._root);
 }
 
 std::cout << "-------------------------------------------------------\n";
@@ -240,16 +254,16 @@ std::cout << "-------------------------------------------------------\n";
 	// std::cout << "--> " << rite->first << std::endl;
 
 	//* lower_bound and upper_bound
-	std::map<int, std::string>::iterator itlow, itup;
-	itlow = m.lower_bound(13);
+	// std::map<int, std::string>::iterator itlow, itup;
+	// itlow = m.lower_bound(13);
 	// std::cout << "lower_bound = " << itlow->first << std::endl;
-	itup = m.upper_bound(53);
+	// itup = m.upper_bound(53);
 	// std::cout << "upper_bound = " << itup->first << std::endl;
 
 	//* erase
-	std::cout << "size before = " << m.size() << std::endl;
-	m.erase(itlow, itup);
-	std::cout << "size after = " << m.size() << std::endl;
+	// std::cout << "size before = " << m.size() << std::endl;
+	// m.erase(itlow, itup);
+	// std::cout << "size after = " << m.size() << std::endl;
 	// m.erase(13);
 	// m.erase(64);
 	// m.erase(itlow);
