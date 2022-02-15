@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 18:21:26 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/14 18:47:44 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ namespace ft{
 
 			int remove_(key_type key){
 
-				// std::cout << key << std::endl;
 				if (exist(_root, key)){
 					_root = remove_(_root, key);
 					_nbr_node -= 1;
@@ -161,16 +160,6 @@ namespace ft{
 				}
 				return (0);
 			}
-
-			// int remove_(node_type* n){
-
-			// 	if (exist(_root, n->data.first)){
-			// 		_root = remove_(_root, n->data.first);
-			// 		_nbr_node -= 1;
-			// 		return (1);
-			// 	}
-			// 	return (0);
-			// }
 
 			void print_parent(node_type* n){
 

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/14 18:35:01 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/15 15:28:27 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ namespace ft{
 
 					while (first != last){
 						_tree.insert(*first);
-						++first;	
+						++first;
 					}
 			}
 
@@ -168,17 +168,16 @@ namespace ft{
 			void erase (biterator first, biterator last){
 
 				while (first != last){
+
 					// erase(first);
-					std::cout << first.get_ptr()->data.first << " - ";
+					// std::cout << first.get_ptr()->data.first << " - ";
 					_tree.remove_(first.get_ptr()->data.first);
-					// if (_comp(first.get_ptr()->data.first, 40) <= 0){
-						std::cout << "\n***********************\n";
-						_tree.display(_tree._root);
-						std::cout << "\n***********************\n";
-					// }
+					// std::cout << "\n***********************\n";
+					// _tree.display(_tree._root);
+					// std::cout << "\n***********************\n";
 					first++;
 				}
-				std::cout << "\n";
+				// std::cout << "\n";
 			}
 
 			//? Swap content
@@ -325,7 +324,19 @@ namespace ft{
 				return ft::make_pair(upper_bound(k), upper_bound(k));
 			}
 
-			pair<const_biterator,const_biterator> equal_range (const key_type& k) const;
+			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
+
+				node_type* n;
+				if (_tree.exist(k)){
+					n = _tree.find_(k);
+					biterator it(n, &_tree);
+					biterator ite = this->end();
+					if (it == --ite)
+						return ft::make_pair(it, biterator(0, NULL));
+					return ft::make_pair(it, ++it);
+				}
+				return ft::make_pair(upper_bound(k), upper_bound(k));
+			}
 
 			//* Allocator ************************************************* //
 
@@ -341,6 +352,30 @@ namespace ft{
 			
 			
 	};
+
+	//? Relational operators
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	//? swap
+	template <class Key, class T, class Compare, class Alloc>
+	void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y){ x.swap(y); }
+
 };
 
 
@@ -400,6 +435,7 @@ namespace ft{
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
+//* find the missing node !!!!
 //* implement map member functions
 	//! equal_range 
 	//! erase
