@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/01 09:59:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:26:53 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace ft{
 			typedef typename iterator_traits<iterator>::reference			reference;
 
 			//? Constructs a reverse iterator that points to no object.
-			reverse_iterator(): _it(NULL) {}
+			reverse_iterator(): _it() {}
 
 			//? Constructs a reverse iterator from some original iterator it
 			explicit reverse_iterator (iterator_type it) { this->_it = it; }

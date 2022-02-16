@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 18:30:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:52:20 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft{
 					typedef value_type first_argument_type;
 					typedef value_type second_argument_type;
 					bool operator() (const value_type& x, const value_type& y) const{
-						return comp(x.first, y.first);
+						return _comp(x.first, y.first);
 					}
 			} value_compare;
 			typedef Alloc																		allocator_type;
@@ -100,18 +100,20 @@ namespace ft{
 					start = start->left_node;
 				return (biterator(start, &_tree));
 			}
+
 			const_biterator begin() const{
 
-				node_type* start = _tree._root;
-				while (start->left_node != NULL)
-					start = start->left_node;
-				return (biterator(start, &_tree));
-
+				// node_type* start = _tree._root;
+				// while (start->left_node != NULL)
+				// 	start = start->left_node;
+				// return (biterator(start, &_tree));
+				return begin();
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
 			biterator end() { return (biterator(NULL, &_tree)); }
-			const_biterator end() const { return (biterator(NULL, &_tree)); }
+			// const_biterator end() const { return (biterator(NULL, &_tree)); }
+			const_biterator end() const { return end(); }
 
 			//? Return reverse iterator to reverse beginning
 			reverse_iterator rbegin(){ return (reverse_iterator(this->end())); }
@@ -210,7 +212,7 @@ namespace ft{
 			key_compare key_comp() const { return this->_comp; }
 
 			//? Return value comparison object
-			value_compare value_comp() const{ value_compare(_comp); }
+			value_compare value_comp() const{ return value_compare(_comp); }
 
 			//* Operations ************************************************* //
 
@@ -274,23 +276,24 @@ namespace ft{
 
 			const_biterator lower_bound (const key_type& k) const{
 
-				if (_comp(k, this->begin()->first) > 0)
-					return this->begin();
-				else if (_comp(this->rbegin()->first, k) > 0){
-					std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-					return biterator(NULL, NULL);
-				}
-				else{
-					biterator it = this->begin(), ite = this->end();
-					while (--ite != it){
-						if (_comp(k, ite->first) <= 0){
-							if (_comp(ite->first, k) > 0)
-								++ite;
-							return (ite);
-						}
-					}
-				}
-				return biterator(NULL, NULL);
+				// if (_comp(k, this->begin()->first) > 0)
+				// 	return this->begin();
+				// else if (_comp(this->rbegin()->first, k) > 0){
+				// 	std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+				// 	return biterator(NULL, NULL);
+				// }
+				// else{
+				// 	biterator it = this->begin(), ite = this->end();
+				// 	while (--ite != it){
+				// 		if (_comp(k, ite->first) <= 0){
+				// 			if (_comp(ite->first, k) > 0)
+				// 				++ite;
+				// 			return (ite);
+				// 		}
+				// 	}
+				// }
+				// return biterator(NULL, NULL);
+				return lower_bound(k);
 			}
 
 			//? Return iterator to upper bound
@@ -312,18 +315,19 @@ namespace ft{
 
 			const_biterator upper_bound (const key_type& k) const{
 
-				if (_comp(k, this->begin()->first) > 0)
-					return this->begin();
-				else if (_comp(k, this->rbegin()->first) > 0){
-					biterator it = this->begin(), ite = this->end();
-					while (it != ite){
-						if (_comp(k, it->first) > 0)
-							return (it);
-						it++;
-					}
-				}
-				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				return biterator(NULL, NULL);
+				// if (_comp(k, this->begin()->first) > 0)
+				// 	return this->begin();
+				// else if (_comp(k, this->rbegin()->first) > 0){
+				// 	biterator it = this->begin(), ite = this->end();
+				// 	while (it != ite){
+				// 		if (_comp(k, it->first) > 0)
+				// 			return (it);
+				// 		it++;
+				// 	}
+				// }
+				// std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+				// return biterator(NULL, NULL);
+				return upper_bound(k);
 			}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
@@ -343,16 +347,17 @@ namespace ft{
 
 			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
 
-				node_type* n;
-				if (_tree.exist(k)){
-					n = _tree.find_(k);
-					biterator it(n, &_tree);
-					biterator ite = this->end();
-					if (it == --ite)
-						return ft::make_pair(it, biterator(0, NULL));
-					return ft::make_pair(it, ++it);
-				}
-				return ft::make_pair(upper_bound(k), upper_bound(k));
+				// node_type* n;
+				// if (_tree.exist(k)){
+				// 	n = _tree.find_(k);
+				// 	biterator it(n, &_tree);
+				// 	biterator ite = this->end();
+				// 	if (it == --ite)
+				// 		return ft::make_pair(it, biterator(0, NULL));
+				// 	return ft::make_pair(it, ++it);
+				// }
+				// return ft::make_pair(upper_bound(k), upper_bound(k));
+				return equal_range(k);
 			}
 
 			//* Allocator ************************************************* //

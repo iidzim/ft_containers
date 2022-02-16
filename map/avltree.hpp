@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 16:36:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:47:56 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,11 @@ namespace ft{
 				return search(_root, key);
 			}
 
-			node_type* find_(T p){
+			node_type* find_(T p) const {
 				return find_(_root, p.first);
 			}
 
-			node_type* find_(key_type key){
+			node_type* find_(key_type key) const {
 				return find_(_root, key);
 			}
 
@@ -176,7 +176,7 @@ namespace ft{
 
 			//* Operations ************************************************* //
 
-			node_type* find_(node_type *root, key_type key){
+			node_type* find_(node_type *root, key_type key) const {
 
 				if (root == NULL)
 					return (NULL);

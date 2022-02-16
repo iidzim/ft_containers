@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 14:32:24 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:30:59 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft{
 			return (*this);
 		}
 		reference operator* () const { return (_ptr->data); }
-		pointer operator-> () { return (&_ptr->data); }
+		pointer operator-> () const { return (&(_ptr->data)); }
 		friend bool operator== (const biterator& lhs, const biterator& rhs) { return lhs._ptr == rhs._ptr; }
 		friend bool operator!= (const biterator& lhs, const biterator& rhs) { return (!(lhs == rhs)); }
 
@@ -116,6 +116,10 @@ namespace ft{
 		}
 
 		node_type* get_ptr(void) { return _ptr; }
+
+		operator biterator<iterator_category, const T>(){
+			return biterator<iterator_category, const T>(_ptr, _tree);
+		}
 
 		private:
 			node_type *_ptr;	// points to the node denoting our current position within that tree
