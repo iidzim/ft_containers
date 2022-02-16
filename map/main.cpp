@@ -125,7 +125,7 @@ int main(void){
 	// ft::map<int, std::string> test2 = m;
 	// test2.get_tree().display(test2.get_tree()._root);
 
-	//! copy constructor 
+	//! copy constructor
 	// ft::map<int, std::string> test1(m);
 	// // ft::map<int, std::string> test1(test);
 	// test1.get_tree().display(test1.get_tree()._root);

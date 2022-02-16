@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 16:02:41 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 18:30:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,19 @@ namespace ft{
 			typedef T																			mapped_type;
 			typedef ft::pair<const Key,T>														value_type;
 			typedef Compare																		key_compare;
-			//* typedef value_compare https://www.cplusplus.com/reference/map/map/value_comp/;
+			typedef class value_compare : public std::binary_function<value_type, value_type, bool>{
+				friend class map;
+				protected:
+					Compare _comp;
+					value_compare (Compare c) : _comp(c) {}	// constructed with map's comparison object
+				public:
+					typedef bool result_type;
+					typedef value_type first_argument_type;
+					typedef value_type second_argument_type;
+					bool operator() (const value_type& x, const value_type& y) const{
+						return comp(x.first, y.first);
+					}
+			} value_compare;
 			typedef Alloc																		allocator_type;
 			typedef typename allocator_type::reference											reference;
 			typedef typename allocator_type::const_reference									const_reference;
@@ -195,10 +207,10 @@ namespace ft{
 			//* Observers ************************************************* //
 
 			//? Return key comparison object
-			key_compare key_comp() const;
+			key_compare key_comp() const { return this->_comp; }
 
 			//? Return value comparison object
-			// value_compare value_comp() const; // typedef value compare
+			value_compare value_comp() const{ value_compare(_comp); }
 
 			//* Operations ************************************************* //
 
@@ -456,13 +468,13 @@ namespace ft{
 		//? assignment operator for avltree class
 		//? implement create node function
 		//? clear avltree
+//* observers
 
 
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
 // avltree::clear(){_alloc_node.deallocate(root, 1);} //! leaks -or- assign only the root of the tree 
 	//? swap
-	//? observers
 	//? relational operators
 //* const iterator
 //* enable_if
