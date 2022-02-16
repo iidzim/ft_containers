@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 19:29:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 16:36:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,25 @@ namespace ft{
 		public:
 
 			avltree(void): _nbr_node(0), _root(){}
-			~avltree(void){}
+			~avltree(void){ clear(); }
 			avltree& operator=(const avltree& t){
 
-				clear(t._root);
+				clear();
 				_comp = t._comp;
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
 				_nbr_node = t._nbr_node;
-				_root = assign_tree(_root, t._root);
+				insert_nodes(t._root);
 				return (*this);
 			}
 
-			node_type* assign_tree(node_type* lhs, node_type* rhs){
+			void insert_nodes(node_type* x){
 
-				if (lhs == NULL){
-					lhs = _alloc_node.allocate(1);
-					_alloc.construct(&lhs->data, rhs->data);
-					lhs->height = rhs->height;
-					lhs->bf = rhs->bf;
-					lhs->left_node = rhs->left_node;
-					lhs->right_node = rhs->right_node;
-					lhs->parent_node = rhs->parent_node;
-					return (lhs);
+				if (x != NULL){
+					insert(x->data);
+					insert_nodes(x->left_node);
+					insert_nodes(x->right_node); 
 				}
-				int diff = _comp(rhs->data.first, lhs->data.first);
-				if (diff == true){
-					node_type* lnode = assign_tree(lhs->left_node, rhs);
-					lhs->left_node = lnode;
-					lnode->parent_node = lhs;
-				}
-				else{
-					node_type* rnode = assign_tree(lhs->right_node, rhs);
-					lhs->right_node = rnode;
-					rnode->parent_node = lhs;
-				}
-				update(lhs);
-				return balance(lhs);
 			}
 
 			//* Capacity ************************************************** //
@@ -325,6 +307,7 @@ namespace ft{
 					_alloc_node.deallocate(root, 1); //! heap-use-after-free
 				}
 			}
+
 			//* Rotations ************************************************* //
 
 			void update(node_type *n){

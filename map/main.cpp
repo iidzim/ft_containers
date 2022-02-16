@@ -86,10 +86,8 @@ int main(void){
 	m.insert(p40);
 	m.insert(p39);
 	m.insert(p45);
+	std::cout << "m----------------------------\n";
 	m.get_tree().display(m.get_tree()._root);
-
-	ft::map<int, std::string> test = m;
-	test.get_tree().display(test.get_tree()._root);
 
 
 	//* opertaor[]
@@ -112,9 +110,10 @@ int main(void){
 	// --ote;
 	// --ote;
 	// --ote;
-	// // std::cout << ot->first << std::endl;
-	// // std::cout << ote->first << std::endl;
+	// std::cout << ot->first << std::endl;
+	// std::cout << ote->first << std::endl;
 	// ft::map<int, std::string> test(ot, ote);
+	// std::cout << "test----------------------------\n";
 	// test.get_tree().display(test.get_tree()._root);
 
 	// if (test == m)
@@ -122,7 +121,11 @@ int main(void){
 	// else
 	// 	std::cout << "not equal" << std::endl;
 
-	// //! copy constructor (assignment operator)
+	//! assignment operator
+	// ft::map<int, std::string> test2 = m;
+	// test2.get_tree().display(test2.get_tree()._root);
+
+	//! copy constructor 
 	// ft::map<int, std::string> test1(m);
 	// // ft::map<int, std::string> test1(test);
 	// test1.get_tree().display(test1.get_tree()._root);
@@ -131,6 +134,24 @@ int main(void){
 	// m.insert(ote, p14);
 	// m.get_tree().display(m.get_tree()._root);
 
+	//* swap
+	ft::map<int, std::string> n;
+	ft::pair<int, std::string> p3(3, "A");
+	ft::pair<int, std::string> p1(1, "B");
+	ft::pair<int, std::string> p5(5, "C");
+ 	ft::pair<int, std::string> p7(7, "D");
+	n.insert(p3);
+	n.insert(p1);
+	n.insert(p5);
+	n.insert(p7);
+	std::cout << "n----------------------------\n";
+	n.get_tree().display(n.get_tree()._root);
+	m.swap(n);
+	// swap(m, n);
+	std::cout << "swap\nm*************************\n";
+	m.get_tree().display(m.get_tree()._root);
+	std::cout << "test*************************\n";
+	n.get_tree().display(n.get_tree()._root);
 
 	//* begin()
 	// it = m.begin();

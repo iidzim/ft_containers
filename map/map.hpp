@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 19:31:54 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/16 16:02:41 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ namespace ft{
 			}
 
 			//? Map destructor
-			//? This destroys all container elements, and deallocates all the storage capacity allocated by the map container using its allocator.
-			~map(void){}// _tree.clear(_tree._root); }
+			~map(void){ _tree.clear(); }
 
 			//? Copy container content
 			map& operator= (const map& x){
 
+				_tree.clear();
 				_alloc = x._alloc;
 				_comp = x._comp;
-				_tree = x._tree; //! implement assignment operator for avl tree
-				// this->clear();
-				// insert(x.begin(), x.end());
+				_tree = x._tree;
+				// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
+				//! m2 error: non matching constructor  
 				return (*this);
 			}
 
@@ -179,7 +179,14 @@ namespace ft{
 			}
 
 			//? Swap content
-			void swap (map& x);
+			void swap (map& x){
+
+				std::swap(_comp, x._comp);
+				std::swap(_alloc, x._alloc);
+				tree_type tmp = _tree;
+				_tree = x._tree;
+				x._tree = tmp;
+			}
 
 			//? Removes all elements from the map container
 			//(which are destroyed), leaving the container with a size of 0.
@@ -390,8 +397,6 @@ namespace ft{
 
 };
 
-
-
 #endif
 
 ////////////////////////////ToDo
@@ -441,25 +446,25 @@ namespace ft{
 //* allocator::rebind
 //* test bidirectional iterator
 //* reverse iterator
-//* find & count
-//* lower_bound & upper_bound & equal range
-//! test insert
-//! fix erase(range)
-
-
-////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
-
-//! copy constructor
-
 //* implement map member functions
+	//? find & count
+	//? lower_bound & upper_bound & equal range
+	//! test insert
+	//! fix erase(range)
+	//? copy constructor
 	//! operator= & destructor   - avltree class -
 		//? assignment operator for avltree class
 		//? implement create node function
 		//? clear avltree
-	//! swap
-	//! observers
-//* value compare
-//* non member functions
+
+
+////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
+
+// avltree::clear(){_alloc_node.deallocate(root, 1);} //! leaks -or- assign only the root of the tree 
+	//? swap
+	//? observers
+	//? relational operators
+//* const iterator
 //* enable_if
 
 
