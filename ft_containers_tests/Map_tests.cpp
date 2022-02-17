@@ -222,7 +222,7 @@ void iterator_tests(void)
                 m.insert(ft::make_pair(myints[i], i));
             ft::map<int, int>::biterator it = m.begin(), eit = --m.end();
             tmp = eit->first;
-            // m.erase(eit); //! infinte loop
+            m.erase(eit);
             for (; it != m.end(); ++it)
                 res += it->first;
             cond = cond && (res == (210 - tmp));
@@ -230,54 +230,54 @@ void iterator_tests(void)
         ++my_it; // I incremented here to make sure that the object changes
         EQUAL(*my_it == *my_it1);
     }
-    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " --it operator "
-              << "] --------------------]\t\t\033[0m";
-    {
-        /*---------------------------------- time limit test --------------------------------------------*/
-        {
-            time_t start, end, diff;
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " --it operator "
+    //           << "] --------------------]\t\t\033[0m";
+    // {
+    //     /*---------------------------------- time limit test --------------------------------------------*/
+    //     {
+    //         time_t start, end, diff;
 
-            std::map<int, std::string> m;
-            ft::map<int, std::string> ft_m;
-            for (size_t i = 0; i < 1e6; ++i)
-            {
-                m.insert(std::make_pair(i, "value"));
-                ft_m.insert(ft::make_pair(i, "value"));
-            }
-            start = get_time();
-            std::map<int, std::string>::iterator it = --m.end();
-            for (; it != m.begin(); --it)
-                ;
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+    //         std::map<int, std::string> m;
+    //         ft::map<int, std::string> ft_m;
+    //         for (size_t i = 0; i < 1e6; ++i)
+    //         {
+    //             m.insert(std::make_pair(i, "value"));
+    //             ft_m.insert(ft::make_pair(i, "value"));
+    //         }
+    //         start = get_time();
+    //         std::map<int, std::string>::iterator it = --m.end();
+    //         for (; it != m.begin(); --it)
+    //             ;
+    //         end = get_time();
+    //         diff = end - start;
+    //         diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-            ualarm(diff * 1e3, 0);
-            ft::map<int, std::string>::biterator ft_it = --ft_m.end();
-            for (; ft_it != ft_m.begin(); --ft_it)
-                ;
-            ualarm(0, 0);
-        }
-        int res(0);
-        {
-            int myints[] = {12, 82, 37, 64, 15};
-            ft::map<int, int> m;
-            for (size_t i = 0; i < 5; ++i)
-                m.insert(ft::make_pair(myints[i], i));
-            ft::map<int, int>::biterator it = --m.end();
-            for (;; --it)
-            {
-                if (it == m.begin())
-                {
-                    res += it->first;
-                    break;
-                }
-                res += it->first;
-            }
-        }
-        --my_it; // I decremented here to make sure that the object changes
-        EQUAL(*my_it != *my_it1);
-    }
+    //         ualarm(diff * 1e3, 0);
+    //         ft::map<int, std::string>::biterator ft_it = --ft_m.end();
+    //         for (; ft_it != ft_m.begin(); --ft_it)
+    //             ;
+    //         ualarm(0, 0);
+    //     }
+    //     int res(0);
+    //     {
+    //         int myints[] = {12, 82, 37, 64, 15};
+    //         ft::map<int, int> m;
+    //         for (size_t i = 0; i < 5; ++i)
+    //             m.insert(ft::make_pair(myints[i], i));
+    //         ft::map<int, int>::biterator it = --m.end();
+    //         for (;; --it)
+    //         {
+    //             if (it == m.begin())
+    //             {
+    //                 res += it->first;
+    //                 break;
+    //             }
+    //             res += it->first;
+    //         }
+    //     }
+    //     --my_it; // I decremented here to make sure that the object changes
+    //     EQUAL(*my_it != *my_it1);
+    // }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " it++ operator "
               << "] --------------------]\t\t\033[0m";
     tmp = my_it++;
@@ -374,7 +374,7 @@ void reverse_iterator_tests(void)
         ft::reverse_iterator<std::map<int, char>::iterator> ob(my_rit);
         EQUAL(*my_rit == *ob);
     }
-    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " riterator to const_riterator "
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " riterator to const_riterator " //! read memory access
               << "] --------------------]\t\t\033[0m";
     {
         ft::map<int, char> my_m;

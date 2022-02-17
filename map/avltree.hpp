@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 12:15:22 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 15:07:49 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,33 +266,36 @@ namespace ft{
 				else{
 					if ((n->left_node != NULL && n->right_node == NULL) ||
 							(n->left_node == NULL && n->right_node != NULL)){
+						//? one child (left or right)
 						node_type *tmp = (n->left_node != NULL) ? n->left_node : n->right_node;
 						_root = tmp;
+						_root->parent_node = n->parent_node;	//! update parent
 						tmp = NULL;
-						delete tmp;
+						delete tmp; //todo----------leaks
 						return (_root);
 					}
 					//* The successor is either the smallest value in the right subtree
 					//* or the largest value in the left subtree.
 					//? choose the successor from the subtree with the greatest height (~ tree balanced)
 					else if (n->left_node != NULL && n->right_node != NULL){
+						node_type *parent = n->parent_node;
 						if (n->left_node->height >= n->right_node->height){
 							T successor = max(n->left_node);
-							// n->data = successor;
 							_alloc.construct(&n->data, successor);
+							n->parent_node = parent;
 							n->left_node = remove_(n->left_node, successor.first);
 						}
 						else{
 							T successor = min(n->right_node);
-							// n->data = successor;
 							_alloc.construct(&n->data, successor);
+							n->parent_node = parent;
 							n->right_node = remove_(n->right_node, successor.first);
 						}
 					}
-					else{ // n->left_node == NULL && n->right_node == NULL
+					else{ //? n->left_node == NULL && n->right_node == NULL -> leaf
 						delete n;
 						return (NULL);
-					}	
+					}
 				}
 				update(n);
 				return (balance(n));

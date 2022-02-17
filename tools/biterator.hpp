@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 14:27:21 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 16:33:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,19 @@ namespace ft{
 				while (_ptr->left_node != NULL) // min value in the tree
 					_ptr = _ptr->left_node;
 			}
+			else if (_ptr->right_node != NULL){
+				// successor = smallest value in the right subtree
+				_ptr = _ptr->right_node;
+				while (_ptr->left_node != NULL)
+					_ptr = _ptr->left_node;
+			}
 			else{
-				if (_ptr->right_node != NULL){
-					// successor = smallest value in the right subtree
-					_ptr = _ptr->right_node;
-					while (_ptr->left_node != NULL)
-						_ptr = _ptr->left_node;
-				}
-				else{
-					node_type* new_parent = _ptr->parent_node;
-					while (new_parent != NULL && _ptr == new_parent->right_node){
-						_ptr = new_parent;
-						new_parent = new_parent->parent_node;
-					}
+				node_type* new_parent = _ptr->parent_node;
+				while (new_parent != NULL && _ptr == new_parent->right_node){
 					_ptr = new_parent;
+					new_parent = new_parent->parent_node;
 				}
+				_ptr = new_parent;
 			}
 			return (*this);
 		}
@@ -88,25 +86,21 @@ namespace ft{
 				_ptr = _tree->_root;
 				if (_ptr == NULL)
 					throw std::underflow_error("iterator");
-				else{
-					while (_ptr->right_node != NULL)
-						_ptr = _ptr->right_node;
-				}
+				while (_ptr->right_node != NULL)
+					_ptr = _ptr->right_node;
+			}
+			else if (_ptr->left_node != NULL){
+				_ptr = _ptr->left_node;
+				while (_ptr->right_node != NULL) // max value in the right subtree
+					_ptr = _ptr->right_node;
 			}
 			else{
-				if (_ptr->left_node != NULL){
-					_ptr = _ptr->left_node;
-					while (_ptr->right_node != NULL) // min value in the tree
-						_ptr = _ptr->right_node;		
-				}
-				else{
-					node_type* new_parent = _ptr->parent_node;
-					while (new_parent != NULL && _ptr == new_parent->left_node){
-						_ptr = new_parent;
-						new_parent = new_parent->parent_node;
-					}
+				node_type* new_parent = _ptr->parent_node;
+				while (new_parent != NULL && _ptr == new_parent->left_node){
 					_ptr = new_parent;
+					new_parent = new_parent->parent_node;
 				}
+				_ptr = new_parent;
 			}
 			return (*this);
 		}
