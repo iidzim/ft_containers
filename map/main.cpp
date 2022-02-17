@@ -86,8 +86,8 @@ int main(void){
 	m.insert(p40);
 	m.insert(p39);
 	m.insert(p45);
-	std::cout << "m----------------------------\n";
-	m.get_tree().display(m.get_tree()._root);
+	// std::cout << "m----------------------------\n";
+	// m.get_tree().display(m.get_tree()._root);
 
 
 	//* opertaor[]
@@ -135,23 +135,23 @@ int main(void){
 	// m.get_tree().display(m.get_tree()._root);
 
 	//* swap
-	ft::map<int, std::string> n;
-	ft::pair<int, std::string> p3(3, "A");
-	ft::pair<int, std::string> p1(1, "B");
-	ft::pair<int, std::string> p5(5, "C");
- 	ft::pair<int, std::string> p7(7, "D");
-	n.insert(p3);
-	n.insert(p1);
-	n.insert(p5);
-	n.insert(p7);
-	std::cout << "n----------------------------\n";
-	n.get_tree().display(n.get_tree()._root);
-	m.swap(n);
-	// swap(m, n);
-	std::cout << "swap\nm*************************\n";
-	m.get_tree().display(m.get_tree()._root);
-	std::cout << "test*************************\n";
-	n.get_tree().display(n.get_tree()._root);
+	// ft::map<int, std::string> n;
+	// ft::pair<int, std::string> p3(3, "A");
+	// ft::pair<int, std::string> p1(1, "B");
+	// ft::pair<int, std::string> p5(5, "C");
+ 	// ft::pair<int, std::string> p7(7, "D");
+	// n.insert(p3);
+	// n.insert(p1);
+	// n.insert(p5);
+	// n.insert(p7);
+	// std::cout << "n----------------------------\n";
+	// n.get_tree().display(n.get_tree()._root);
+	// m.swap(n);
+	// // swap(m, n);
+	// std::cout << "swap\nm*************************\n";
+	// m.get_tree().display(m.get_tree()._root);
+	// std::cout << "test*************************\n";
+	// n.get_tree().display(n.get_tree()._root);
 
 	//* begin()
 	// it = m.begin();
@@ -243,6 +243,24 @@ int main(void){
 	// std::cout << p.second->first << " - " << p.second->second << std::endl;
 
 	// m.get_tree().display(m.get_tree()._root);
+
+	//* reverse iterator
+	ft::map<int, std::string> k;
+	ft::pair<int, std::string> p1(23, "A");
+	ft::pair<int, std::string> p2(31, "A");
+	ft::pair<int, std::string> p3(13, "A");
+
+	k.insert(ft::make_pair(23, "a"));
+	k.insert(p2);
+	k.insert(p3);
+
+	ft::map<int, std::string>::reverse_iterator kite(k.end());
+    ft::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
+	cit = kite;
+	if (kite->first == cit->first && kite->first == cri->first)
+		std::cout << "ok\n";
+
+
 }
 
 std::cout << "-------------------------------------------------------\n";
@@ -301,6 +319,23 @@ std::cout << "-------------------------------------------------------\n";
 	// p = m.equal_range(53);
 	// std::cout << p.first->first << " - " << p.first->second << std::endl;
 	// std::cout << p.second->first << " - " << p.second->second << std::endl;
+
+
+	//* reverse iterator
+	std::map<int, std::string> k;
+	std::pair<int, std::string> p1(23, "A");
+	std::pair<int, std::string> p2(31, "A");
+	std::pair<int, std::string> p3(13, "A");
+
+	k.insert(std::make_pair(23, "a"));
+	k.insert(p2);
+	k.insert(p3);
+
+	std::map<int, std::string>::reverse_iterator kite(k.end());
+    std::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
+	cit = kite;
+	if (kite->first == cit->first && kite->first == cri->first)
+		std::cout << "ok\n";
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 16:33:34 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 18:27:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ namespace ft{
 		typedef Pointer   pointer;
 		typedef Reference reference;
 		// typedef typename ft::node<T> node_type;
+		// typedef typename ft::avltree<T> tree_type;
 		typedef node node_type;
 		typedef tree tree_type;
-		// typedef typename ft::avltree<T> tree_type;
 
 		biterator(void): _ptr(), _tree() {}
 		biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
@@ -80,7 +80,7 @@ namespace ft{
 			return (tmp);
 		}
 
-		biterator  operator-- (){
+		biterator  operator-- (){ //!!!!!!! segfault
 
 			if (_ptr == NULL){
 				_ptr = _tree->_root;

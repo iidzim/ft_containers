@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 15:07:49 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 17:16:38 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ namespace ft{
 			}
 
 			//? return the min pair in the tree
-			T min(node_type *root){
+			T min(node_type *root)const {
 
 				while (root->left_node != NULL)
 					root = root->left_node;
@@ -109,7 +109,7 @@ namespace ft{
 			}
 
 			//? return the max pair in the tree
-			T max(node_type *root){
+			T max(node_type *root)const {
 
 				while (root->right_node != NULL)
 					root = root->right_node;

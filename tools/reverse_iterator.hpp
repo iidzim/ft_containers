@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 09:34:22 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 18:45:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include "./tools.hpp"
 #include "./iterator.hpp"
+#include "./biterator.hpp"
 
 namespace ft{
 
@@ -33,17 +34,18 @@ namespace ft{
 			reverse_iterator(): _it() {}
 
 			//? Constructs a reverse iterator from some original iterator it
-			explicit reverse_iterator (iterator_type it) { this->_it = it; }
+			explicit reverse_iterator (iterator_type it) { this->_it = --it; }
 
 			//? Constructs a reverse iterator from some other reverse iterator
 			template <typename Iter>
 			reverse_iterator (const reverse_iterator<Iter>& rev_it) { this->_it = rev_it.base(); }
 
 			//? Returns a copy of the base iterator.
-			iterator_type base() const {return (_it); }
+			iterator_type base() const { return (_it); }
 
 			//? Operator overloading
-			reference operator* () const { iterator_type tmp = _it; return *(--tmp); }
+			pointer operator->() const { return &(operator*()); }
+			reference operator* () const { iterator_type tmp = _it; return *(tmp); }
 			reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(this->base() - n)); }
 			reverse_iterator operator- (difference_type n) const {return (reverse_iterator(this->base() + n)); }
 			reverse_iterator& operator++() { --(_it); return (*this); }
@@ -52,11 +54,10 @@ namespace ft{
 			reverse_iterator  operator--(int) { reverse_iterator temp = *this; --(*this); return (temp); }
 			reverse_iterator& operator+= (difference_type n) { _it -= n; return (*this); }
 			reverse_iterator& operator-= (difference_type n) { _it += n; return (*this); }
-			pointer operator->() const { return &(operator*()); }
 			reference operator[] (difference_type n) const { return (this->base()[-n-1]); }
 
 			friend reverse_iterator operator+ (difference_type n, const reverse_iterator& rev_it)
-			{ return reverse_iterator(rev_it.base() - n); } 
+			{ return reverse_iterator(rev_it.base() - n); }
 
 		private:
 			iterator_type _it;

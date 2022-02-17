@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 14:41:07 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 17:53:47 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,11 +460,17 @@ namespace ft{
 //! const iterator
 
 
-//ToDo------ Canonical form		3/5
+//? --it operator() segfault
+//? it++ & it-- WA
+//? reverse_iterator::base() WA
+//* constructors - write memory access
+
+
+//ToDo------ Canonical form		4/5
 //ToDo------ Iterators			4/4
 //ToDo------ Capacity			3/3
 //ToDo------ Element access		1/1
 //ToDo------ Modifiers			6/8
-//ToDo------ Observers			./2
+//ToDo------ Observers			2/2
 //ToDo------ Operations			5/5
 //ToDo------ Allocator			1/1
