@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 19:30:59 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 14:27:21 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 namespace ft{
 
-	template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	// template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	template <typename Category, typename tree, typename node, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
 	struct biterator {
 
 		typedef Category  iterator_category;
@@ -27,8 +28,10 @@ namespace ft{
 		typedef Distance  difference_type;
 		typedef Pointer   pointer;
 		typedef Reference reference;
-		typedef typename ft::node<T> node_type;
-		typedef typename ft::avltree<T> tree_type;
+		// typedef typename ft::node<T> node_type;
+		typedef node node_type;
+		typedef tree tree_type;
+		// typedef typename ft::avltree<T> tree_type;
 
 		biterator(void): _ptr(), _tree() {}
 		biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
@@ -36,7 +39,7 @@ namespace ft{
 		~biterator(void){}
 		biterator& operator=(const biterator& b){
 			_ptr = b._ptr;
-			_tree = b._tree;
+			// _tree = b._tree;
 			return (*this);
 		}
 		reference operator* () const { return (_ptr->data); }
@@ -117,13 +120,13 @@ namespace ft{
 
 		node_type* get_ptr(void) { return _ptr; }
 
-		operator biterator<iterator_category, const T>(){
-			return biterator<iterator_category, const T>(_ptr, _tree);
+		operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+			return biterator<iterator_category, const tree_type, const node_type, const T>(_ptr, _tree);
 		}
 
 		private:
 			node_type *_ptr;	// points to the node denoting our current position within that tree
-			tree_type *_tree;	// points to the tree that we are walking through
+			const tree_type *_tree;	// points to the tree that we are walking through
 
 	};
 }

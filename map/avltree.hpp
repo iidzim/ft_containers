@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 19:47:56 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 12:15:22 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ namespace ft{
 					_alloc.destroy(&(root->data));
 					clear(root->left_node);
 					clear(root->right_node);
-					_alloc_node.deallocate(root, 1); //! heap-use-after-free
+					// _alloc_node.deallocate(root, 1); //! heap-use-after-free
 				}
 			}
 

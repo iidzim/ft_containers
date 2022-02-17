@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/16 19:52:20 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/17 14:41:07 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,18 @@ namespace ft{
 			typedef typename allocator_type::const_reference									const_reference;
 			typedef typename allocator_type::pointer											pointer;
 			typedef typename allocator_type::const_pointer										const_pointer;
-			typedef typename ft::biterator<std::bidirectional_iterator_tag, value_type>			biterator;
-			typedef typename ft::biterator<std::bidirectional_iterator_tag, const value_type>	const_biterator;
-			typedef typename ft::reverse_iterator<biterator>									reverse_iterator;
-			typedef typename ft::reverse_iterator<const_biterator>								const_reverse_iterator;
+			// typedef typename ft::biterator<std::bidirectional_iterator_tag, value_type>			biterator;
+			// typedef typename ft::biterator<std::bidirectional_iterator_tag, const value_type>	const_biterator;
+			// typedef typename ft::const_biterator<std::bidirectional_iterator_tag, value_type>	const_biterator;
 
 			typedef typename ft::node<ft::pair<const Key,T> > 									node_type;
 			typedef typename ft::avltree<ft::pair<const Key,T> >								tree_type;
+			
+			typedef typename ft::biterator<std::bidirectional_iterator_tag, tree_type, node_type, value_type>			biterator;
+			typedef typename ft::biterator<std::bidirectional_iterator_tag, const tree_type, const node_type, const value_type>	const_biterator;
 
-
+			typedef typename ft::reverse_iterator<biterator>									reverse_iterator;
+			typedef typename ft::reverse_iterator<const_biterator>								const_reverse_iterator;
 			//? Constructs a map container object
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 				 _comp(comp), _alloc(alloc), _tree(){}
@@ -79,14 +82,25 @@ namespace ft{
 			~map(void){ _tree.clear(); }
 
 			//? Copy container content
-			map& operator= (const map& x){
+			// map& operator= (const map& x){
+
+			// 	_tree.clear();
+			// 	_alloc = x._alloc;
+			// 	_comp = x._comp;
+			// 	_tree = x._tree;
+			// 	// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
+			// 	//! m2 error: non matching constructor biterator()
+			// 	return (*this);
+			// }
+
+			map& assignment_op(const map& x){
 
 				_tree.clear();
 				_alloc = x._alloc;
 				_comp = x._comp;
 				_tree = x._tree;
 				// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
-				//! m2 error: non matching constructor  
+				//! m2 error: non matching constructor biterator()
 				return (*this);
 			}
 
@@ -106,22 +120,21 @@ namespace ft{
 				// node_type* start = _tree._root;
 				// while (start->left_node != NULL)
 				// 	start = start->left_node;
-				// return (biterator(start, &_tree));
-				return begin();
+				// return (const_biterator(start, &_tree));
+				return const_biterator(begin());
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
 			biterator end() { return (biterator(NULL, &_tree)); }
-			// const_biterator end() const { return (biterator(NULL, &_tree)); }
-			const_biterator end() const { return end(); }
+			const_biterator end() const { return const_biterator(end()); }
 
 			//? Return reverse iterator to reverse beginning
 			reverse_iterator rbegin(){ return (reverse_iterator(this->end())); }
-			const_reverse_iterator rbegin() const { return (reverse_iterator(this->end())); }
+			const_reverse_iterator rbegin() const { return const_reverse_iterator(rbegin()); }
 
 			//? Return reverse iterator to reverse end
 			reverse_iterator rend(){ return (reverse_iterator(this->begin())); }
-			const_reverse_iterator rend() const { return (reverse_iterator(this->begin())); }
+			const_reverse_iterator rend() const { return const_reverse_iterator(rend()); }
 
 			//* Capacity ************************************************** //
 
@@ -197,9 +210,9 @@ namespace ft{
 
 				std::swap(_comp, x._comp);
 				std::swap(_alloc, x._alloc);
-				tree_type tmp = _tree;
-				_tree = x._tree;
-				x._tree = tmp;
+				map tmp = *this; // shallow copy
+				*this = x;
+				x = tmp;
 			}
 
 			//? Removes all elements from the map container
@@ -274,27 +287,7 @@ namespace ft{
 				return biterator(NULL, NULL);
 			}
 
-			const_biterator lower_bound (const key_type& k) const{
-
-				// if (_comp(k, this->begin()->first) > 0)
-				// 	return this->begin();
-				// else if (_comp(this->rbegin()->first, k) > 0){
-				// 	std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				// 	return biterator(NULL, NULL);
-				// }
-				// else{
-				// 	biterator it = this->begin(), ite = this->end();
-				// 	while (--ite != it){
-				// 		if (_comp(k, ite->first) <= 0){
-				// 			if (_comp(ite->first, k) > 0)
-				// 				++ite;
-				// 			return (ite);
-				// 		}
-				// 	}
-				// }
-				// return biterator(NULL, NULL);
-				return lower_bound(k);
-			}
+			const_biterator lower_bound (const key_type& k) const{ return const_biterator(lower_bound(k)); }
 
 			//? Return iterator to upper bound
 			biterator upper_bound (const key_type& k){
@@ -313,22 +306,7 @@ namespace ft{
 				return biterator(NULL, NULL);
 			}
 
-			const_biterator upper_bound (const key_type& k) const{
-
-				// if (_comp(k, this->begin()->first) > 0)
-				// 	return this->begin();
-				// else if (_comp(k, this->rbegin()->first) > 0){
-				// 	biterator it = this->begin(), ite = this->end();
-				// 	while (it != ite){
-				// 		if (_comp(k, it->first) > 0)
-				// 			return (it);
-				// 		it++;
-				// 	}
-				// }
-				// std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				// return biterator(NULL, NULL);
-				return upper_bound(k);
-			}
+			const_biterator upper_bound (const key_type& k) const{ return const_biterator(upper_bound(k)); }
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
 			pair<biterator,biterator> equal_range (const key_type& k){
@@ -347,17 +325,15 @@ namespace ft{
 
 			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
 
-				// node_type* n;
-				// if (_tree.exist(k)){
-				// 	n = _tree.find_(k);
-				// 	biterator it(n, &_tree);
-				// 	biterator ite = this->end();
-				// 	if (it == --ite)
-				// 		return ft::make_pair(it, biterator(0, NULL));
-				// 	return ft::make_pair(it, ++it);
-				// }
-				// return ft::make_pair(upper_bound(k), upper_bound(k));
-				return equal_range(k);
+				node_type* n;
+				if (_tree.exist(k)){
+					n = _tree.find_(k);
+					const_biterator it(n, &_tree);
+					if (it == --(this->end()))
+						return ft::make_pair(it, const_biterator(0, NULL));
+					return ft::make_pair(it, ++it);
+				}
+				return ft::make_pair(upper_bound(k), upper_bound(k));
 			}
 
 			//* Allocator ************************************************* //
@@ -479,10 +455,9 @@ namespace ft{
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
 // avltree::clear(){_alloc_node.deallocate(root, 1);} //! leaks -or- assign only the root of the tree 
-	//? swap
-	//? relational operators
-//* const iterator
-//* enable_if
+//! swap
+//! relational operators
+//! const iterator
 
 
 //ToDo------ Canonical form		3/5

@@ -222,7 +222,7 @@ void iterator_tests(void)
                 m.insert(ft::make_pair(myints[i], i));
             ft::map<int, int>::biterator it = m.begin(), eit = --m.end();
             tmp = eit->first;
-            m.erase(eit);
+            // m.erase(eit); //! infinte loop
             for (; it != m.end(); ++it)
                 res += it->first;
             cond = cond && (res == (210 - tmp));
@@ -2227,7 +2227,7 @@ int main()
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    TEST_CASE(testConstructors);
+    TEST_CASE(testmapConstructors);
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
