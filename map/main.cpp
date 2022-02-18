@@ -52,7 +52,7 @@
 // 	// t.remove_(45);
 // 	// t.remove_(53);
 // 	// std::cout << "size = " << t.size() << std::endl << std::endl;
-// 	// t.print_parent(t._root);
+	// t.print_parent(t._root);
 // 	// t.display(t._root);
 
 // 	ft::avltree<ft::pair<int, std::string> > test(t);
@@ -245,22 +245,31 @@ int main(void){
 	// m.get_tree().display(m.get_tree()._root);
 
 	//* reverse iterator
-	ft::map<int, std::string> k;
-	ft::pair<int, std::string> p1(23, "A");
-	ft::pair<int, std::string> p2(31, "A");
-	ft::pair<int, std::string> p3(13, "A");
+	// ft::map<int, std::string> k;
+	// ft::pair<int, std::string> p1(23, "A");
+	// ft::pair<int, std::string> p2(31, "A");
+	// ft::pair<int, std::string> p3(13, "A");
 
-	k.insert(ft::make_pair(23, "a"));
-	k.insert(p2);
-	k.insert(p3);
+	// k.insert(ft::make_pair(23, "a"));
+	// k.insert(p2);
+	// k.insert(p3);
 
-	ft::map<int, std::string>::reverse_iterator kite(k.end());
-    ft::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
-	cit = kite;
-	if (kite->first == cit->first && kite->first == cri->first)
-		std::cout << "ok\n";
+	// ft::map<int, std::string>::reverse_iterator kite(k.end());
+    // ft::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
+	// cit = kite;
+	// if (kite->first == cit->first && kite->first == cri->first)
+	// 	std::cout << "ok\n";
 
-
+	//* --it operator TLE - segfault
+	// ft::map<int, std::string> ft_m;
+    // for (size_t i = 0; i < 10; ++i)
+    //     ft_m.insert(ft::make_pair(i, "value"));
+	// ft_m.get_tree().display(ft_m.get_tree()._root);
+	// ft_m.get_tree().print_parent(ft_m.get_tree()._root);
+	// ft::map<int, std::string>::biterator ft_it = --ft_m.end();
+    // for (; ft_it != ft_m.begin(); --ft_it)
+    //     std::cout << ft_it->first << " - ";
+	// std::cout << std::endl;
 }
 
 std::cout << "-------------------------------------------------------\n";
@@ -322,20 +331,20 @@ std::cout << "-------------------------------------------------------\n";
 
 
 	//* reverse iterator
-	std::map<int, std::string> k;
-	std::pair<int, std::string> p1(23, "A");
-	std::pair<int, std::string> p2(31, "A");
-	std::pair<int, std::string> p3(13, "A");
+	// std::map<int, std::string> k;
+	// std::pair<int, std::string> p1(23, "A");
+	// std::pair<int, std::string> p2(31, "A");
+	// std::pair<int, std::string> p3(13, "A");
 
-	k.insert(std::make_pair(23, "a"));
-	k.insert(p2);
-	k.insert(p3);
+	// k.insert(std::make_pair(23, "a"));
+	// k.insert(p2);
+	// k.insert(p3);
 
-	std::map<int, std::string>::reverse_iterator kite(k.end());
-    std::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
-	cit = kite;
-	if (kite->first == cit->first && kite->first == cri->first)
-		std::cout << "ok\n";
+	// std::map<int, std::string>::reverse_iterator kite(k.end());
+    // std::map<int, std::string>::const_reverse_iterator cit, cri(k.end());
+	// cit = kite;
+	// if (kite->first == cit->first && kite->first == cri->first)
+	// 	std::cout << "ok\n";
 
 }
 

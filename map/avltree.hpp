@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 17:16:38 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 09:10:30 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,8 +382,11 @@ namespace ft{
 				node_type *new_parent = n->right_node;
 				n->right_node = new_parent->left_node;
 				new_parent->left_node = n;
+				//? update parent
 				new_parent->parent_node = n->parent_node;
 				n->parent_node = new_parent;
+				if (n->right_node != NULL)
+					n->right_node->parent_node = new_parent->left_node;
 				update(n);
 				update(new_parent);
 				return (new_parent);
