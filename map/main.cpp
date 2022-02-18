@@ -270,6 +270,17 @@ int main(void){
     // for (; ft_it != ft_m.begin(); --ft_it)
     //     std::cout << ft_it->first << " - ";
 	// std::cout << std::endl;
+
+	//* base function
+	std::map<int, std::string> m;
+    for (size_t i = 0; i < 10; ++i)
+        m.insert(ft::make_pair(i, "value"));
+    // std::reverse_iterator<std::map<int, std::string>::iterator> rit(m.end()), rit_1(--m.end());
+    // ft::reverse_iterator<ft::map<int, std::string>::biterator> my_rit(m.end()), my_rit1(--m.end());
+    // ft::reverse_iterator<std::map<int, char>::iterator> my_rit(ft_m.end()), my_rit1(--ft_m.end());
+	// (rit->first == (rit_1.base()->first)) && (my_rit->first == my_rit1.base()->first)
+
+
 }
 
 std::cout << "-------------------------------------------------------\n";

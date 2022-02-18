@@ -388,6 +388,9 @@ void reverse_iterator_tests(void)
     }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " base function "
               << "] --------------------]\t\t\033[0m";
+    std::cout << "\n" << my_rit->first << " - " << my_rit1.base()->first << std::endl;
+    std::cout << "\n" << rit->first << " - " << rit_1.base()->first << std::endl;
+
     EQUAL((rit->first == (rit_1.base()->first)) && (my_rit->first == my_rit1.base()->first));
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " == operator "
               << "] --------------------]\t\t\033[0m";

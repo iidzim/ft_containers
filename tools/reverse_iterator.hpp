@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 18:45:58 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 10:06:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ namespace ft{
 			iterator_type base() const { return (_it); }
 
 			//? Operator overloading
+			reference operator* () const { return *(_it); }
 			pointer operator->() const { return &(operator*()); }
-			reference operator* () const { iterator_type tmp = _it; return *(tmp); }
+			// reference operator* () const { return *(base()); }
+			// reference operator* () const { return *(_it); }
 			reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(this->base() - n)); }
 			reverse_iterator operator- (difference_type n) const {return (reverse_iterator(this->base() + n)); }
 			reverse_iterator& operator++() { --(_it); return (*this); }
