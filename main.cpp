@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:06:38 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/06 12:25:57 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 14:55:17 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -690,26 +690,28 @@ int main()
 // }
 
 
-	ft::pair<int, float> p1;
-	ft::pair<int, float> p2(1, 0.2659);
-	ft::pair<int, float> p3(p2);
-	ft::pair<string, int> p4;
+	// ft::pair<int, float> p1;
+	// ft::pair<int, float> p2(1, 0.2659);
+	// ft::pair<int, float> p3(p2);
+	// ft::pair<string, int> p4;
 
-	p1.first = 5;
-	p1.second = 3.1416;
+	// p1.first = 5;
+	// p1.second = 3.1416;
 
-	cout << " pair | first | second\n";
-	cout << "p1: " << p1.first << ", " << p1.second << endl;
-	cout << "p2: " << p2.first << ", " << p2.second << endl;
-	cout << "p3: " << p3.first << ", " << p3.second << endl;
-	cout << "p4: " << p4.first << ", " << p4.second << endl;
+	// cout << " pair | first | second\n";
+	// cout << "p1: " << p1.first << ", " << p1.second << endl;
+	// cout << "p2: " << p2.first << ", " << p2.second << endl;
+	// cout << "p3: " << p3.first << ", " << p3.second << endl;
+	// cout << "p4: " << p4.first << ", " << p4.second << endl;
 
-	p3 = ft::make_pair(123, 456.789);
-	p4.first = "testtest";
-	p4.second = 2147483647;
+	// p3 = ft::make_pair(123, 456.789);
+	// p4.first = "testtest";
+	// p4.second = 2147483647;
 
-	cout << "p3: " << p3.first << ", " << p3.second << endl;
-	cout << "p4: " << p4.first << ", " << p4.second << endl;
+	// cout << "p3: " << p3.first << ", " << p3.second << endl;
+	// cout << "p4: " << p4.first << ", " << p4.second << endl;
+
+
 
 	return (0);
 }

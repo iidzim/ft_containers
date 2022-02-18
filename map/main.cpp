@@ -63,29 +63,29 @@
 int main(void){
 
 {
-	ft::map<int, std::string> m;
-	std::cout << std::boolalpha;
-	// std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
-	ft::map<int, std::string>::biterator it, ite, eq;
-	ft::pair<int, std::string> p33(33, "A");
-	ft::pair<int, std::string> p13(13, "B");
-	ft::pair<int, std::string> p53(53, "C");
- 	ft::pair<int, std::string> p11(11, "D");
- 	ft::pair<int, std::string> p40(40, "E");
- 	ft::pair<int, std::string> p39(39, "F");
- 	ft::pair<int, std::string> p45(45, "G");
- 	ft::pair<int, std::string> p64(64, "Z");
+	// ft::map<int, std::string> m;
+	// std::cout << std::boolalpha;
+	// // std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
+	// ft::map<int, std::string>::biterator it, ite, eq;
+	// ft::pair<int, std::string> p33(33, "A");
+	// ft::pair<int, std::string> p13(13, "B");
+	// ft::pair<int, std::string> p53(53, "C");
+ 	// ft::pair<int, std::string> p11(11, "D");
+ 	// ft::pair<int, std::string> p40(40, "E");
+ 	// ft::pair<int, std::string> p39(39, "F");
+ 	// ft::pair<int, std::string> p45(45, "G");
+ 	// ft::pair<int, std::string> p64(64, "Z");
 
- 	ft::pair<int, std::string> p14(14, "X");
+ 	// ft::pair<int, std::string> p14(14, "X");
 
-	m.insert(p33);
-	m.insert(p13);
-	m.insert(p53);
-	m.insert(p11);
-	m.insert(p64);
-	m.insert(p40);
-	m.insert(p39);
-	m.insert(p45);
+	// m.insert(p33);
+	// m.insert(p13);
+	// m.insert(p53);
+	// m.insert(p11);
+	// m.insert(p64);
+	// m.insert(p40);
+	// m.insert(p39);
+	// m.insert(p45);
 	// std::cout << "m----------------------------\n";
 	// m.get_tree().display(m.get_tree()._root);
 
@@ -271,14 +271,51 @@ int main(void){
     //     std::cout << ft_it->first << " - ";
 	// std::cout << std::endl;
 
-	//* base function
-	std::map<int, std::string> m;
-    for (size_t i = 0; i < 10; ++i)
-        m.insert(ft::make_pair(i, "value"));
+	//!!! base function
+	// std::map<int, std::string> m;
+    // for (size_t i = 0; i < 10; ++i)
+    //     m.insert(std::make_pair(i, "value"));
     // std::reverse_iterator<std::map<int, std::string>::iterator> rit(m.end()), rit_1(--m.end());
-    // ft::reverse_iterator<ft::map<int, std::string>::biterator> my_rit(m.end()), my_rit1(--m.end());
-    // ft::reverse_iterator<std::map<int, char>::iterator> my_rit(ft_m.end()), my_rit1(--ft_m.end());
-	// (rit->first == (rit_1.base()->first)) && (my_rit->first == my_rit1.base()->first)
+    // ft::reverse_iterator<std::map<int, std::string>::iterator> my_rit(m.end()), my_rit1(--m.end());
+	// // (rit->first == (rit_1.base()->first)) && (my_rit->first == my_rit1.base()->first);
+	// std::cout << "\n" << my_rit->first << " - " << my_rit1.base()->first << std::endl;
+    // std::cout << "\n" << rit->first << " - " << rit_1.base()->first << std::endl;
+
+	//* empty constructor
+	// ft::map<int, std::string> my_m;
+    // for (int i = 0; i < 1e6; ++i)
+    //     my_m.insert(ft::make_pair(i, "fill constructor test"));
+	// std::cout << my_m[1] << " - " << my_m[4] << std::endl;
+	// std::cout << "done1\n";
+	// ft::map<int, std::string> my_mm;
+    // std::map<int, std::string> mm;
+    // for (int i = 0; i < 10; i++){
+    //     my_mm.insert(ft::make_pair(i, "Hello"));
+    //     mm.insert(std::make_pair(i, "Hello"));
+	// }
+	// // std::cout << my_mm[1] << " - " << my_mm[4] << std::endl;
+	// std::string res, my_res;
+    // /*---------------------------------------------------------*/
+    // for (std::map<int, std::string>::iterator it = mm.begin(); it != mm.end(); ++it) // fill res from std::map
+    //     res += it->second;
+    // for (ft::map<int, std::string>::biterator it = my_mm.begin(); it != my_mm.end(); ++it) // fill res from std::map
+    //     my_res += it->second;
+	// std::cout << my_res << std::endl;
+	// if (res == my_res)
+	// 	std::cout << "ok\n";
+
+	//! Constructors with costum compare
+	// std::map<char, int> first;
+    // ft::map<char, int> m_first;
+
+    // for (size_t i = 97; i < 110; i++)
+    // {
+    //     first[i - 97] = i;
+    //     m_first[i - 97] = i;
+    // }
+
+//? string2string2string2string2string2string2string2string2string2string2 = string2string2string2string2string2string2string2string2string2string2
+//* string2string2string2string2string2string2string2string2string2string2 = string2string2string2string2string2string2string2string2string2string2
 
 
 }

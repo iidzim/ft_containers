@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/18 10:06:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 16:38:30 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,24 @@ namespace ft{
 			reverse_iterator(): _it() {}
 
 			//? Constructs a reverse iterator from some original iterator it
-			explicit reverse_iterator (iterator_type it) { this->_it = --it; }
+			explicit reverse_iterator (iterator_type it) { this->_it = --it;}
+			// explicit reverse_iterator (iterator_type it): _it(it) {}
+
+			//? copy constructor
+			reverse_iterator (const reverse_iterator& x): _it(x._it) {}//
 
 			//? Constructs a reverse iterator from some other reverse iterator
 			template <typename Iter>
-			reverse_iterator (const reverse_iterator<Iter>& rev_it) { this->_it = rev_it.base(); }
+			reverse_iterator (const reverse_iterator<Iter>& rev_it):_it((rev_it.base())) {}
 
 			//? Returns a copy of the base iterator.
+			// iterator_type base() const { iterator_type tmp = _it; return (++tmp); }
 			iterator_type base() const { return (_it); }
 
 			//? Operator overloading
-			reference operator* () const { return *(_it); }
+			// reference operator* () const { iterator_type tmp = _it; return *(--tmp); }
+			reference operator* () const { iterator_type tmp = _it; return *(tmp); }
 			pointer operator->() const { return &(operator*()); }
-			// reference operator* () const { return *(base()); }
-			// reference operator* () const { return *(_it); }
 			reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(this->base() - n)); }
 			reverse_iterator operator- (difference_type n) const {return (reverse_iterator(this->base() + n)); }
 			reverse_iterator& operator++() { --(_it); return (*this); }

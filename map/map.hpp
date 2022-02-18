@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/17 17:53:47 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 18:35:49 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,19 @@ namespace ft{
 			}
 
 			//? Map destructor
-			~map(void){ _tree.clear(); }
+			~map(void){}// _tree.clear(); }
 
 			//? Copy container content
-			// map& operator= (const map& x){
+			map& operator= (const map& x){
 
-			// 	_tree.clear();
-			// 	_alloc = x._alloc;
-			// 	_comp = x._comp;
-			// 	_tree = x._tree;
-			// 	// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
-			// 	//! m2 error: non matching constructor biterator()
-			// 	return (*this);
-			// }
+				_tree.clear();
+				_alloc = x._alloc;
+				_comp = x._comp;
+				_tree = x._tree;
+				// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
+				//! m2 error: non matching constructor biterator()
+				return (*this);
+			}
 
 			map& assignment_op(const map& x){
 
@@ -115,26 +115,26 @@ namespace ft{
 				return (biterator(start, &_tree));
 			}
 
-			const_biterator begin() const{
+			const_biterator begin() const {
 
-				// node_type* start = _tree._root;
-				// while (start->left_node != NULL)
-				// 	start = start->left_node;
-				// return (const_biterator(start, &_tree));
-				return const_biterator(begin());
+				node_type* start = _tree._root;
+				while (start->left_node != NULL)
+					start = start->left_node;
+				return (const_biterator(start, &_tree));
+				// return const_biterator(begin());
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
 			biterator end() { return (biterator(NULL, &_tree)); }
-			const_biterator end() const { return const_biterator(end()); }
+			const_biterator end() const { return const_biterator(NULL, &_tree); }
 
 			//? Return reverse iterator to reverse beginning
 			reverse_iterator rbegin(){ return (reverse_iterator(this->end())); }
-			const_reverse_iterator rbegin() const { return const_reverse_iterator(rbegin()); }
+			const_reverse_iterator rbegin() const { return const_reverse_iterator(this->end()); }
 
 			//? Return reverse iterator to reverse end
 			reverse_iterator rend(){ return (reverse_iterator(this->begin())); }
-			const_reverse_iterator rend() const { return const_reverse_iterator(rend()); }
+			const_reverse_iterator rend() const { return const_reverse_iterator(this->begin()); }
 
 			//* Capacity ************************************************** //
 
@@ -150,10 +150,8 @@ namespace ft{
 			//* Element access ******************************************** //
 
 			//? Access element
-			// A call to this function is equivalent to: (*((this->insert(make_pair(k,mapped_type()))).first)).second
 			mapped_type& operator[] (const key_type& k){
-				mapped_type *v = _tree.search(k);
-				return (*v);
+				return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
 			}
 
 			//* Modifiers ************************************************* //
@@ -287,7 +285,27 @@ namespace ft{
 				return biterator(NULL, NULL);
 			}
 
-			const_biterator lower_bound (const key_type& k) const{ return const_biterator(lower_bound(k)); }
+			const_biterator lower_bound (const key_type& k) const {
+
+				// if (_comp(k, this->begin()->first) > 0)
+				// 	return this->begin();
+				// else if (_comp(this->rbegin()->first, k) > 0){
+				// 	std::cout << "undefined behaviour 9223372036854775807" << std::endl;
+				// 	return const_biterator(NULL, NULL);
+				// }
+				// else{
+				// 	biterator it = this->begin(), ite = this->end();
+				// 	while (--ite != it){
+				// 		if (_comp(k, ite->first) <= 0){
+				// 			if (_comp(ite->first, k) > 0)
+				// 				++ite;
+				// 			return (const_biterator(ite));
+				// 		}
+				// 	}
+				// }
+				// return const_biterator(NULL, NULL);
+				return const_biterator(lower_bound(k));
+			}
 
 			//? Return iterator to upper bound
 			biterator upper_bound (const key_type& k){
@@ -455,15 +473,16 @@ namespace ft{
 ////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
 
 // avltree::clear(){_alloc_node.deallocate(root, 1);} //! leaks -or- assign only the root of the tree 
-//! swap
-//! relational operators
-//! const iterator
+//? swap
+//? relational operators
 
 
-//? --it operator() segfault
-//? it++ & it-- WA
-//? reverse_iterator::base() WA
-//* constructors - write memory access
+//! reverse_iterator::base() WA
+//! Constructors with costum compare | = operator (lhs.size > rhs.size) | = operator (rhs.size = 0) WA
+//! rbegin() & rend() segfault
+//! size WA
+//! operator[]
+
 
 
 //ToDo------ Canonical form		4/5

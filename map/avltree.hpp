@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/18 09:10:30 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/18 16:55:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace ft{
 		public:
 
 			avltree(void): _nbr_node(0), _root(){}
-			~avltree(void){ clear(); }
+			~avltree(void){ }//clear(); }
 			avltree& operator=(const avltree& t){
 
 				clear();
