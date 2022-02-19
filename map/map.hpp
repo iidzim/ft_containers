@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/18 18:35:49 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/19 18:18:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ namespace ft{
 			typedef typename ft::reverse_iterator<const_biterator>								const_reverse_iterator;
 			//? Constructs a map container object
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
-				 _comp(comp), _alloc(alloc), _tree(){}
+				 _comp(comp), _alloc(alloc), _tree(){ }
 
 			map (const map& x): _tree() { *this = x; }
 
@@ -84,7 +84,6 @@ namespace ft{
 			//? Copy container content
 			map& operator= (const map& x){
 
-				_tree.clear();
 				_alloc = x._alloc;
 				_comp = x._comp;
 				_tree = x._tree;
@@ -93,16 +92,16 @@ namespace ft{
 				return (*this);
 			}
 
-			map& assignment_op(const map& x){
+			// map& assignment_op(const map& x){
 
-				_tree.clear();
-				_alloc = x._alloc;
-				_comp = x._comp;
-				_tree = x._tree;
-				// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
-				//! m2 error: non matching constructor biterator()
-				return (*this);
-			}
+			// 	_tree.clear();
+			// 	_alloc = x._alloc;
+			// 	_comp = x._comp;
+			// 	_tree = x._tree;
+			// 	// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
+			// 	//! m2 error: non matching constructor biterator()
+			// 	return (*this);
+			// }
 
 			//* iterators ************************************************ //
 
@@ -150,8 +149,16 @@ namespace ft{
 			//* Element access ******************************************** //
 
 			//? Access element
+			/* 
+			** If k matches the key of an element in the container, the function returns a reference to its mapped value.
+			** If k does not match the key of any element in the container, the function inserts a new element
+			** with that key and returns a reference to its mapped value. Notice that this always increases the container size by one,
+			** even if no mapped value is assigned to the element (the element is constructed using its default constructor).
+			*/
 			mapped_type& operator[] (const key_type& k){
-				return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
+				
+				this->insert(ft::make_pair(k,mapped_type()));
+				return (this->find(k).get_ptr())->data.second;
 			}
 
 			//* Modifiers ************************************************* //
@@ -159,6 +166,7 @@ namespace ft{
 			//? Insert elements
 			pair<biterator,bool> insert (const value_type& val)
 			{
+				// std::cout << "value = " << val.second << std::endl;
 				node_type* n;
 				if (_tree.exist(val)){
 					n = _tree.find_(val);
@@ -476,12 +484,11 @@ namespace ft{
 //? swap
 //? relational operators
 
-
-//! reverse_iterator::base() WA
+//! copy constructor **
 //! Constructors with costum compare | = operator (lhs.size > rhs.size) | = operator (rhs.size = 0) WA
-//! rbegin() & rend() segfault
 //! size WA
-//! operator[]
+//! rbegin() & rend() segfault
+//! reverse_iterator::base() WA
 
 
 

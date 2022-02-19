@@ -64,8 +64,8 @@ int main(void){
 
 {
 	// ft::map<int, std::string> m;
-	// std::cout << std::boolalpha;
-	// // std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
+	// // std::cout << std::boolalpha;
+	// // // std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
 	// ft::map<int, std::string>::biterator it, ite, eq;
 	// ft::pair<int, std::string> p33(33, "A");
 	// ft::pair<int, std::string> p13(13, "B");
@@ -75,7 +75,6 @@ int main(void){
  	// ft::pair<int, std::string> p39(39, "F");
  	// ft::pair<int, std::string> p45(45, "G");
  	// ft::pair<int, std::string> p64(64, "Z");
-
  	// ft::pair<int, std::string> p14(14, "X");
 
 	// m.insert(p33);
@@ -88,6 +87,7 @@ int main(void){
 	// m.insert(p45);
 	// std::cout << "m----------------------------\n";
 	// m.get_tree().display(m.get_tree()._root);
+	// m.get_tree().print_parent(m.get_tree()._root);
 
 
 	//* opertaor[]
@@ -126,9 +126,20 @@ int main(void){
 	// test2.get_tree().display(test2.get_tree()._root);
 
 	//! copy constructor
+	// std::cout << "---------copy constructor-------------\n";
 	// ft::map<int, std::string> test1(m);
 	// // ft::map<int, std::string> test1(test);
 	// test1.get_tree().display(test1.get_tree()._root);
+	// test1.get_tree().print_parent(test1.get_tree()._root);
+
+	
+	// std::cout << " ** " << it->first << std::endl;
+	// ++it;
+	// std::cout << " ** " << it->first << std::endl;
+
+	// for (it = test1.begin() ;it != test1.end() ; it++)
+	// 	std::cout << it->first << " - ";
+	// std::cout << std::endl;
 
 	//* insert with hint
 	// m.insert(ote, p14);
@@ -305,43 +316,68 @@ int main(void){
 	// 	std::cout << "ok\n";
 
 	//! Constructors with costum compare
-	// std::map<char, int> first;
-    // ft::map<char, int> m_first;
+    ft::map<char, int> m;
+    for (size_t i = 97; i < 110; i++){
+        m[i - 97] = i;
+		// std::cout << m[i - 97] << " - ";
+	}
+	// std::cout << std::endl;
+	std::cout << m[100] << std::endl;
+	// m.get_tree().display(m.get_tree()._root);
+    ft::map<char, int> c(m);
+    ft::map<char, int>::biterator it = m.begin(), ite = m.end();
+	std::cout << "|" << it->first << "|" << std::endl;
+	// for (size_t i = 97; i < 110; i++)
+	// 	std::cout << m[i - 97] << " - ";
+	// std::cout << std::endl;
 
-    // for (size_t i = 97; i < 110; i++)
-    // {
-    //     first[i - 97] = i;
-    //     m_first[i - 97] = i;
-    // }
+	// std::cout << "|" << it->first << "|" << std::endl;
 
-//? string2string2string2string2string2string2string2string2string2string2 = string2string2string2string2string2string2string2string2string2string2
-//* string2string2string2string2string2string2string2string2string2string2 = string2string2string2string2string2string2string2string2string2string2
+	// for (; it != ite; it++)
+	// 	std::cout << it->first << " - ";
+	// std::cout << std::endl;
 
 
+	//! operator []
+	// ft::map<int, std::string> o;
+	// int i = 0;
+	// for (; i < 10; i++)
+	// 	o.insert(ft::make_pair(i, "ok"));
+	// for (; it != ite; it++)
+		// std::cout << it->first << " - " << it->second << std::endl;
+	// std::cout << "*****\n";
+	// for (int i = 0; i < 15; i++)
+	// o[101] = "ko";
+	// std::cout <<"|" << o[101] << "|" << std::endl;
+	// std::cout << "|" << o[12] << "|" << std::endl;
+	// std::cout << o.size() << std::endl;
+	// ft::map<int, std::string>::biterator it = o.begin(), ite = o.end();
+	// for (it = o.begin(); it != ite; it++)
+	// 	std::cout << it->first << " - " << it->second << std::endl;
 }
 
 std::cout << "-------------------------------------------------------\n";
 
 {
-	std::map<int, std::string> m;
-	std::map<int, std::string>::iterator it, ite, eq;
-	std::pair<int, std::string> p33(33, "A");
-	std::pair<int, std::string> p13(13, "B");
-	std::pair<int, std::string> p53(53, "C");
- 	std::pair<int, std::string> p11(11, "D");
- 	std::pair<int, std::string> p64(64, "Z");
- 	std::pair<int, std::string> p40(40, "E");
- 	std::pair<int, std::string> p39(39, "F");
- 	std::pair<int, std::string> p45(45, "G");
+	// std::map<int, std::string> m;
+	// std::map<int, std::string>::iterator it, ite, eq;
+	// std::pair<int, std::string> p33(33, "A");
+	// std::pair<int, std::string> p13(13, "B");
+	// std::pair<int, std::string> p53(53, "C");
+ 	// std::pair<int, std::string> p11(11, "D");
+ 	// std::pair<int, std::string> p64(64, "Z");
+ 	// std::pair<int, std::string> p40(40, "E");
+ 	// std::pair<int, std::string> p39(39, "F");
+ 	// std::pair<int, std::string> p45(45, "G");
 
-	m.insert(p33);
-	m.insert(p13);
-	m.insert(p53);
-	m.insert(p11);
-	m.insert(p64);
-	m.insert(p40);
-	m.insert(p39);
-	m.insert(p45);
+	// m.insert(p33);
+	// m.insert(p13);
+	// m.insert(p53);
+	// m.insert(p11);
+	// m.insert(p64);
+	// m.insert(p40);
+	// m.insert(p39);
+	// m.insert(p45);
 
 	// std::map<int, std::string>::reverse_iterator rit = m.rbegin();
 	// std::cout << "--> " << rit->first << std::endl;
@@ -393,6 +429,21 @@ std::cout << "-------------------------------------------------------\n";
 	// cit = kite;
 	// if (kite->first == cit->first && kite->first == cri->first)
 	// 	std::cout << "ok\n";
+
+	// //! operator []
+	// std::map<int, std::string> o;
+	// for (int i = 0; i < 10; i++)
+	// 	o.insert(std::make_pair(i, "ok"));
+	// std::map<int, std::string>::iterator it = o.begin(), ite = o.end();
+	// // for (; it != ite; it++)
+	// 	// std::cout << it->first << " - " << it->second << std::endl;
+	// // std::cout << "*****\n";
+	// // for (int i = 0; i < 15; i++)
+	// 	o[12] = "ko";
+	// std::cout << "|" << o[12] << "|" << std::endl;
+	// // std::cout << o.size() << std::endl;
+	// for (it = o.begin(); it != ite; it++)
+	// 	std::cout << it->first << " - " << it->second << std::endl;
 
 }
 

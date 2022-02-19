@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/18 16:55:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/19 19:12:09 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ namespace ft{
 				_comp = t._comp;
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
-				_nbr_node = t._nbr_node;
+				_nbr_node = 0;
 				insert_nodes(t._root);
 				return (*this);
 			}
@@ -307,7 +307,7 @@ namespace ft{
 					_alloc.destroy(&(root->data));
 					clear(root->left_node);
 					clear(root->right_node);
-					// _alloc_node.deallocate(root, 1); //! heap-use-after-free
+					_alloc_node.deallocate(root, 1); //! heap-use-after-free
 				}
 			}
 
@@ -367,11 +367,15 @@ namespace ft{
 
 			node_type* right_rotation(node_type* n){
 
+				// std::cout << "right_rotation\n";
 				node_type *new_parent = n->left_node;
 				n->left_node = new_parent->right_node;
 				new_parent->right_node = n;
+				//? update parent
 				new_parent->parent_node = n->parent_node;
 				n->parent_node = new_parent;
+				if (n->left_node != NULL)
+					n->left_node->parent_node = new_parent->right_node;
 				update(n);
 				update(new_parent);
 				return (new_parent);
@@ -379,6 +383,7 @@ namespace ft{
 
 			node_type* left_rotation(node_type* n){
 
+				// std::cout << "left_rotation\n";
 				node_type *new_parent = n->right_node;
 				n->right_node = new_parent->left_node;
 				new_parent->left_node = n;
