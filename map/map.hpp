@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 12:36:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/20 15:03:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ namespace ft{
 				}
 				else
 					return biterator(NULL, NULL);
+					//! return biterator(NULL, &_tree);
 			}
 
 			const_biterator find (const key_type& k) const{
@@ -290,27 +291,7 @@ namespace ft{
 				return biterator(NULL, NULL);
 			}
 
-			const_biterator lower_bound (const key_type& k) const {
-
-				// if (_comp(k, this->begin()->first) > 0)
-				// 	return this->begin();
-				// else if (_comp(this->rbegin()->first, k) > 0){
-				// 	std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				// 	return const_biterator(NULL, NULL);
-				// }
-				// else{
-				// 	biterator it = this->begin(), ite = this->end();
-				// 	while (--ite != it){
-				// 		if (_comp(k, ite->first) <= 0){
-				// 			if (_comp(ite->first, k) > 0)
-				// 				++ite;
-				// 			return (const_biterator(ite));
-				// 		}
-				// 	}
-				// }
-				// return const_biterator(NULL, NULL);
-				return const_biterator(lower_bound(k));
-			}
+			const_biterator lower_bound (const key_type& k) const { return const_biterator(lower_bound(k)); }
 
 			//? Return iterator to upper bound
 			biterator upper_bound (const key_type& k){
@@ -327,6 +308,7 @@ namespace ft{
 				}
 				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
 				return biterator(NULL, NULL);
+				// return (NULL);
 			}
 
 			const_biterator upper_bound (const key_type& k) const{ return const_biterator(upper_bound(k)); }

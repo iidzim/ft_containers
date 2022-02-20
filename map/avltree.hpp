@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 12:12:18 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/20 16:23:03 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,13 @@ namespace ft{
 				return (root->data);
 			}
 
+			// node_type* min(node_type *root)const {
+
+			// 	while (root->left_node != NULL)
+			// 		root = root->left_node;
+			// 	return (root);
+			// }
+
 			//? return the max pair in the tree
 			T max(node_type *root)const {
 
@@ -115,6 +122,13 @@ namespace ft{
 					root = root->right_node;
 				return (root->data);
 			}
+
+			// node_type* max(node_type *root)const {
+
+			// 	while (root->right_node != NULL)
+			// 		root = root->right_node;
+			// 	return (root);
+			// }
 
 			mapped_value* search(key_type& key){
 				return search(_root, key);

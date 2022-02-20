@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 12:26:06 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/20 16:05:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,10 @@ namespace ft{
 			reverse_iterator(): _it() {}
 
 			//? Constructs a reverse iterator from some original iterator it
-			explicit reverse_iterator (iterator_type it) { 
-				std::cout << "SSIGNEMEMTGHM__ " << std::endl;
-				this->_it = --it;}
-			// explicit reverse_iterator (iterator_type it): _it(it) {}
+			explicit reverse_iterator (iterator_type it) { this->_it = --it; }
 
 			//? copy constructor
-			reverse_iterator (const reverse_iterator& x): _it(x._it) {std::cout << "COPY__ " << std::endl;}//
-
+			reverse_iterator (const reverse_iterator& x): _it(x._it) {}
 
 			// template <typename Iter>
 			// reverse_iterator& operator=(const reverse_iterator<Iter>& x){
@@ -53,10 +49,10 @@ namespace ft{
 
 			//? Constructs a reverse iterator from some other reverse iterator
 			template <typename Iter>
-			reverse_iterator (const reverse_iterator<Iter>& rev_it):_it((rev_it.base())) {}/*{std::cout << "COPY " << std::endl;}*/
+			reverse_iterator (const reverse_iterator<Iter>& rev_it):_it((rev_it.base())) {}
 
 			//? Returns a copy of the base iterator.
-			iterator_type base() const {/* std::cout << "hdjshfjdhjdhj" << std::endl;*/ iterator_type tmp = _it; return (++tmp); }
+			iterator_type base() const { iterator_type tmp = _it; return (++tmp); }
 			// iterator_type base() const { return (_it); }
 
 			//? Operator overloading

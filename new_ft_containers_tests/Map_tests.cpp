@@ -395,7 +395,9 @@ void reverse_iterator_tests(void)
         ft::map<int, char>::const_reverse_iterator c_it, c_ob(my_m.end());
 
 	    my_m.get_tree().display(my_m.get_tree()._root);
-        
+	    // my_m.get_tree().print_parent(my_m.get_tree()._root);
+		// _tree->print_parent(_tree->_root);
+
         // std::cout << "START CHECKING***********************" << std::endl;
         c_it = my_rit2;
 		// std::cout << "CHECK 06"  << std::endl;
