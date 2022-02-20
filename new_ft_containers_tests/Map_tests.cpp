@@ -393,11 +393,26 @@ void reverse_iterator_tests(void)
 
         ft::map<int, char>::reverse_iterator my_rit2(my_m.end());
         ft::map<int, char>::const_reverse_iterator c_it, c_ob(my_m.end());
+
+	    my_m.get_tree().display(my_m.get_tree()._root);
+        
+        // std::cout << "START CHECKING***********************" << std::endl;
         c_it = my_rit2;
+		// std::cout << "CHECK 06"  << std::endl;
+		// std::cout << "CHECK 06"<< std::endl;
+        
         EQUAL(my_rit2->first == c_it->first && my_rit2->first == c_ob->first);
+
+		// std::cout << my_rit2->first << std::endl;
+		// std::cout << c_it->first << std::endl;
+		// std::cout << "CHECK 07" << std::endl;
     }
+    // int a;
+    // std::cin >> a;
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " base function "
               << "] --------------------]\t\t\033[0m";
+    // std::cout << rit->first << " - " << rit_1.base()->first << std::endl;
+    // std::cout << my_rit->first << " - " << my_rit1.base()->first << std::endl;
     EQUAL((rit->first == (rit_1.base()->first)) && (my_rit->first == my_rit1.base()->first));
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " == operator "
               << "] --------------------]\t\t\033[0m";
@@ -2242,7 +2257,7 @@ int main()
     // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
     // TEST_CASE(iterator_tests);
     // TEST_CASE(const_iterator_tests);
-    // TEST_CASE(reverse_iterator_tests); //! base function WA
+    TEST_CASE(reverse_iterator_tests); //! base function WA
     // std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;

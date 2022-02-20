@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/19 19:12:09 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/20 12:12:18 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft{
 		node* parent_node;
 		node* left_node;
 		node* right_node;
-
+		
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
 				&& left_node == rhs.left_node && right_node == rhs.right_node

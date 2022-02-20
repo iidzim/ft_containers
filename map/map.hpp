@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/19 18:18:46 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/20 12:36:08 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ namespace ft{
 			typedef T																			mapped_type;
 			typedef ft::pair<const Key,T>														value_type;
 			typedef Compare																		key_compare;
+
 			typedef class value_compare : public std::binary_function<value_type, value_type, bool>{
 				friend class map;
 				protected:
@@ -44,24 +45,20 @@ namespace ft{
 					bool operator() (const value_type& x, const value_type& y) const{
 						return _comp(x.first, y.first);
 					}
-			} value_compare;
-			typedef Alloc																		allocator_type;
-			typedef typename allocator_type::reference											reference;
-			typedef typename allocator_type::const_reference									const_reference;
-			typedef typename allocator_type::pointer											pointer;
-			typedef typename allocator_type::const_pointer										const_pointer;
-			// typedef typename ft::biterator<std::bidirectional_iterator_tag, value_type>			biterator;
-			// typedef typename ft::biterator<std::bidirectional_iterator_tag, const value_type>	const_biterator;
-			// typedef typename ft::const_biterator<std::bidirectional_iterator_tag, value_type>	const_biterator;
+			}																					value_compare;
 
-			typedef typename ft::node<ft::pair<const Key,T> > 									node_type;
-			typedef typename ft::avltree<ft::pair<const Key,T> >								tree_type;
-			
-			typedef typename ft::biterator<std::bidirectional_iterator_tag, tree_type, node_type, value_type>			biterator;
+			typedef Alloc																										allocator_type;
+			typedef typename allocator_type::reference																			reference;
+			typedef typename allocator_type::const_reference																	const_reference;
+			typedef typename allocator_type::pointer																			pointer;
+			typedef typename allocator_type::const_pointer																		const_pointer;
+			typedef typename ft::node<ft::pair<const Key,T> > 																	node_type;
+			typedef typename ft::avltree<ft::pair<const Key,T> >																tree_type;
+			typedef typename ft::biterator<std::bidirectional_iterator_tag, tree_type, node_type, value_type>					biterator;
 			typedef typename ft::biterator<std::bidirectional_iterator_tag, const tree_type, const node_type, const value_type>	const_biterator;
+			typedef typename ft::reverse_iterator<biterator>																	reverse_iterator;
+			typedef typename ft::reverse_iterator<const_biterator>																const_reverse_iterator;
 
-			typedef typename ft::reverse_iterator<biterator>									reverse_iterator;
-			typedef typename ft::reverse_iterator<const_biterator>								const_reverse_iterator;
 			//? Constructs a map container object
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 				 _comp(comp), _alloc(alloc), _tree(){ }
