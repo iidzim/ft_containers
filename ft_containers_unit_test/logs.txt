@@ -1,8 +1,1 @@
-In file included from ../vector_tests/insert(std iterators).cpp:2:
-../vector_tests/__service.ipp:3:10: fatal error: '../vector/vector.hpp' file not found
-#include VECTOR
-         ^~~~~~
-../vector_tests/../system/../../config.hpp:8:18: note: expanded from macro 'VECTOR'
-#define VECTOR                  "../vector/vector.hpp"
-                                ^~~~~~~~~~~~~~~~~~~~~~
-1 error generated.
+

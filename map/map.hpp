@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 11:44:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 15:10:42 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ namespace ft{
 						}
 					}
 				}
-				return biterator(NULL, NULL);
+				return this->end();
 			}
 
 			const_biterator lower_bound (const key_type& k) const { return const_biterator(lower_bound(k)); }
@@ -305,8 +305,7 @@ namespace ft{
 					}
 				}
 				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				return biterator(NULL, NULL);
-				// return (NULL);
+				return this->end();
 			}
 
 			const_biterator upper_bound (const key_type& k) const{ return const_biterator(upper_bound(k)); }

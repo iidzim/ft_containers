@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 11:26:07 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 12:22:34 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ namespace ft{
 		friend bool operator!= (const biterator& lhs, const biterator& rhs) { return (!(lhs == rhs)); }
 
 		biterator& operator++ (){
-			if (_ptr != NULL)
-				std::cout << "CHECK 00	-	" << _ptr->data.first << std::endl;
+			// if (_ptr != NULL)
+				// std::cout << "CHECK 00	-	" << _ptr->data.first << std::endl;
 			if (_ptr == NULL){
 				// std::cout << "CHECK 01" << std::endl;
 				_ptr = _tree->_root;
@@ -69,13 +69,13 @@ namespace ft{
 				while (new_parent != NULL && _ptr == new_parent->right_node){
 					_ptr = new_parent;
 					new_parent = new_parent->parent_node;
-					std::cout << "CHECK LOOP " << _ptr->data.first <<  std::endl;
-					if (new_parent != NULL)
-						std::cout << "CHECK LOOP** " << new_parent->data.first <<  std::endl;
+					// std::cout << "CHECK LOOP " << _ptr->data.first <<  std::endl;
+					// if (new_parent != NULL)
+						// std::cout << "CHECK LOOP** " << new_parent->data.first <<  std::endl;
 				}
 				_ptr = new_parent;
 			}
-			std::cout << "CHECK 05 " << std::endl;
+			// std::cout << "CHECK 05 " << std::endl;
 			// std::cout << "CHECK 05 " << _ptr->data.first << std::endl;
 			// int a;
     		// std::cin >> a;

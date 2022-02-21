@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 11:56:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 15:09:52 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft{
 			}
 
 			//? Map destructor
-			~map(void){}// _tree.clear(); }
+			~map(void){} //use avl_tree destructor
 
 			//? Copy container content
 			map& operator= (const map& x){
@@ -84,21 +84,8 @@ namespace ft{
 				_alloc = x._alloc;
 				_comp = x._comp;
 				_tree = x._tree;
-				// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
-				//! m2 error: non matching constructor biterator()
 				return (*this);
 			}
-
-			// map& assignment_op(const map& x){
-
-			// 	_tree.clear();
-			// 	_alloc = x._alloc;
-			// 	_comp = x._comp;
-			// 	_tree = x._tree;
-			// 	// insert(x.begin(), x.end()); //? m2 : assign the tree using insert range, but first clear the old tree 
-			// 	//! m2 error: non matching constructor biterator()
-			// 	return (*this);
-			// }
 
 			//* iterators ************************************************ //
 
@@ -188,10 +175,8 @@ namespace ft{
 			void erase (biterator first, biterator last){
 
 				ft::vector<int> v;
-				while (first != last){
+				for (; first != last; first++)
 					v.push_back(first.get_ptr()->data.first);
-					first++;
-				}
 				for (ft::vector<int>::iterator it = v.begin(); it < v.end(); it++)
 					_tree.remove_(*it);
 			}
@@ -231,14 +216,7 @@ namespace ft{
 					return this->end();
 			}
 
-			const_biterator find (const key_type& k) const{
-
-				// if (_tree.exist(k))
-				// 	return const_biterator(_tree.find_(k), &_tree);
-				// else
-				// 	return this->end();
-                return const_biterator(find(k));
-			}
+			const_biterator find (const key_type& k) const{ return const_biterator(find(k)); }
 
 			//* Two keys are considered equivalent if the container's comparison object returns false reflexively
 			//* (i.e., no matter the order in which the elements are passed as arguments).
@@ -256,9 +234,7 @@ namespace ft{
 
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
-				else if (_comp(this->rbegin()->first, k) > 0) // undefined behaviour
-					return this->end();
-				else{
+				else if (k, _comp(this->rbegin()->first) > 0){
 					biterator it = this->begin(), ite = this->end();
 					while (--ite != it){
 						if (_comp(k, ite->first) <= 0){
@@ -268,7 +244,7 @@ namespace ft{
 						}
 					}
 				}
-				return biterator(NULL, NULL);
+				return this->end();
 			}
 
 			const_biterator lower_bound (const key_type& k) const { return const_biterator(lower_bound(k)); }
@@ -369,86 +345,3 @@ namespace ft{
 };
 
 #endif
-
-////////////////////////////ToDo
-//* calculate the balance factor for each node of the tree
-//* implement helpers :
-	//! int height(void); √
-		//? The height of a rooted tree is the number of edges between the tree's
-		//? root and its furthest leaf. This means that a tree containing a single
-		//? node has a height of 0.
-	//! int size(){ return nbr_node; } √
-	//! bool isEmpty(); √
-	//! bool exist(node root, T value){} √
-		//? Return true/false depending on whether a value exists in the tree.
-//* insert non duplicate value to the avl-tree -left node or right node-
-	//? allocate new nod √
-		//? allocate value √
-// * update _nbr_node value after each insertion +=1 
-//* update height and bf
-//* rebalance the tree if |bf| == 2
-	//! leftLeft rotation
-	//! rightright rotation
-	//! leftright rotation  *update height and bf child node first then the parent node*
-	//! rightLeft rotation  *update height and bf child node first then the parent node*
-//* display the tree
-	//? level order traversal
-//* remove node..
-//* 3 cases
-	//! case1: the node is a leaf
-	//! case2: the node have at most 1 child
-	//! case3: the node have left and right child
-		//? choose the successor and swap its value into the node
-			// The successor is either the smallest value in the right subtree
-			// or the largest value in the left subtree.
-		//? remove the successor's node
-		//? rebalance the tree
-//* update nbr_node value after each insertion
-// use min max functions instead
-//* update height and bf
-//* replace node->data with pair
-//* update parent_node for each node after insert and remove
-//* overload operator= node
-//* bidirectionnal iterator
-	//? iterate over tree -> inorder traversal (ascending order)
-	//? save current_pos (or node) and avl_tree
-	//? implement post || pre & increment || decrement
-	//? equality/inequality operators - friend 
-//* allocator::rebind
-//* test bidirectional iterator
-//* reverse iterator
-//* implement map member functions
-	//? find & count
-	//? lower_bound & upper_bound & equal range
-	//! test insert
-	//! fix erase(range)
-	//? copy constructor
-	//! operator= & destructor   - avltree class -
-		//? assignment operator for avltree class
-		//? implement create node function
-		//? clear avltree
-//* observers
-
-
-////TODO > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > >
-
-// avltree::clear(){_alloc_node.deallocate(root, 1);} //! leaks -or- assign only the root of the tree 
-//? swap
-//? relational operators
-
-//! copy constructor **
-//! Constructors with costum compare | = operator (lhs.size > rhs.size) | = operator (rhs.size = 0) WA
-//! size WA
-//! rbegin() & rend() segfault
-//! reverse_iterator::base() WA
-
-
-
-//ToDo------ Canonical form		4/5
-//ToDo------ Iterators			4/4
-//ToDo------ Capacity			3/3
-//ToDo------ Element access		1/1
-//ToDo------ Modifiers			6/8
-//ToDo------ Observers			2/2
-//ToDo------ Operations			5/5
-//ToDo------ Allocator			1/1

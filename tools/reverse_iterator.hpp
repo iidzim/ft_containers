@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:09:39 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 16:05:34 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 12:32:28 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ namespace ft{
 			reverse_iterator(): _it() {}
 
 			//? Constructs a reverse iterator from some original iterator it
-			explicit reverse_iterator (iterator_type it) { this->_it = --it; }
+			// explicit reverse_iterator (iterator_type it) { this->_it = --it; }
+			explicit reverse_iterator (iterator_type it) { this->_it = it; }
 
 			//? copy constructor
 			reverse_iterator (const reverse_iterator& x): _it(x._it) {}
@@ -52,12 +53,12 @@ namespace ft{
 			reverse_iterator (const reverse_iterator<Iter>& rev_it):_it((rev_it.base())) {}
 
 			//? Returns a copy of the base iterator.
-			iterator_type base() const { iterator_type tmp = _it; return (++tmp); }
-			// iterator_type base() const { return (_it); }
+			// iterator_type base() const { iterator_type tmp = _it; return (++tmp); }
+			iterator_type base() const { return (_it); }
 
 			//? Operator overloading
-			// reference operator* () const { iterator_type tmp = _it; return *(--tmp); }
-			reference operator* () const { iterator_type tmp = _it; return *(tmp); }
+			reference operator* () const { iterator_type tmp = _it; return *(--tmp); }
+			// reference operator* () const { iterator_type tmp = _it; return *(tmp); }
 			pointer operator->() const { return &(operator*()); }
 			reverse_iterator operator+ (difference_type n) const {return (reverse_iterator(this->base() - n)); }
 			reverse_iterator operator- (difference_type n) const {return (reverse_iterator(this->base() + n)); }

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/15 16:39:20 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 12:36:45 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ namespace ft{
 				int pos = _end - &(*position);
 				if (_capacity == 0){
 					_start = _alloc.allocate(1);
-					_end += 1;
+					_end = _start + 1;
 					_alloc.construct(_start , val);
 					_capacity = _size = 1;
 					return (_start);
