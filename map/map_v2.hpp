@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 20:04:14 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 21:26:42 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ namespace ft{
 
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
-				else if (k, _comp(this->rbegin()->first) > 0){
+				else if (_comp(k, this->rbegin()->first) > 0){
 					biterator it = this->begin(), ite = this->end();
 					while (--ite != it){
 						if (_comp(k, ite->first) <= 0){
@@ -265,7 +265,7 @@ namespace ft{
 				return this->end();
 			}
 
-			const_biterator upper_bound (const key_type& k) const{ return const_biterator(upper_bound(k)); }
+			const_biterator upper_bound (const key_type& k) const { return const_biterator(upper_bound(k)); }
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
 			pair<biterator,biterator> equal_range (const key_type& k){
