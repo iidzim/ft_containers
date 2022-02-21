@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:57:20 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 16:51:24 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 11:26:07 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft{
 
-	template <typename Category, typename tree, typename node, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	template <typename Category, typename tree, typename node, typename T, typename Distance = ptrdiff_t, 			typename Pointer = T*, typename Reference = T&>
 	struct biterator {
 
 		typedef Category 	iterator_category;
@@ -43,23 +43,6 @@ namespace ft{
 		pointer operator-> () const { return (&(_ptr->data)); }
 		friend bool operator== (const biterator& lhs, const biterator& rhs) { return lhs._ptr == rhs._ptr; }
 		friend bool operator!= (const biterator& lhs, const biterator& rhs) { return (!(lhs == rhs)); }
-
-		// biterator& operator++ (){
-
-		// 	if (_ptr == NULL)
-		// 		_ptr = min(_tree->_root);
-		// 	else if (_ptr->right_node != NULL)
-		// 		_ptr = min(_ptr->right_node);
-		// 	else{
-		// 		node_type* new_parent = _ptr->parent_node;
-		// 		while (new_parent != NULL && _ptr == new_parent->right_node){
-		// 			_ptr = new_parent;
-		// 			new_parent = new_parent->parent_node;
-		// 		}
-		// 		_ptr = new_parent;
-		// 	}
-		// 	return (*this);
-		// }
 
 		biterator& operator++ (){
 			if (_ptr != NULL)
@@ -105,23 +88,6 @@ namespace ft{
 			++(*this);
 			return (tmp);
 		}
-
-		// biterator  operator-- (){
-
-		// 	if (_ptr == NULL)
-		// 		_ptr = max(_tree->_root);
-		// 	else if (_ptr->left_node != NULL)
-		// 		_ptr = max(_ptr->left_node);
-		// 	else{
-		// 		node_type* new_parent = _ptr->parent_node;
-		// 		while (new_parent != NULL && _ptr == new_parent->left_node){
-		// 			_ptr = new_parent;
-		// 			new_parent = new_parent->parent_node;
-		// 		}
-		// 		_ptr = new_parent;
-		// 	}
-		// 	return (*this);
-		// }
 
 		biterator  operator-- (){
 

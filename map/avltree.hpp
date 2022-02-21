@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/20 16:23:03 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 11:28:37 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ namespace ft{
 	template <typename T>
 	struct node
 	{
-		T data; //? pair<U, V>
-		int bf; //? balance factor
-		int height; //? height of this node in the tree
-		node* parent_node;
-		node* left_node;
-		node* right_node;
-		
+		T		data; //? pair<U, V>
+		int		bf; //? balance factor
+		int		height; //? height of this node in the tree
+		node*	parent_node;
+		node*	left_node;
+		node*	right_node;
+
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
 				&& left_node == rhs.left_node && right_node == rhs.right_node
@@ -43,15 +43,15 @@ namespace ft{
 		typename Alloc = std::allocator <T> >
 	class avltree{
 
+		typedef node<T>					node_type;
 		typedef typename T::first_type	key_type;
 		typedef typename T::second_type	mapped_value;
-		typedef node<T> node_type;
 		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 		public:
 
 			avltree(void): _nbr_node(0), _root(){}
-			~avltree(void){ }//clear(); }
+			~avltree(void){ clear(); }
 			avltree& operator=(const avltree& t){
 
 				clear();
@@ -78,29 +78,28 @@ namespace ft{
 			int height(void){
 				if (_root == NULL)
 					return (0);
-				return _root->height;
+				return (_root->height);
 			}
 
 			//? the number of nodes in the tree
-			int size(void) const { return _nbr_node; }
+			int size(void) const { return (_nbr_node); }
 	
 			bool is_empty(void) const {
 				if (_nbr_node == 0)
-					return true;
-				return false;
+					return (true);
+				return (false);
 			}
 
 			//* Operations ************************************************* //
 
-			bool exist (T value) const {
+			bool exist(T value) const {
 				return exist(_root, value);
 			}
 
-			bool exist (key_type key) const {
+			bool exist(key_type key) const {
 				return exist(_root, key);
 			}
 
-			//? return the min pair in the tree
 			T min(node_type *root)const {
 
 				while (root->left_node != NULL)
@@ -108,27 +107,12 @@ namespace ft{
 				return (root->data);
 			}
 
-			// node_type* min(node_type *root)const {
-
-			// 	while (root->left_node != NULL)
-			// 		root = root->left_node;
-			// 	return (root);
-			// }
-
-			//? return the max pair in the tree
 			T max(node_type *root)const {
 
 				while (root->right_node != NULL)
 					root = root->right_node;
 				return (root->data);
 			}
-
-			// node_type* max(node_type *root)const {
-
-			// 	while (root->right_node != NULL)
-			// 		root = root->right_node;
-			// 	return (root);
-			// }
 
 			mapped_value* search(key_type& key){
 				return search(_root, key);

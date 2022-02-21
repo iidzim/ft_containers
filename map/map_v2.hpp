@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.hpp                                            :+:      :+:    :+:   */
+/*   map_v2.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 11:44:13 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 11:56:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,33 +162,22 @@ namespace ft{
 			//? Insert elements
 			pair<biterator,bool> insert (const value_type& val)
 			{
-				// std::cout << "value = " << val.second << std::endl;
-				node_type* n;
-				if (_tree.exist(val)){
-					n = _tree.find_(val);
-					biterator it (n, &_tree);
-					return ft::make_pair(it, false);
-				}
-				n = _tree.insert(val);
-				biterator it (n, &_tree);
-				return ft::make_pair(it, true);
+				if (_tree.exist(val))
+					return ft::make_pair(biterator(_tree.find_(val), &_tree), false);
+				return ft::make_pair(biterator(_tree.insert(val), &_tree), true);
 			}
 
 			biterator insert (biterator position, const value_type& val){
 
 				(void)position;
-				node_type* n;
-				n = _tree.insert(val);
-				return biterator(n, &_tree);
+				return biterator(_tree.insert(val), &_tree);
 			}
 
 			template <class InputIterator>
   			void insert (InputIterator first, InputIterator last){
 
-				while (first != last){
+				for(; first != last; first++)
 					insert(*first);
-					++first;
-				}
 			}
 
 			//? Erase elements
@@ -224,7 +213,7 @@ namespace ft{
 			//* Observers ************************************************* //
 
 			//? Return key comparison object
-			key_compare key_comp() const { return this->_comp; }
+			key_compare key_comp() const { return (this->_comp); }
 
 			//? Return value comparison object
 			value_compare value_comp() const{ return value_compare(_comp); }
@@ -236,24 +225,19 @@ namespace ft{
 			// and returns an iterator to it if found, otherwise it returns an iterator to map::end.
 			biterator find (const key_type& k){
 
-				node_type* n;
-				if (_tree.exist(k)){
-					n = _tree.find_(k);
-					return biterator(n, &_tree);
-				}
+				if (_tree.exist(k))
+					return biterator(_tree.find_(k), &_tree);
 				else
 					return this->end();
 			}
 
 			const_biterator find (const key_type& k) const{
 
-				node_type* n;
-				if (_tree.exist(k)){
-					n = _tree.find_(k);
-					return const_biterator(n, &_tree);
-				}
-				else
-					return this->end();
+				// if (_tree.exist(k))
+				// 	return const_biterator(_tree.find_(k), &_tree);
+				// else
+				// 	return this->end();
+                return const_biterator(find(k));
 			}
 
 			//* Two keys are considered equivalent if the container's comparison object returns false reflexively
@@ -272,10 +256,8 @@ namespace ft{
 
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
-				else if (_comp(this->rbegin()->first, k) > 0){
-					std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-					return biterator(NULL, NULL);
-				}
+				else if (_comp(this->rbegin()->first, k) > 0) // undefined behaviour
+					return this->end();
 				else{
 					biterator it = this->begin(), ite = this->end();
 					while (--ite != it){
@@ -304,9 +286,7 @@ namespace ft{
 						it++;
 					}
 				}
-				std::cout << "undefined behaviour 9223372036854775807" << std::endl;
-				return biterator(NULL, NULL);
-				// return (NULL);
+				return this->end();
 			}
 
 			const_biterator upper_bound (const key_type& k) const{ return const_biterator(upper_bound(k)); }
@@ -314,11 +294,8 @@ namespace ft{
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
 			pair<biterator,biterator> equal_range (const key_type& k){
 
-				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
-					biterator it(n, &_tree);
-					biterator ite = this->end();
+					biterator it(_tree.find_(k), &_tree), ite = this->end();
 					if (it == --ite)
 						return ft::make_pair(it, biterator(0, NULL));
 					return ft::make_pair(it, ++it);
@@ -328,10 +305,8 @@ namespace ft{
 
 			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
 
-				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
-					const_biterator it(n, &_tree);
+					const_biterator it(_tree.find_(k), &_tree);
 					if (it == --(this->end()))
 						return ft::make_pair(it, const_biterator(0, NULL));
 					return ft::make_pair(it, ++it);
