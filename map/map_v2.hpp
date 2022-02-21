@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 15:09:52 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 20:04:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ namespace ft{
 			pair<biterator,bool> insert (const value_type& val)
 			{
 				if (_tree.exist(val))
-					return ft::make_pair(biterator(_tree.find_(val), &_tree), false);
+					return ft::make_pair(biterator(_tree.find_node(val), &_tree), false);
 				return ft::make_pair(biterator(_tree.insert(val), &_tree), true);
 			}
 
@@ -211,7 +211,7 @@ namespace ft{
 			biterator find (const key_type& k){
 
 				if (_tree.exist(k))
-					return biterator(_tree.find_(k), &_tree);
+					return biterator(_tree.find_node(k), &_tree);
 				else
 					return this->end();
 			}
@@ -271,7 +271,7 @@ namespace ft{
 			pair<biterator,biterator> equal_range (const key_type& k){
 
 				if (_tree.exist(k)){
-					biterator it(_tree.find_(k), &_tree), ite = this->end();
+					biterator it(_tree.find_node(k), &_tree), ite = this->end();
 					if (it == --ite)
 						return ft::make_pair(it, biterator(0, NULL));
 					return ft::make_pair(it, ++it);
@@ -282,7 +282,7 @@ namespace ft{
 			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
 
 				if (_tree.exist(k)){
-					const_biterator it(_tree.find_(k), &_tree);
+					const_biterator it(_tree.find_node(k), &_tree);
 					if (it == --(this->end()))
 						return ft::make_pair(it, const_biterator(0, NULL));
 					return ft::make_pair(it, ++it);

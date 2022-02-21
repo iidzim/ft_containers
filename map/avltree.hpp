@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 15:05:50 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 20:05:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ namespace ft{
 		typename Alloc = std::allocator <T> >
 	class avltree{
 
-		typedef node<T>					node_type;
-		typedef typename T::first_type	key_type;
-		typedef typename T::second_type	mapped_value;
-		typedef typename Alloc::template rebind<node_type>::other Alloc_node;
-
 		public:
+
+			typedef node<T>					node_type;
+			typedef typename T::first_type	key_type;
+			typedef typename T::second_type	mapped_value;
+			typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 			avltree(void): _nbr_node(0), _root(){}
 			~avltree(void){ clear(); }
@@ -118,12 +118,12 @@ namespace ft{
 				return search(_root, key);
 			}
 
-			node_type* find_(T p) const {
-				return find_(_root, p.first);
+			node_type* find_node(T p) const {
+				return find_node(_root, p.first);
 			}
 
-			node_type* find_(key_type key) const {
-				return find_(_root, key);
+			node_type* find_node(key_type key) const {
+				return find_node(_root, key);
 			}
 
 			//* Modifiers ************************************************* //
@@ -174,16 +174,16 @@ namespace ft{
 
 			//* Operations ************************************************* //
 
-			node_type* find_(node_type *root, key_type key) const {
+			node_type* find_node(node_type *root, key_type key) const {
 
 				if (root == NULL)
 					return (NULL);
 				else if (root->data.first == key)
 					return (root);
 				else if (root->data.first > key)
-					return find_(root->left_node, key);
+					return find_node(root->left_node, key);
 				else
-					return find_(root->right_node, key);
+					return find_node(root->right_node, key);
 			}
 
 			mapped_value* search (node_type *root, key_type& key){

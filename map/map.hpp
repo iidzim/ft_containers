@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 15:10:42 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/21 20:04:14 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ namespace ft{
 				// std::cout << "value = " << val.second << std::endl;
 				node_type* n;
 				if (_tree.exist(val)){
-					n = _tree.find_(val);
+					n = _tree.find_node(val);
 					biterator it (n, &_tree);
 					return ft::make_pair(it, false);
 				}
@@ -238,7 +238,7 @@ namespace ft{
 
 				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
+					n = _tree.find_node(k);
 					return biterator(n, &_tree);
 				}
 				else
@@ -249,7 +249,7 @@ namespace ft{
 
 				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
+					n = _tree.find_node(k);
 					return const_biterator(n, &_tree);
 				}
 				else
@@ -315,7 +315,7 @@ namespace ft{
 
 				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
+					n = _tree.find_node(k);
 					biterator it(n, &_tree);
 					biterator ite = this->end();
 					if (it == --ite)
@@ -329,7 +329,7 @@ namespace ft{
 
 				node_type* n;
 				if (_tree.exist(k)){
-					n = _tree.find_(k);
+					n = _tree.find_node(k);
 					const_biterator it(n, &_tree);
 					if (it == --(this->end()))
 						return ft::make_pair(it, const_biterator(0, NULL));
