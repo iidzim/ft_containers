@@ -357,31 +357,51 @@ int main(void){
 	// 	std::cout << it->first << " - " << it->second << std::endl;
 
 
-	std::map<int, std::string> m1;
-    std::map<int, std::string> m2;
-    ft::map<int, std::string> ft_m1;
-    ft::map<int, std::string> ft_m2;
-    // for (int i = 0; i < 1e6; ++i)
-    for (int i = 0; i < 10; ++i)
+	// std::map<int, std::string> m1;
+    // std::map<int, std::string> m2;
+    // ft::map<int, std::string> ft_m1;
+    // ft::map<int, std::string> ft_m2;
+    // // for (int i = 0; i < 1e6; ++i)
+    // for (int i = 0; i < 10; ++i)
+    // {
+    //     m1.insert(std::make_pair(i, "string1"));
+    //     m2.insert(std::make_pair(i, "string2"));
+    //     ft_m1.insert(ft::make_pair(i, "string1"));
+    //     ft_m2.insert(ft::make_pair(i, "string2"));
+    // }
+
+    // std::cout << m1.size() << " - " << m2.size() << std::endl;
+    // std::cout << ft_m1.size() << " - " << ft_m2.size() << std::endl;    
+	// std::cout << "START--------------\n";
+
+	// ft_m1.get_tree().display(ft_m1.get_tree()._root);
+	// ft_m2.get_tree().display(ft_m2.get_tree()._root);
+
+    // ft_m1 = ft_m2;
+    // std::cout << "-> " << m1.size() << " - " << m2.size() << std::endl;
+    // std::cout << "-> " << ft_m1.size() << " - " << ft_m2.size() << std::endl;
+	// std::cout << ft_m1.empty() << std::endl;
+
+	ft::map<int, std::string> m;
+	std::map<int, std::string> p;
+	for (int i = 0; i < 10; ++i)
     {
-        m1.insert(std::make_pair(i, "string1"));
-        m2.insert(std::make_pair(i, "string2"));
-        ft_m1.insert(ft::make_pair(i, "string1"));
-        ft_m2.insert(ft::make_pair(i, "string2"));
-    }
+        m.insert(ft::make_pair(i, "string1"));
+        p.insert(std::make_pair(i, "string2"));
+	}
+	// m.get_tree().display(m.get_tree()._root);
 
-    std::cout << m1.size() << " - " << m2.size() << std::endl;
-    std::cout << ft_m1.size() << " - " << ft_m2.size() << std::endl;    
-	std::cout << "START--------------\n";
-
-	ft_m1.get_tree().display(ft_m1.get_tree()._root);
-	ft_m2.get_tree().display(ft_m2.get_tree()._root);
-
-    ft_m1 = ft_m2;
-    std::cout << "-> " << m1.size() << " - " << m2.size() << std::endl;
-    std::cout << "-> " << ft_m1.size() << " - " << ft_m2.size() << std::endl;
-	std::cout << ft_m1.empty() << std::endl;
-
+	ft::map<int, std::string> c(m);
+	// c.get_tree().display(c.get_tree()._root);
+	// if (m == c)
+	// 	std::cout << "equal\n";
+	m.clear();
+	// std::cout << m.size();
+	std::cout << "ok99\n";
+	m = c;
+	// if (m == c)
+	// 	std::cout << "equal\n";
+	// std::cout << "666666" << m.size();
 
 
 }

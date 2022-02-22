@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 11:31:42 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 14:53:43 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft{
 		node*	left_node;
 		node*	right_node;
 
-		node(void): T(), bf(0), height(0), parent_node(), left_node(), right_node(){}
+		node(void): T(), bf(0), height(0), parent_node(NULL), left_node(NULL), right_node(NULL){}
 		~node(void){}
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
@@ -52,21 +52,21 @@ namespace ft{
 			typedef typename T::second_type	mapped_value;
 			typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
-			avltree(void): _nbr_node(0), _root(){}
-			~avltree(void){ clear(); }
+			avltree(void): _nbr_node(0), _root(NULL){}
+			~avltree(void){ }//clear(); }
 			avltree& operator=(const avltree& t){
 
-				if (this != &t){
-					// clear();
-					_comp = t._comp;
-					_alloc = t._alloc;
-					_alloc_node = t._alloc_node;
-					_nbr_node = 0;
-					// std::cout << "avltree -size before = " << size() << std::endl;
-					insert_nodes(t._root);
-					// insert_nodes(t._root, 1);
-					// std::cout << "avltree -size after = " << size() << std::endl;
-				}
+				// clear();
+				_comp = t._comp;
+				_alloc = t._alloc;
+				_alloc_node = t._alloc_node;
+				_nbr_node = 0;
+				// std::cout << "avltree -size before = " << size() << std::endl;
+				insert_nodes(t._root);
+				std::cout << "done***\n";
+				// display(_root);
+				// insert_nodes(t._root, 1);
+				// std::cout << "avltree -size after = " << size() << std::endl;
 				return (*this);
 			}
 
@@ -76,8 +76,10 @@ namespace ft{
 					std::cout << x->data.first << std::endl;
 					insert(x->data);
 					std::cout << "maybe here2\n";
-					insert_nodes(x->left_node);
-					insert_nodes(x->right_node);
+					if (x->left_node != NULL)
+						insert_nodes(x->left_node);
+					if (x->right_node != NULL)
+						insert_nodes(x->right_node);
 				}
 			}
 
@@ -331,13 +333,19 @@ namespace ft{
 				return (balance(n));
 			}
 
-			void clear(node_type* root){
+			void clear(node_type* &root){
 
 				if (root != NULL){
+					std::cout << "ok\n";
 					_alloc.destroy(&(root->data));
+					// root->data = NULL;
 					clear(root->left_node);
 					clear(root->right_node);
+					// _root->left_node = NULL;
+					// _root->right_node = NULL;
+					// _root->parent_node = NULL;
 					_alloc_node.deallocate(root, 1); //! heap-use-after-free
+					// _root = NULL;
 				}
 				_nbr_node = 0;
 			}
