@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 21:05:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:22:46 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,8 @@ namespace ft{
 
 				std::swap(_comp, x._comp);
 				std::swap(_alloc, x._alloc);
-				map tmp = *this;
-				*this = x;
-				x = tmp;
+				std::swap(_tree._root, x._tree._root);
+				std::swap(_tree._nbr_node, x._tree._nbr_node);
 			}
 
 			//? Removes all elements from the map container

@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 21:05:30 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:20:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft{
 			typedef typename T::second_type	mapped_value;
 			typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
-			avltree(void): _nbr_node(0), _root(NULL){}
+			avltree(void):  _root(NULL), _nbr_node(0){}
 			~avltree(void){ clear(); }
 			avltree& operator=(const avltree& t){
 
@@ -447,10 +447,10 @@ namespace ft{
 			Compare     _comp;
 			Alloc_node  _alloc_node;
 			Alloc       _alloc;
-			int         _nbr_node;
 			
 		public:
 			node_type   *_root;
+			int         _nbr_node;
 
 	};
 
