@@ -1,4 +1,4 @@
-#include "map.hpp"
+#include "map_v2.hpp"
 
 #include <map>
 #include <iterator>
@@ -62,7 +62,7 @@
 
 int main(void){
 
-// {
+{
 	// ft::map<int, std::string> m;
 	// // // std::cout << std::boolalpha;
 	// // // // std::cout << "map is empty ? " << m.empty() << " | size = " << m.size() << std::endl;
@@ -316,27 +316,27 @@ int main(void){
 	// 	std::cout << "ok\n";
 
 	//! Constructors with costum compare
-    ft::map<char, int> m;
-    for (size_t i = 97; i < 110; i++){
-        m[i - 97] = i;
-		std::cout << m[i - 97] << " - ";
-	}
-	std::cout << std::endl;
-	// std::cout << m[100] << std::endl;
-	// // m.get_tree().display(m.get_tree()._root);
-    // ft::map<char, int> c(m);
-    ft::map<char, int>::biterator it = m.begin(), ite = m.end();
-	// std::cout << "|" << it->first << "|" << std::endl;
-	// for (size_t i = 97; i < 110; i++)
+    // ft::map<char, int> m;
+    // for (size_t i = 97; i < 110; i++){
+    //     m[i - 97] = i;
 	// 	std::cout << m[i - 97] << " - ";
+	// }
 	// std::cout << std::endl;
+	// // std::cout << m[100] << std::endl;
+	// // // m.get_tree().display(m.get_tree()._root);
+    // // ft::map<char, int> c(m);
+    // ft::map<char, int>::biterator it = m.begin(), ite = m.end();
+	// // std::cout << "|" << it->first << "|" << std::endl;
+	// // for (size_t i = 97; i < 110; i++)
+	// // 	std::cout << m[i - 97] << " - ";
+	// // std::cout << std::endl;
 
-	// std::cout << "|" << it->first << "|" << std::endl;
+	// // std::cout << "|" << it->first << "|" << std::endl;
 
 
-	for (; it != ite; it++)
-		std::cout << it->second << " - ";
-	std::cout << std::endl;
+	// for (; it != ite; it++)
+	// 	std::cout << it->second << " - ";
+	// std::cout << std::endl;
 
 
 	//! operator []
@@ -355,9 +355,38 @@ int main(void){
 	// ft::map<int, std::string>::biterator it = o.begin(), ite = o.end();
 	// for (it = o.begin(); it != ite; it++)
 	// 	std::cout << it->first << " - " << it->second << std::endl;
-// }
 
-std::cout << "-------------------------------------------------------\n";
+
+	std::map<int, std::string> m1;
+    std::map<int, std::string> m2;
+    ft::map<int, std::string> ft_m1;
+    ft::map<int, std::string> ft_m2;
+    // for (int i = 0; i < 1e6; ++i)
+    for (int i = 0; i < 10; ++i)
+    {
+        m1.insert(std::make_pair(i, "string1"));
+        m2.insert(std::make_pair(i, "string2"));
+        ft_m1.insert(ft::make_pair(i, "string1"));
+        ft_m2.insert(ft::make_pair(i, "string2"));
+    }
+
+    std::cout << m1.size() << " - " << m2.size() << std::endl;
+    std::cout << ft_m1.size() << " - " << ft_m2.size() << std::endl;    
+	std::cout << "START--------------\n";
+
+	ft_m1.get_tree().display(ft_m1.get_tree()._root);
+	ft_m2.get_tree().display(ft_m2.get_tree()._root);
+
+    ft_m1 = ft_m2;
+    std::cout << "-> " << m1.size() << " - " << m2.size() << std::endl;
+    std::cout << "-> " << ft_m1.size() << " - " << ft_m2.size() << std::endl;
+	std::cout << ft_m1.empty() << std::endl;
+
+
+
+}
+
+// std::cout << "-------------------------------------------------------\n";
 
 // {
 	// std::map<int, std::string> m;

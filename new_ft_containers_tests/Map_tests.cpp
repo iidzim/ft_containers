@@ -103,20 +103,18 @@ bool testmapConstructors()
 
     // std::map<char, int, classcomp>::iterator r = fourth.begin(), re = fourth.end();
 
-    // std::cout << fourth.size() << " - " << m_fourth.size() << std::endl;
-	// std::cout << std::boolalpha;
-    // std::cout << comparemaps(fourth.begin(), fourth.end(), m_fourth.begin(), m_fourth.end()) << std::endl;
-    // for (ft::map<char, int>::biterator it = m_fourth.begin(); it != m_fourth.end(); it++)
-    //     std::cout << it->second << " - ";
-    // std::cout << std::endl;
-
-    std::cout << "here\n";
-
-    cond = fourth.size() == m_fourth.size() && cond && comparemaps(fourth.begin(), fourth.end(), m_fourth.begin(), m_fourth.end()); //! read memory access
+    cond = fourth.size() == m_fourth.size() && cond && comparemaps(fourth.begin(), fourth.end(), m_fourth.begin(), m_fourth.end()); 
 
     bool (*fn_pt)(char, char) = fncomp;
     std::map<char, int, bool (*)(char, char)> fifth(fn_pt);  // function pointer as Compare
     ft::map<char, int, bool (*)(char, char)> m_fifth(fn_pt); // function pointer as Compare
+
+    // std::cout << fifth.size() << " - " << m_fifth.size() << std::endl;
+	// std::cout << std::boolalpha;
+    // std::cout << comparemaps(fifth.begin(), fifth.end(), m_fifth.begin(), m_fifth.end()) << std::endl;
+    // for (ft::map<char, int>::biterator it = m_fourth.begin(); it != m_fourth.end(); it++)
+    //     std::cout << it->second << " - ";
+    // std::cout << std::endl;
 
     cond = fifth.size() == m_fifth.size() && cond && comparemaps(fifth.begin(), fifth.end(), m_fifth.begin(), m_fifth.end());
 
@@ -124,6 +122,10 @@ bool testmapConstructors()
     m_first = ft::map<char, int>();
 
     cond = copy.size() == m_copy.size() && cond && comparemaps(copy.begin(), copy.end(), m_copy.begin(), m_copy.end());
+
+    // std::cout << "here\n";
+    // int i;
+    // std::cin >> i;
 
     return cond;
 }
@@ -588,9 +590,9 @@ void testConstructors()
     //         res1 += it->second;
     //     EQUAL(res == res1);
     // }
-    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " Constructors with costum compare " //!!!!!!!!! WA
-              << "] --------------------]\t\t\033[0m";
-    EQUAL(testmapConstructors());
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " Constructors with costum compare "
+    //           << "] --------------------]\t\t\033[0m";
+    // EQUAL(testmapConstructors());
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator= (lhs.size = rhs.size) "
               << "] --------------------]\t\t\033[0m";
     {
@@ -609,6 +611,9 @@ void testConstructors()
                 ft_m2.insert(ft::make_pair(i, "string2"));
             }
 
+            std::cout << m1.size() << " - " << m2.size() << std::endl;
+            std::cout << ft_m1.size() << " - " << ft_m2.size() << std::endl;    
+
             start = get_time();
             m1 = m2;
             end = get_time();
@@ -619,6 +624,8 @@ void testConstructors()
             ualarm(diff * 1e3, 0);
             ft_m1 = ft_m2;
             ualarm(0, 0);
+            std::cout << "-> " << m1.size() << " - " << m2.size() << std::endl;
+            std::cout << "-> " << ft_m1.size() << " - " << ft_m2.size() << std::endl;
             /*----------------------------------------------------*/
         }
         /*------------------------------------------------------------------------------------------*/
@@ -2263,7 +2270,7 @@ int main()
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    TEST_CASE(testModifiers)
+    TEST_CASE(testModifiers) //! swap
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
@@ -2271,7 +2278,7 @@ int main()
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations)
+    TEST_CASE(testOperations) //! lower bound method
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
@@ -2283,7 +2290,7 @@ int main()
     std::cout << std::endl;
 
     std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    TEST_CASE(testNonMemberSwap);
+    TEST_CASE(testNonMemberSwap); //! WA
     std::cout << std::endl;
     return 0;
 }

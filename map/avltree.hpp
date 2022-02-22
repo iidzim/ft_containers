@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 20:05:29 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:31:42 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ namespace ft{
 		node*	left_node;
 		node*	right_node;
 
+		node(void): T(), bf(0), height(0), parent_node(), left_node(), right_node(){}
+		~node(void){}
 		bool operator== (const node& rhs) const{
 			return (data == rhs.data && bf == rhs.bf && height == rhs.height
 				&& left_node == rhs.left_node && right_node == rhs.right_node
@@ -54,23 +56,52 @@ namespace ft{
 			~avltree(void){ clear(); }
 			avltree& operator=(const avltree& t){
 
-				clear();
-				_comp = t._comp;
-				_alloc = t._alloc;
-				_alloc_node = t._alloc_node;
-				_nbr_node = 0;
-				insert_nodes(t._root);
+				if (this != &t){
+					// clear();
+					_comp = t._comp;
+					_alloc = t._alloc;
+					_alloc_node = t._alloc_node;
+					_nbr_node = 0;
+					// std::cout << "avltree -size before = " << size() << std::endl;
+					insert_nodes(t._root);
+					// insert_nodes(t._root, 1);
+					// std::cout << "avltree -size after = " << size() << std::endl;
+				}
 				return (*this);
 			}
 
 			void insert_nodes(node_type* x){
 
 				if (x != NULL){
+					std::cout << x->data.first << std::endl;
 					insert(x->data);
+					std::cout << "maybe here2\n";
 					insert_nodes(x->left_node);
-					insert_nodes(x->right_node); 
+					insert_nodes(x->right_node);
 				}
 			}
+
+			// void insert_nodes(node_type* x, int i){
+
+			// 	if (x != NULL){
+			// 		// std::cout << "hi" << std::endl;
+			// 		insert(x->data, i);
+			// 		insert_nodes(x->left_node, i);
+			// 		insert_nodes(x->right_node, i); 
+			// 	}
+			// }
+
+			// node_type* insert(T data, int i){
+
+			// 	(void)i;
+			// 	if (!exist(_root, data)){
+			// 		_root = insert(_root, data);
+			// 		// std::cout << "********* " << _nbr_node << std::endl;
+			// 		return (_root);
+			// 	}
+			// 	_nbr_node += 1;
+			// 	return (NULL);
+			// }
 
 			//* Capacity ************************************************** //
 
@@ -133,6 +164,7 @@ namespace ft{
 				if (!exist(_root, data)){
 					_root = insert(_root, data);
 					_nbr_node += 1;
+					// std::cout << "********* " << _nbr_node << std::endl;
 					return (_root);
 				}
 				return (NULL);

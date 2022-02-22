@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/21 21:26:42 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 11:10:44 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,13 @@ namespace ft{
 			//? Copy container content
 			map& operator= (const map& x){
 
+				_tree.clear();
+				std::cout << "size after clear = " << size() << std::endl;
 				_alloc = x._alloc;
 				_comp = x._comp;
+				std::cout << "maybe here\n";
 				_tree = x._tree;
+				std::cout << "size after assign operator = " << size() << std::endl;
 				return (*this);
 			}
 
@@ -92,18 +96,24 @@ namespace ft{
 			// ? Returns an iterator referring to the first element in the map container
 			biterator begin(){
 
-				node_type* start = _tree._root;
-				while (start->left_node != NULL)
-					start = start->left_node;
-				return (biterator(start, &_tree));
+				if (_tree.size() != 0){
+					node_type* start = _tree._root;
+					while (start->left_node != NULL)
+						start = start->left_node;
+					return (biterator(start, &_tree));
+				}
+				return (biterator(NULL, &_tree));
 			}
 
 			const_biterator begin() const {
 
-				node_type* start = _tree._root;
-				while (start->left_node != NULL)
-					start = start->left_node;
-				return (const_biterator(start, &_tree));
+				if (_tree.size() != 0){
+					node_type* start = _tree._root;
+					while (start->left_node != NULL)
+						start = start->left_node;
+					return (const_biterator(start, &_tree));
+				}
+				return (const_biterator(NULL, &_tree));
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
@@ -247,7 +257,22 @@ namespace ft{
 				return this->end();
 			}
 
-			const_biterator lower_bound (const key_type& k) const { return const_biterator(lower_bound(k)); }
+			const_biterator lower_bound (const key_type& k) const {
+
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(k, this->rbegin()->first) > 0){
+					const_biterator it = this->begin(), ite = this->end();
+					while (--ite != it){
+						if (_comp(k, ite->first) <= 0){
+							if (_comp(ite->first, k) > 0)
+								++ite;
+							return const_biterator(ite);
+						}
+					}
+				}
+				return this->end();
+			}
 
 			//? Return iterator to upper bound
 			biterator upper_bound (const key_type& k){
@@ -265,7 +290,20 @@ namespace ft{
 				return this->end();
 			}
 
-			const_biterator upper_bound (const key_type& k) const { return const_biterator(upper_bound(k)); }
+			const_biterator upper_bound (const key_type& k) const {
+
+				if (_comp(k, this->begin()->first) > 0)
+					return this->begin();
+				else if (_comp(k, this->rbegin()->first) > 0){
+					const_biterator it = this->begin(), ite = this->end();
+					while (it != ite){
+						if (_comp(k, it->first) > 0)
+							return (it);
+						it++;
+					}
+				}
+				return this->end();
+				}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
 			pair<biterator,biterator> equal_range (const key_type& k){
