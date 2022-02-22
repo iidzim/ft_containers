@@ -382,25 +382,25 @@ int main(void){
     // std::cout << "-> " << ft_m1.size() << " - " << ft_m2.size() << std::endl;
 	// std::cout << ft_m1.empty() << std::endl;
 
+//*
 	ft::map<int, std::string> m;
-	std::map<int, std::string> p;
 	for (int i = 0; i < 10; ++i)
-    {
         m.insert(ft::make_pair(i, "string1"));
-        p.insert(std::make_pair(i, "string2"));
-	}
 	// m.get_tree().display(m.get_tree()._root);
 
+	std::cout << "here\n";
 	ft::map<int, std::string> c(m);
 	// c.get_tree().display(c.get_tree()._root);
 	// if (m == c)
-	// 	std::cout << "equal\n";
+		// std::cout << "equal\n";
 	m.clear();
-	// std::cout << m.size();
-	std::cout << "ok99\n";
+	std::cout << m.size();
+	// c.get_tree().display(c.get_tree()._root);
+
+	std::cout << "ok------\n";
 	m = c;
-	// if (m == c)
-	// 	std::cout << "equal\n";
+	if (m == c)
+		std::cout << "equal\n";
 	// std::cout << "666666" << m.size();
 
 

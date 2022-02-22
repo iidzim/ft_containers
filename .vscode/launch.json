@@ -8,7 +8,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/new_ft_containers_tests/a.out",
+            // "program": "${workspaceFolder}/new_ft_containers_tests/a.out",
+            "program": "${workspaceFolder}/map/a.out",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

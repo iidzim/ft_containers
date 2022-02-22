@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 14:53:43 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:05:30 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,15 @@ namespace ft{
 			typedef typename Alloc::template rebind<node_type>::other Alloc_node;
 
 			avltree(void): _nbr_node(0), _root(NULL){}
-			~avltree(void){ }//clear(); }
+			~avltree(void){ clear(); }
 			avltree& operator=(const avltree& t){
 
-				// clear();
 				_comp = t._comp;
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
-				_nbr_node = 0;
 				// std::cout << "avltree -size before = " << size() << std::endl;
 				insert_nodes(t._root);
-				std::cout << "done***\n";
-				// display(_root);
-				// insert_nodes(t._root, 1);
+				// std::cout << "done***\n";
 				// std::cout << "avltree -size after = " << size() << std::endl;
 				return (*this);
 			}
@@ -73,37 +69,15 @@ namespace ft{
 			void insert_nodes(node_type* x){
 
 				if (x != NULL){
-					std::cout << x->data.first << std::endl;
+					// std::cout << x->data.first << std::endl;
 					insert(x->data);
-					std::cout << "maybe here2\n";
+					// std::cout << "maybe here2\n";
 					if (x->left_node != NULL)
 						insert_nodes(x->left_node);
 					if (x->right_node != NULL)
 						insert_nodes(x->right_node);
 				}
 			}
-
-			// void insert_nodes(node_type* x, int i){
-
-			// 	if (x != NULL){
-			// 		// std::cout << "hi" << std::endl;
-			// 		insert(x->data, i);
-			// 		insert_nodes(x->left_node, i);
-			// 		insert_nodes(x->right_node, i); 
-			// 	}
-			// }
-
-			// node_type* insert(T data, int i){
-
-			// 	(void)i;
-			// 	if (!exist(_root, data)){
-			// 		_root = insert(_root, data);
-			// 		// std::cout << "********* " << _nbr_node << std::endl;
-			// 		return (_root);
-			// 	}
-			// 	_nbr_node += 1;
-			// 	return (NULL);
-			// }
 
 			//* Capacity ************************************************** //
 
@@ -116,7 +90,7 @@ namespace ft{
 
 			//? the number of nodes in the tree
 			int size(void) const { return (_nbr_node); }
-	
+
 			bool is_empty(void) const {
 				if (_nbr_node == 0)
 					return (true);
@@ -183,7 +157,9 @@ namespace ft{
 			}
 
 			void clear(void){
+
 				clear(_root);
+				_nbr_node = 0;
 			}
 
 			//* Print Content ************************************************* //
@@ -291,9 +267,9 @@ namespace ft{
 				if (n == NULL)
 					return (NULL);
 				int diff = _comp(key, n->data.first);
-				if (diff > 0)
+				if (diff == true)
 					n->left_node = remove_(n->left_node, key);
-				else if (diff == 0 && n->right_node != NULL && n->data.first != key)
+				else if (diff == false && n->right_node != NULL && n->data.first != key)
 					n->right_node = remove_(n->right_node, key);
 				else{
 					if ((n->left_node != NULL && n->right_node == NULL) ||
@@ -303,7 +279,9 @@ namespace ft{
 						_root = tmp;
 						_root->parent_node = n->parent_node;	//! update parent
 						tmp = NULL;
-						delete tmp; //todo----------leaks
+						// delete tmp 
+						_alloc.destroy(&(n->data));
+						_alloc_node.deallocate(n, 1);
 						return (_root);
 					}
 					//* The successor is either the smallest value in the right subtree
@@ -325,7 +303,9 @@ namespace ft{
 						}
 					}
 					else{ //? n->left_node == NULL && n->right_node == NULL -> leaf
-						delete n;
+						// delete n
+						_alloc.destroy(&(n->data));
+						_alloc_node.deallocate(n, 1);
 						return (NULL);
 					}
 				}
@@ -333,21 +313,35 @@ namespace ft{
 				return (balance(n));
 			}
 
-			void clear(node_type* &root){
+			// void clear(node_type* &root){
 
-				if (root != NULL){
-					std::cout << "ok\n";
-					_alloc.destroy(&(root->data));
-					// root->data = NULL;
-					clear(root->left_node);
-					clear(root->right_node);
-					// _root->left_node = NULL;
-					// _root->right_node = NULL;
-					// _root->parent_node = NULL;
-					_alloc_node.deallocate(root, 1); //! heap-use-after-free
-					// _root = NULL;
+			// 	if (root != NULL){
+			// 		std::cout << "in " << root->data.first << std::endl;
+			// 		_alloc.destroy(&(root->data));
+			// 		clear(root->right_node);
+			// 		clear(root->left_node);
+			// 		std::cout << "before deallocate " << root->data.first << std::endl;
+			// 		// _root->left_node = NULL;
+			// 		// _root->right_node = NULL;
+			// 		// _root->parent_node = NULL;
+			// 		if (root->parent_node != NULL)
+						
+			// 		_alloc_node.deallocate(root, 1);
+			// 	}
+			// 	_root = NULL;
+			// }
+
+			void clear(node_type* &n){
+
+				if (n != NULL){
+					_alloc.destroy(&(n->data));
+					if (n->left_node != NULL)
+						clear(n->left_node);
+					if (n->right_node != NULL)
+						clear(n->right_node);
+					_alloc_node.deallocate(n, 1);
 				}
-				_nbr_node = 0;
+				n = NULL;
 			}
 
 			//* Rotations ************************************************* //
@@ -382,7 +376,7 @@ namespace ft{
 					else
 						return rightleft_case(n);
 				}
-				// we return node without any rotation if |bf| < 1
+				// we return node without any rotation if |bf| <= 1
 				return (n);
 			}
 
@@ -406,7 +400,6 @@ namespace ft{
 
 			node_type* right_rotation(node_type* n){
 
-				// std::cout << "right_rotation\n";
 				node_type *new_parent = n->left_node;
 				n->left_node = new_parent->right_node;
 				new_parent->right_node = n;
@@ -422,7 +415,6 @@ namespace ft{
 
 			node_type* left_rotation(node_type* n){
 
-				// std::cout << "left_rotation\n";
 				node_type *new_parent = n->right_node;
 				n->right_node = new_parent->left_node;
 				new_parent->left_node = n;
