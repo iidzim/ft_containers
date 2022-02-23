@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 21:22:46 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 11:01:12 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft{
 			typedef typename allocator_type::pointer																			pointer;
 			typedef typename allocator_type::const_pointer																		const_pointer;
 			typedef typename ft::node<ft::pair<const Key,T> > 																	node_type;
-			typedef typename ft::avltree<ft::pair<const Key,T> >																tree_type;
+			typedef typename ft::avltree<ft::pair<const Key,T>, Compare, Alloc>													tree_type;
 			typedef typename ft::biterator<std::bidirectional_iterator_tag, tree_type, node_type, value_type>					biterator;
 			typedef typename ft::biterator<std::bidirectional_iterator_tag, const tree_type, const node_type, const value_type>	const_biterator;
 			typedef typename ft::reverse_iterator<biterator>																	reverse_iterator;
@@ -147,7 +147,7 @@ namespace ft{
 			** even if no mapped value is assigned to the element (the element is constructed using its default constructor).
 			*/
 			mapped_type& operator[] (const key_type& k){
-				
+
 				this->insert(ft::make_pair(k,mapped_type()));
 				return (this->find(k).get_ptr())->data.second;
 			}
@@ -243,6 +243,7 @@ namespace ft{
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
 					biterator it = this->begin(), ite = this->end();
+					std::cout << "here3\n";
 					while (--ite != it){
 						if (_comp(k, ite->first) <= 0){
 							if (_comp(ite->first, k) > 0)

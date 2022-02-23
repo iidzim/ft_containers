@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 21:20:58 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 10:50:53 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ namespace ft{
 				_comp = t._comp;
 				_alloc = t._alloc;
 				_alloc_node = t._alloc_node;
-				// std::cout << "avltree -size before = " << size() << std::endl;
 				insert_nodes(t._root);
-				// std::cout << "done***\n";
-				// std::cout << "avltree -size after = " << size() << std::endl;
 				return (*this);
 			}
 
@@ -71,7 +68,6 @@ namespace ft{
 				if (x != NULL){
 					// std::cout << x->data.first << std::endl;
 					insert(x->data);
-					// std::cout << "maybe here2\n";
 					if (x->left_node != NULL)
 						insert_nodes(x->left_node);
 					if (x->right_node != NULL)
@@ -140,7 +136,6 @@ namespace ft{
 				if (!exist(_root, data)){
 					_root = insert(_root, data);
 					_nbr_node += 1;
-					// std::cout << "********* " << _nbr_node << std::endl;
 					return (_root);
 				}
 				return (NULL);
@@ -188,9 +183,10 @@ namespace ft{
 
 				if (root == NULL)
 					return (NULL);
-				else if (root->data.first == key)
+				if (root->data.first == key)
 					return (root);
-				else if (root->data.first > key)
+				int diff = _comp(root->data.first, key);
+				if (diff == false)
 					return find_node(root->left_node, key);
 				else
 					return find_node(root->right_node, key);
@@ -200,9 +196,10 @@ namespace ft{
 
 				if (root == NULL)
 					return (0);
-				else if (root->data.first == key)
+				if (root->data.first == key)
 					return (&(root->data.second));
-				else if (root->data.first > key)
+				int diff = _comp(root->data.first, key);
+				if (diff == false)
 					return search(root->left_node, key);
 				else
 					return search(root->right_node, key);
@@ -212,9 +209,9 @@ namespace ft{
 
 				if (n == NULL)
 					return (false);
-				int diff = _comp(data.first, n->data.first);
 				if (n->data.first == data.first)
 					return (true);
+				int diff = _comp(data.first, n->data.first);
 				if (diff == true)
 					return exist(n->left_node, data);
 				if (diff == false)
@@ -226,9 +223,9 @@ namespace ft{
 
 				if (n == NULL)
 					return (false);
-				int diff = _comp(key, n->data.first);
 				if (n->data.first == key)
 					return (true);
+				int diff = _comp(key, n->data.first);
 				if (diff == true)
 					return exist(n->left_node, key);
 				if (diff == false)
@@ -282,6 +279,7 @@ namespace ft{
 						// delete tmp 
 						_alloc.destroy(&(n->data));
 						_alloc_node.deallocate(n, 1);
+						n = NULL;
 						return (_root);
 					}
 					//* The successor is either the smallest value in the right subtree
@@ -306,6 +304,7 @@ namespace ft{
 						// delete n
 						_alloc.destroy(&(n->data));
 						_alloc_node.deallocate(n, 1);
+						n = NULL;
 						return (NULL);
 					}
 				}
@@ -447,7 +446,7 @@ namespace ft{
 			Compare     _comp;
 			Alloc_node  _alloc_node;
 			Alloc       _alloc;
-			
+
 		public:
 			node_type   *_root;
 			int         _nbr_node;
