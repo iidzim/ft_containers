@@ -43,7 +43,7 @@ std::vector<int> erase_test_1(_map<T, V> mp) {
     v.push_back(mp.erase(3));
     for (int i = 0, j = 0; i < 300000 ; ++i, ++j)
         mp.insert(_make_pair(i, j));
-    typename _map<T, V>::iterator it = mp.begin();
+    typename _map<T, V>::biterator it = mp.begin();
     v.push_back(it->first);
     v.push_back(mp.erase(-5));
     v.push_back(mp.size());
@@ -51,12 +51,12 @@ std::vector<int> erase_test_1(_map<T, V> mp) {
     v.push_back(mp.size());
     it = mp.begin();
     v.push_back(it->first);
-    typename _map<T, V>::iterator it4 = mp.begin();
+    typename _map<T, V>::biterator it4 = mp.begin();
     g_start2 = timer();
     for (; it4 != mp.end(); it4 = mp.begin())
         mp.erase(it4->first);
     g_end2 = timer();
-    typename _map<T, V>::iterator it2 = mp.end();
+    typename _map<T, V>::biterator it2 = mp.end();
     it2--;
     v.push_back(mp.erase(299999));
     v.push_back(mp.size());
@@ -65,7 +65,7 @@ std::vector<int> erase_test_1(_map<T, V> mp) {
         mp2.insert(_make_pair(i, j));
     mp2.erase(2);
     mp2.erase(7);
-    typename _map<T, V>::iterator it3 = mp2.begin();
+    typename _map<T, V>::biterator it3 = mp2.begin();
     for (; it3 != mp2.end(); ++it3) {
         v.push_back(it3->first);
         v.push_back(it3->second);

@@ -21,13 +21,13 @@ std::vector<int> insert_test_3(std::map<T, V> mp) {
 template <class T, class V>
 std::vector<int> insert_test_3(_map<T, V> mp) {
     std::vector<int> v;
-    typename _map<T, V>::iterator it = mp.end();
+    typename _map<T, V>::biterator it = mp.end();
     g_start2 = timer();
     for (int i = 0, j = 0; i < 500000; ++i, ++j) {
         mp.insert(it, _make_pair(i, j));
     }
     g_end2 = timer();
-    typename _map<T, V>::iterator it2 = mp.begin();
+    typename _map<T, V>::biterator it2 = mp.begin();
     for (; it2 != mp.end(); ++it2) {
         v.push_back(it2->first);
         v.push_back(it2->second);

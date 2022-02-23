@@ -55,8 +55,8 @@ template <class T, class V>
 std::vector<int> comparator_test(_map<T, V> mp) {
     std::vector<int> v;
     fillMap(mp);
-    for (typename _map<T, V>::iterator it = mp.begin(); it != mp.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp.end(); it != mp.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp.begin(); it != mp.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp.end(); it != mp.begin(); it--) { v.push_back(it->first); }
     _map<int, int, std::greater<int> > mp1;
     fillMap(mp1);
     v.push_back(mp1.begin()->first);
@@ -72,24 +72,24 @@ std::vector<int> comparator_test(_map<T, V> mp) {
         v.push_back(1);
     _map<int, int, std::plus<int> > mp3;
     fillMap(mp3);
-    for (typename _map<T, V>::iterator it = mp3.begin(); it != mp3.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp3.end(); it != mp3.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp3.begin(); it != mp3.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp3.end(); it != mp3.begin(); it--) { v.push_back(it->first); }
     _map<int, int, std::minus<int> > mp4;
     fillMap(mp4);
-    for (typename _map<T, V>::iterator it = mp4.begin(); it != mp4.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp4.end(); it != mp4.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp4.begin(); it != mp4.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp4.end(); it != mp4.begin(); it--) { v.push_back(it->first); }
     _map<int, int, std::greater_equal<int> > mp5;
     fillMap(mp5);
-    for (typename _map<T, V>::iterator it = mp5.begin(); it != mp5.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp5.end(); it != mp5.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp5.begin(); it != mp5.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp5.end(); it != mp5.begin(); it--) { v.push_back(it->first); }
     _map<int, int, std::multiplies<int> > mp6;
     fillMap(mp6);
-    for (typename _map<T, V>::iterator it = mp6.begin(); it != mp6.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp6.end(); it != mp6.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp6.begin(); it != mp6.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp6.end(); it != mp6.begin(); it--) { v.push_back(it->first); }
     _map<int, int, std::bit_xor<int> > mp7;
     fillMap(mp7);
-    for (typename _map<T, V>::iterator it = mp7.begin(); it != mp7.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mp7.end(); it != mp7.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mp7.begin(); it != mp7.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mp7.end(); it != mp7.begin(); it--) { v.push_back(it->first); }
     std::map<int, int, std::logical_and<int> > mp8;
     fillMap(mp8);
     for (typename std::map<T, V>::iterator it = mp8.begin(); it != mp8.end(); it++) { v.push_back(it->first); }

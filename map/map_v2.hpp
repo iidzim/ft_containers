@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/23 11:48:57 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 16:26:32 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,12 +242,12 @@ namespace ft{
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
+					if (_tree.exist(k))
+						return biterator(_tree.find_node(k), &_tree);
 					biterator it = this->begin(), ite = this->end();
 					while (it != ite){
-						if (_comp(k, it->first) || it->first == k){
-							std::cout << "ok\n";
+						if (_comp(k, it->first) || it->first == k)
 							return (it);
-						}
 						it++;
 					}
 				}
@@ -259,6 +259,8 @@ namespace ft{
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
+					if (_tree.exist(k))
+						return const_biterator(_tree.find_node(k), &_tree);
 					const_biterator it = this->begin(), ite = this->end();
 					while (it != ite){
 						if (_comp(k, it->first) || it->first == k)
@@ -275,6 +277,8 @@ namespace ft{
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
+					if (_tree.exist(k))
+						return ++(biterator(_tree.find_node(k), &_tree));
 					biterator it = this->begin(), ite = this->end();
 					while (it != ite){
 						if (_comp(k, it->first) > 0)
@@ -290,6 +294,8 @@ namespace ft{
 				if (_comp(k, this->begin()->first) > 0)
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
+					if (_tree.exist(k))
+						return ++(const_biterator(_tree.find_node(k), &_tree));
 					const_biterator it = this->begin(), ite = this->end();
 					while (it != ite){
 						if (_comp(k, it->first) > 0)

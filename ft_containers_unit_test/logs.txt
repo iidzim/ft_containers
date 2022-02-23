@@ -1,1 +1,91 @@
-
+In file included from ../map_tests/equal_range().cpp:2:
+In file included from ../map_tests/__service.ipp:3:
+In file included from ../map_tests/../../../map/map_v2.hpp:16:
+In file included from ../map_tests/../../../map/../tools/../map/avltree.hpp:21:
+../map_tests/../../../map/../vector/../tools/tools.hpp:115:31: error: no matching constructor for initialization of 'ft::pair<ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &>, ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &> >::first_type' (aka 'ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &>')
+                pair (const pair<U,V>& pr): first(pr.first), second(pr.second){}
+                                            ^     ~~~~~~~~
+../map_tests/equal_range().cpp:43:92: note: in instantiation of function template specialization 'ft::pair<ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &>, ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &> >::pair<ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &>, ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> >' requested here
+    const _pair<_map<int, int>::const_biterator , _map<int, int>::const_biterator>& pair = mp.equal_range(10);
+                                                                                           ^
+../map_tests/equal_range().cpp:64:73: note: in instantiation of function template specialization 'equal_range_test<int, int>' requested here
+    exit(run_map_unit_test<int, int>("equal_range()", equal_range_test, equal_range_test));
+                                                                        ^
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'const biterator<[...], avltree<...>, node<...>, pair<...>, [...], ft::pair<const int, int> *, ft::pair<const int, int> &>' to 'const biterator<[...], const avltree<...>, const node<...>, const pair<...>, [...], const ft::pair<const int, int> *, const ft::pair<const int, int> &>' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:33:3: note: candidate constructor not viable: requires 0 arguments, but 1 was provided
+                biterator(void): _ptr(), _tree() {}
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:34:3: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+                biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
+                ^
+In file included from ../map_tests/equal_range().cpp:2:
+In file included from ../map_tests/__service.ipp:3:
+In file included from ../map_tests/../../../map/map_v2.hpp:16:
+In file included from ../map_tests/../../../map/../tools/../map/avltree.hpp:21:
+../map_tests/../../../map/../vector/../tools/tools.hpp:115:48: error: no matching constructor for initialization of 'ft::pair<ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &>, ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &> >::second_type' (aka 'ft::biterator<std::__1::bidirectional_iterator_tag, const ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, const ft::node<ft::pair<const int, int> >, const ft::pair<const int, int>, long, const ft::pair<const int, int> *, const ft::pair<const int, int> &>')
+                pair (const pair<U,V>& pr): first(pr.first), second(pr.second){}
+                                                             ^      ~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'const biterator<[...], avltree<...>, node<...>, pair<...>, [...], ft::pair<const int, int> *, ft::pair<const int, int> &>' to 'const biterator<[...], const avltree<...>, const node<...>, const pair<...>, [...], const ft::pair<const int, int> *, const ft::pair<const int, int> &>' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:33:3: note: candidate constructor not viable: requires 0 arguments, but 1 was provided
+                biterator(void): _ptr(), _tree() {}
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:34:3: note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+                biterator(node_type *p, tree_type *t): _ptr(p), _tree(t) {}
+                ^
+2 errors generated.
+:pair<const int, int> >, pair<const int, int> >') to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+../map_tests/compare class.cpp:84:41: error: no viable conversion from 'biterator<[...], avltree<[...], std::__1::greater_equal<int>, [...]>, [5 * ...]>' to 'biterator<[...], avltree<[...], std::__1::less<int>, [...]>, [5 * ...]>'
+    for (typename _map<T, V>::biterator it = --mp5.end(); it != mp5.begin(); it--) { v.push_back(it->first); }
+                                        ^    ~~~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::greater_equal<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &>' to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+../map_tests/compare class.cpp:87:41: error: no viable conversion from 'biterator<[...], avltree<[...], std::__1::multiplies<int>, [...]>, [2 * ...]>' to 'biterator<[...], avltree<[...], std::__1::less<int>, [...]>, [2 * ...]>'
+    for (typename _map<T, V>::biterator it = mp6.begin(); it != mp6.end(); it++) { v.push_back(it->first); }
+                                        ^    ~~~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::__1::multiplies<int>, std::__1::allocator<ft::pair<const int, int> > >::biterator' (aka 'biterator<std::__1::bidirectional_iterator_tag, avltree<ft::pair<const int, int>, std::__1::multiplies<int>, std::__1::allocator<ft::pair<const int, int> > >, node<ft::pair<const int, int> >, pair<const int, int> >') to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+../map_tests/compare class.cpp:88:41: error: no viable conversion from 'biterator<[...], avltree<[...], std::__1::multiplies<int>, [...]>, [5 * ...]>' to 'biterator<[...], avltree<[...], std::__1::less<int>, [...]>, [5 * ...]>'
+    for (typename _map<T, V>::biterator it = --mp6.end(); it != mp6.begin(); it--) { v.push_back(it->first); }
+                                        ^    ~~~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::multiplies<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &>' to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+../map_tests/compare class.cpp:91:41: error: no viable conversion from 'biterator<[...], avltree<[...], std::__1::bit_xor<int>, [...]>, [2 * ...]>' to 'biterator<[...], avltree<[...], std::__1::less<int>, [...]>, [2 * ...]>'
+    for (typename _map<T, V>::biterator it = mp7.begin(); it != mp7.end(); it++) { v.push_back(it->first); }
+                                        ^    ~~~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'ft::map<int, int, std::__1::bit_xor<int>, std::__1::allocator<ft::pair<const int, int> > >::biterator' (aka 'biterator<std::__1::bidirectional_iterator_tag, avltree<ft::pair<const int, int>, std::__1::bit_xor<int>, std::__1::allocator<ft::pair<const int, int> > >, node<ft::pair<const int, int> >, pair<const int, int> >') to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+../map_tests/compare class.cpp:92:41: error: no viable conversion from 'biterator<[...], avltree<[...], std::__1::bit_xor<int>, [...]>, [5 * ...]>' to 'biterator<[...], avltree<[...], std::__1::less<int>, [...]>, [5 * ...]>'
+    for (typename _map<T, V>::biterator it = --mp7.end(); it != mp7.begin(); it--) { v.push_back(it->first); }
+                                        ^    ~~~~~~~~~~~
+../map_tests/../../../map/../tools/biterator.hpp:35:3: note: candidate constructor not viable: no known conversion from 'ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::bit_xor<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &>' to 'const ft::biterator<std::__1::bidirectional_iterator_tag, ft::avltree<ft::pair<const int, int>, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >, ft::node<ft::pair<const int, int> >, ft::pair<const int, int>, long, ft::pair<const int, int> *, ft::pair<const int, int> &> &' for 1st argument
+                biterator(const biterator& b){ *this = b; }
+                ^
+../map_tests/../../../map/../tools/biterator.hpp:126:3: note: candidate function
+                operator biterator<iterator_category, const tree_type, const node_type, const T>(){
+                ^
+10 errors generated.

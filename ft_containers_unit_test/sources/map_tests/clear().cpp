@@ -30,7 +30,7 @@ std::vector<int> clear_test(_map<T, V> mp) {
     mp.clear();
     g_end2 = timer();
     v.push_back(mp.size());
-    typename _map<T, V>::iterator it = mp.begin();
+    typename _map<T, V>::biterator it = mp.begin();
     if (it == mp.end())
         v.push_back(1);
     return v;

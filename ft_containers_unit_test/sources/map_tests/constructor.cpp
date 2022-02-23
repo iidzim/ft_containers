@@ -31,7 +31,7 @@ std::vector<int> copy_constructor_test(_map<T, V> mp) {
     g_start2 = timer();
     _map<int, int> mp2(mp.begin(), mp.end());
     g_end2 = timer();
-    _map<int, int>::iterator it = mp2.begin();
+    _map<int, int>::biterator it = mp2.begin();
     for (int i = 0; i < 300000; ++i, it++) {
         v.push_back(it->first);
         v.push_back(it->second);

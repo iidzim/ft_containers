@@ -36,16 +36,16 @@ std::vector<int> insert_test(std::map<T, V> mp) {
 template <class T, class V>
 std::vector<int> insert_test(_map<T, V> mp) {
     std::vector<int> v;
-    _pair<_map<int, int>::iterator , bool> pair = mp.insert(_make_pair(7, 7));
-    _map<int, int>::iterator it = mp.begin();
+    _pair<_map<int, int>::biterator , bool> pair = mp.insert(_make_pair(7, 7));
+    _map<int, int>::biterator it = mp.begin();
     v.push_back(it->first);
     v.push_back(it->second);
     v.push_back(pair.first->first);
     v.push_back(pair.first->second);
     v.push_back(pair.second);
     mp.insert(_make_pair(9, 9));
-    _pair<_map<int, int>::iterator , bool> pair2 = mp.insert(_make_pair(9, 9));
-    _map<int, int>::iterator it2 = pair.first;
+    _pair<_map<int, int>::biterator , bool> pair2 = mp.insert(_make_pair(9, 9));
+    _map<int, int>::biterator it2 = pair.first;
     v.push_back(it2->first);
     v.push_back(it2->second);
     v.push_back(pair2.first->first);
@@ -56,7 +56,7 @@ std::vector<int> insert_test(_map<T, V> mp) {
         mp.insert(_make_pair(i, j));
     }
     g_end2 = timer();
-    typename _map<T, V>::iterator it3 = mp.begin();
+    typename _map<T, V>::biterator it3 = mp.begin();
     for (; it3 != mp.end(); ++it3) {
         v.push_back(it3->first);
         v.push_back(it3->second);

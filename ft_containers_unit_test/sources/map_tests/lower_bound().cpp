@@ -60,7 +60,7 @@ std::vector<int> lower_bound_test(_map<T, V> mp) {
     mp2.insert(_make_pair(40, 40));
     mp2.insert(_make_pair(50, 50));
     mp2.insert(_make_pair(60, 60));
-    _map<int, int>::iterator it;
+    _map<int, int>::biterator it;
     for (int i = 1; i < 60; i += 10) {
         it = mp.lower_bound(i);
         v.push_back(it->first);

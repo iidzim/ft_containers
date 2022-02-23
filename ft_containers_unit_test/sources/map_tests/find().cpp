@@ -28,7 +28,7 @@ std::vector<int> find_test(_map<T, V> mp) {
         mp.insert(_make_pair(i, j));
     }
     g_start2 = timer();
-    typename _map<T, V>::iterator it = mp.find(345678);
+    typename _map<T, V>::biterator it = mp.find(345678);
     g_end2 = timer();
     v.push_back(it->first);
     v.push_back(it->second);

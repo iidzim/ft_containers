@@ -45,13 +45,13 @@ std::vector<int> swap_test(_map<T, V> mp) {
     if (reinterpret_cast<long *>(&mp) == adr1 && reinterpret_cast<long *>(&mp2) == adr2)
     	v.push_back(1);
     v.push_back(mp2.size());
-    typename _map<T, V>::iterator it = mp2.begin();
+    typename _map<T, V>::biterator it = mp2.begin();
     for (; it != mp2.end(); ++it) {
         v.push_back(it->first);
         v.push_back(it->second);
     }
     std::swap(mp, mp2);
-    typename _map<T, V>::iterator it2 = mp2.begin();
+    typename _map<T, V>::biterator it2 = mp2.begin();
     for (; it2 != mp2.end(); ++it2) {
         v.push_back(it2->first);
         v.push_back(it2->second);

@@ -1783,141 +1783,141 @@ void testNonMemberSwap()
 
 void testOperations()
 {
-    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " find method "
-    //           << "] --------------------]\t\t\033[0m";
-    // {
-    //     bool cond(true);
-    //     {
-    //         time_t start, end, diff;
-    //         /*------------------ std::maps ---------------------*/
-    //         std::map<int, std::string> m1;
-    //         ft::map<int, std::string> ft_m1;
-    //         for (size_t i = 0; i < 1e6; i++)
-    //         {
-    //             m1.insert(std::make_pair(i, "string2"));
-    //             ft_m1.insert(ft::make_pair(i, "string2"));
-    //         }
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " find method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        bool cond(true);
+        {
+            time_t start, end, diff;
+            /*------------------ std::maps ---------------------*/
+            std::map<int, std::string> m1;
+            ft::map<int, std::string> ft_m1;
+            for (size_t i = 0; i < 1e6; i++)
+            {
+                m1.insert(std::make_pair(i, "string2"));
+                ft_m1.insert(ft::make_pair(i, "string2"));
+            }
 
-    //         start = get_time();
+            start = get_time();
 
-    //         for (size_t i = 1e1; i < 1e5; i += 10)
-    //             m1.find(i);
+            for (size_t i = 1e1; i < 1e5; i += 10)
+                m1.find(i);
 
-    //         end = get_time();
-    //         diff = end - start;
-    //         diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
-    //         /*-----------------------------------------------------*/
-    //         /*------------------ ft::maps ---------------------*/
-    //         ualarm(diff * 1e3, 0);
-    //         for (size_t i = 1e1; i < 1e5; i += 10)
-    //             ft_m1.find(i);
-    //         ualarm(0, 0);
-    //         /*----------------------------------------------------*/
-    //     }
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            /*-----------------------------------------------------*/
+            /*------------------ ft::maps ---------------------*/
+            ualarm(diff * 1e3, 0);
+            for (size_t i = 1e1; i < 1e5; i += 10)
+                ft_m1.find(i);
+            ualarm(0, 0);
+            /*----------------------------------------------------*/
+        }
 
-    //     std::vector<int> vec;
-    //     std::vector<int> ft_vec;
-    //     std::random_device randDev;
-    //     std::mt19937 generator(randDev());
-    //     std::uniform_int_distribution<int> distr(0, 1e8);
+        std::vector<int> vec;
+        std::vector<int> ft_vec;
+        std::random_device randDev;
+        std::mt19937 generator(randDev());
+        std::uniform_int_distribution<int> distr(0, 1e8);
 
-    //     std::map<int, std::string> m1;
-    //     ft::map<int, std::string> ft_m1;
-    //     std::map<int, std::string>::iterator it;
-    //     ft::map<int, std::string>::biterator ft_it;
+        std::map<int, std::string> m1;
+        ft::map<int, std::string> ft_m1;
+        std::map<int, std::string>::iterator it;
+        ft::map<int, std::string>::biterator ft_it;
 
-    //     for (size_t i = 0; i < 1e6; i++)
-    //     {
-    //         m1.insert(std::make_pair(i, "string2"));
-    //         ft_m1.insert(ft::make_pair(i, "string2"));
-    //     }
+        for (size_t i = 0; i < 1e6; i++)
+        {
+            m1.insert(std::make_pair(i, "string2"));
+            ft_m1.insert(ft::make_pair(i, "string2"));
+        }
 
-    //     for (size_t i = 0; i < 1e6; i++)
-    //     {
-    //         int n = distr(generator);
-    //         it = m1.find(n);
-    //         ft_it = ft_m1.find(n);
-    //         if (it == m1.end() && ft_it == ft_m1.end())
-    //             continue;
-    //         if (it == m1.end() && ft_it != ft_m1.end())
-    //         {
-    //             cond = false;
-    //             break;
-    //         }
-    //         else
-    //         {
-    //             vec.push_back(it->first);
-    //             ft_vec.push_back(ft_it->first);
-    //         }
-    //     }
+        for (size_t i = 0; i < 1e6; i++)
+        {
+            int n = distr(generator);
+            it = m1.find(n);
+            ft_it = ft_m1.find(n);
+            if (it == m1.end() && ft_it == ft_m1.end())
+                continue;
+            if (it == m1.end() && ft_it != ft_m1.end())
+            {
+                cond = false;
+                break;
+            }
+            else
+            {
+                vec.push_back(it->first);
+                ft_vec.push_back(ft_it->first);
+            }
+        }
 
-    //     std::map<char, int> m;
-    //     ft::map<char, int> ft_m;
-    //     std::map<char, int>::iterator it2;
-    //     ft::map<char, int>::biterator ft_it2;
+        std::map<char, int> m;
+        ft::map<char, int> ft_m;
+        std::map<char, int>::iterator it2;
+        ft::map<char, int>::biterator ft_it2;
 
-    //     m['a'] = 50;
-    //     m['b'] = 100;
-    //     m['c'] = 150;
-    //     m['d'] = 200;
+        m['a'] = 50;
+        m['b'] = 100;
+        m['c'] = 150;
+        m['d'] = 200;
 
-    //     ft_m['a'] = 50;
-    //     ft_m['b'] = 100;
-    //     ft_m['c'] = 150;
-    //     ft_m['d'] = 200;
+        ft_m['a'] = 50;
+        ft_m['b'] = 100;
+        ft_m['c'] = 150;
+        ft_m['d'] = 200;
 
-    //     it2 = m.find('b');
-    //     ft_it2 = ft_m.find('b');
+        it2 = m.find('b');
+        ft_it2 = ft_m.find('b');
 
-    //     cond = cond && it2->first == ft_it2->first && it2->second == ft_it2->second;
+        cond = cond && it2->first == ft_it2->first && it2->second == ft_it2->second;
 
-    //     if (it2 != m.end())
-    //         m.erase(it2);
-    //     if (ft_it2 != ft_m.end())
-    //         ft_m.erase(ft_it2);
+        if (it2 != m.end())
+            m.erase(it2);
+        if (ft_it2 != ft_m.end())
+            ft_m.erase(ft_it2);
 
-    //     cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
+        cond = cond && comparemaps(m.begin(), m.end(), ft_m.begin(), ft_m.end());
 
-    //     EQUAL(cond && vec == ft_vec);
-    // }
-    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " count method "
-    //           << "] --------------------]\t\t\033[0m";
-    // {
-    //     bool cond;
-    //     /*---------------------------------- time limit test --------------------------------------------*/
-    //     {
-    //         time_t start, end, diff;
-    //         bool res, ft_res;
+        EQUAL(cond && vec == ft_vec);
+    }
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " count method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        bool cond;
+        /*---------------------------------- time limit test --------------------------------------------*/
+        {
+            time_t start, end, diff;
+            bool res, ft_res;
 
-    //         std::map<int, std::string> m;
-    //         ft::map<int, std::string> ft_m;
-    //         for (size_t i = 0; i < 1e6; ++i)
-    //         {
-    //             m.insert(std::make_pair(i, "value"));
-    //             ft_m.insert(ft::make_pair(i, "value"));
-    //         }
-    //         start = get_time();
-    //         res = m.count(1e6 - 10);
-    //         end = get_time();
-    //         diff = end - start;
-    //         diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            std::map<int, std::string> m;
+            ft::map<int, std::string> ft_m;
+            for (size_t i = 0; i < 1e6; ++i)
+            {
+                m.insert(std::make_pair(i, "value"));
+                ft_m.insert(ft::make_pair(i, "value"));
+            }
+            start = get_time();
+            res = m.count(1e6 - 10);
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-    //         ualarm(diff * 1e3, 0);
-    //         ft_res = ft_m.count(1e6 - 10);
-    //         ualarm(0, 0);
-    //         cond = ft_res == res;
-    //     }
-    //     std::map<int, std::string> m;
-    //     ft::map<int, std::string> ft_m;
-    //     int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
-    //     for (size_t i = 0; i < 9; ++i)
-    //     {
-    //         m.insert(std::make_pair(arr[i], "value"));
-    //         ft_m.insert(ft::make_pair(arr[i], "value"));
-    //     }
-    //     cond = (cond && (m.count(65) == ft_m.count(65) && m.count(300) == ft_m.count(300)));
-    //     EQUAL(cond);
-    // }
+            ualarm(diff * 1e3, 0);
+            ft_res = ft_m.count(1e6 - 10);
+            ualarm(0, 0);
+            cond = ft_res == res;
+        }
+        std::map<int, std::string> m;
+        ft::map<int, std::string> ft_m;
+        int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
+        for (size_t i = 0; i < 9; ++i)
+        {
+            m.insert(std::make_pair(arr[i], "value"));
+            ft_m.insert(ft::make_pair(arr[i], "value"));
+        }
+        cond = (cond && (m.count(65) == ft_m.count(65) && m.count(300) == ft_m.count(300)));
+        EQUAL(cond);
+    }
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " lower_bound method "
               << "] --------------------]\t\t\033[0m";
     {
@@ -1942,7 +1942,6 @@ void testOperations()
 
             ualarm(diff * 1e3, 0);
             ft_res = ft_m.lower_bound(1e5)->first;
-            std::cout << ft_res << " - " << res << std::endl;
             ualarm(0, 0);
             cond = ft_res == res;
         }
@@ -2276,52 +2275,50 @@ int main()
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
     signal(SIGALRM, alarm_handler);
 
-    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    // TEST_CASE(iterator_tests);
-    // TEST_CASE(const_iterator_tests);
-    // TEST_CASE(reverse_iterator_tests);
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    // TEST_CASE(testConstructors);
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    // TEST_CASE(testIterators);
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    // TEST_CASE(testCapacityMethods)
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    // TEST_CASE(testElementAccess);
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    // TEST_CASE(testModifiers)
-    // std::cout << std::endl;
-
-    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    // TEST_CASE(testObservers)
-    // std::cout << std::endl;
-
-//TODOD>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations) //! lower bound method
+    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    TEST_CASE(iterator_tests);
+    TEST_CASE(const_iterator_tests);
+    TEST_CASE(reverse_iterator_tests);
     std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    // TEST_CASE(testAllocatorMethodes)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
+    TEST_CASE(testConstructors);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    // TEST_CASE(testRetionalOperators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    TEST_CASE(testIterators);
+    std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    // TEST_CASE(testNonMemberSwap);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    TEST_CASE(testCapacityMethods)
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    TEST_CASE(testElementAccess);
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    TEST_CASE(testModifiers)
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    TEST_CASE(testObservers)
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    TEST_CASE(testOperations)
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    TEST_CASE(testAllocatorMethodes)
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    TEST_CASE(testRetionalOperators);
+    std::cout << std::endl;
+
+    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    TEST_CASE(testNonMemberSwap);
+    std::cout << std::endl;
     return 0;
 }

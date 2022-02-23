@@ -42,16 +42,16 @@ std::vector<int> iterators_test(_map<T, V> mp) {
     std::vector<int> v;
     _map<T, V> mpp;
     fillMap(mpp);
-    for (typename _map<T, V>::iterator it = mpp.begin(); it != mpp.end(); it++) { v.push_back(it->first); }
-    for (typename _map<T, V>::iterator it = --mpp.end(); it != mpp.begin(); it--) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = mpp.begin(); it != mpp.end(); it++) { v.push_back(it->first); }
+    for (typename _map<T, V>::biterator it = --mpp.end(); it != mpp.begin(); it--) { v.push_back(it->first); }
     _map<int, int> mp0;
-    _map<int, int>::iterator ii = mp0.insert(_make_pair(3, 3)).first;
+    _map<int, int>::biterator ii = mp0.insert(_make_pair(3, 3)).first;
     ii++;
     v.push_back((--ii)->first);
     for (int i = 0, j = 10; i < 5; ++i, ++j)
         mp.insert(_make_pair(i, j));
-    typename _map<T, V>::iterator it = mp.begin();
-    typename _map<T, V>::iterator it2 = mp.end();
+    typename _map<T, V>::biterator it = mp.begin();
+    typename _map<T, V>::biterator it2 = mp.end();
     g_start2 = timer();
     v.push_back(it->first);
     it++;

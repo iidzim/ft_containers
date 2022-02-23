@@ -28,7 +28,7 @@ template <class T, class V>
         std::vector<int> operator_sq_test(_map<T, V> mp) {
     std::vector<int> v;
     mp.insert(_make_pair(3, 3));
-    typename _map<T, V>::iterator it = mp.begin();
+    typename _map<T, V>::biterator it = mp.begin();
     g_start2 = timer();
     v.push_back(it->first);
     v.push_back(it->second);

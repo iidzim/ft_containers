@@ -27,7 +27,7 @@ std::vector<int> insert_test_2(_map<T, V> mp) {
     g_start2 = timer();
     mp2.insert(mp.begin(), mp.end());
     g_end2 = timer();
-    typename _map<T, V>::iterator it2 = mp2.begin();
+    typename _map<T, V>::biterator it2 = mp2.begin();
     for (; it2 != mp2.end(); ++it2) {
         v.push_back(it2->first);
         v.push_back(it2->second);

@@ -40,9 +40,9 @@ std::vector<int> equal_range_test(_map<T, V> mp) {
     mp.insert(_make_pair(50, 50));
     mp.insert(_make_pair(60, 60));
     g_start2 = timer();
-    const _pair<_map<int, int>::const_iterator , _map<int, int>::const_iterator>& pair = mp.equal_range(10);
-    const _pair<_map<int, int>::const_iterator , _map<int, int>::const_iterator>& pair2 = mp.equal_range(11);
-    const _pair<_map<int, int>::const_iterator , _map<int, int>::const_iterator>& pair3 = mp.equal_range(1);
+    const _pair<_map<int, int>::const_biterator , _map<int, int>::const_biterator>& pair = mp.equal_range(10);
+    const _pair<_map<int, int>::const_biterator , _map<int, int>::const_biterator>& pair2 = mp.equal_range(11);
+    const _pair<_map<int, int>::const_biterator , _map<int, int>::const_biterator>& pair3 = mp.equal_range(1);
     g_end2 = timer();
     v.push_back(pair.first->first);
     v.push_back(pair.first->second);

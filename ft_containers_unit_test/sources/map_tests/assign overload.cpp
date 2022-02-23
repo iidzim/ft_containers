@@ -32,7 +32,7 @@ std::vector<int> assign_overload_test(_map<T, V> mp) {
     g_start2 = timer();
     mp2 = mp;
     g_end2 = timer();
-    typename _map<T, V>::iterator it = mp2.begin();
+    typename _map<T, V>::biterator it = mp2.begin();
     for (; it != mp2.end(); it++) {
         v.push_back(it->first);
         v.push_back(it->second);
