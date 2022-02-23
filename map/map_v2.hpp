@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/23 11:01:12 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 11:48:57 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,13 +243,12 @@ namespace ft{
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
 					biterator it = this->begin(), ite = this->end();
-					std::cout << "here3\n";
-					while (--ite != it){
-						if (_comp(k, ite->first) <= 0){
-							if (_comp(ite->first, k) > 0)
-								++ite;
-							return (ite);
+					while (it != ite){
+						if (_comp(k, it->first) || it->first == k){
+							std::cout << "ok\n";
+							return (it);
 						}
+						it++;
 					}
 				}
 				return this->end();
@@ -261,12 +260,10 @@ namespace ft{
 					return this->begin();
 				else if (_comp(k, this->rbegin()->first) > 0){
 					const_biterator it = this->begin(), ite = this->end();
-					while (--ite != it){
-						if (_comp(k, ite->first) <= 0){
-							if (_comp(ite->first, k) > 0)
-								++ite;
-							return const_biterator(ite);
-						}
+					while (it != ite){
+						if (_comp(k, it->first) || it->first == k)
+							return const_biterator(it);
+						it++;
 					}
 				}
 				return this->end();

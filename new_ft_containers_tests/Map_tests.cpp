@@ -1936,7 +1936,6 @@ void testOperations()
             }
             start = get_time();
             res = m.lower_bound(1e5)->first;
-            std::cout << res << std::endl;
             end = get_time();
             diff = end - start;
             diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
@@ -1946,11 +1945,7 @@ void testOperations()
             std::cout << ft_res << " - " << res << std::endl;
             ualarm(0, 0);
             cond = ft_res == res;
-            if (cond == true)
-                std::cout << "ok\n";
         }
-        int i;
-        cin >> i;
         std::map<int, std::string> m;
         ft::map<int, std::string> ft_m;
         int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
@@ -2303,8 +2298,6 @@ int main()
     // TEST_CASE(testElementAccess);
     // std::cout << std::endl;
 
-//TODOD>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
     // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     // TEST_CASE(testModifiers)
     // std::cout << std::endl;
@@ -2312,6 +2305,8 @@ int main()
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)
     // std::cout << std::endl;
+
+//TODOD>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
     TEST_CASE(testOperations) //! lower bound method
