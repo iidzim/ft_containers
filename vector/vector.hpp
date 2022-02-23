@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/22 21:34:40 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:19:06 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,9 @@ namespace ft{
 				if (_capacity == 0){
 					_start = _alloc.allocate(n);
 					_end = _start + n;
-					std::copy(first, last, _start);
+					// std::copy(first, last, _start);
+					for (int i = 0; i < n; i++)						//!!!!!!!!!!
+						_alloc.construct(_start + i, *(first + i)); //!!!!!!!!!!
 					_size = _capacity = n;
 				}
 				else{
@@ -364,11 +366,14 @@ namespace ft{
 			iterator erase (iterator position){
 
 				pointer pos_ = &(*position);
-				if (position + 1 != _end)
-					std::copy(pos_ + 1, _end, pos_);
-				_end -= 1;
+				if (position + 1 != _end){
+					// std::copy(pos_ + 1, _end, pos_);
+					for (int i = 0; i < _end - pos_ - 1; i++)		//!!!!!!!!!!!!
+						_alloc.construct(pos_ + i, *(pos_ + 1 + i));	//!!!!!!!!!!!!
+				}
 				_size -= 1;
 				_alloc.destroy(_end);
+				_end -= 1;
 				return (iterator(pos_));
 			}
 

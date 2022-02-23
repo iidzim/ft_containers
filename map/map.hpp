@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_v2.hpp                                         :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/23 16:26:32 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:55:29 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft{
 				friend class map;
 				protected:
 					Compare _comp;
-					value_compare (Compare c) : _comp(c) {}	// constructed with map's comparison object
+					value_compare (Compare c) : _comp(c) {}
 				public:
 					typedef bool result_type;
 					typedef value_type first_argument_type;
@@ -85,7 +85,6 @@ namespace ft{
 				_alloc = x._alloc;
 				_comp = x._comp;
 				_tree = x._tree;
-				// _tree.display(_tree._root);
 				return (*this);
 			}
 
@@ -219,8 +218,7 @@ namespace ft{
 
 				if (_tree.exist(k))
 					return biterator(_tree.find_node(k), &_tree);
-				else
-					return this->end();
+				return this->end();
 			}
 
 			const_biterator find (const key_type& k) const{ return const_biterator(find(k)); }
@@ -334,6 +332,9 @@ namespace ft{
 			//? Returns a copy of the allocator object associated with the map
 			allocator_type get_allocator() const { return _alloc; }
 
+			//************************************************************* //
+
+			// getter tree - used to display the avl tree
 			tree_type& get_tree(void){ return _tree; }
 
 		private:
@@ -384,3 +385,9 @@ namespace ft{
 };
 
 #endif
+
+
+//todo
+
+//* test lower & upper bound
+//* write main with all tests
