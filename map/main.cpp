@@ -404,22 +404,22 @@ int main(void){
 
 
 	//* lower_bound method
-	int res, ft_res;
-    bool cond;
+	// int res, ft_res;
+    // bool cond;
 
-    std::map<int, std::string> m;
-    ft::map<int, std::string> ft_m;
-    for (size_t i = 0; i < 1e6; ++i)
-    {
-        m.insert(std::make_pair(i, "value"));
-        ft_m.insert(ft::make_pair(i, "value"));
-    }
-    res = m.lower_bound(1e5)->first;
-    ft_res = ft_m.lower_bound(1e5)->first;
-	std::cout << res << " - " << ft_res << std::endl;
-    cond = ft_res == res;
-    if (cond == true)
-        std::cout << "ok\n";
+    // std::map<int, std::string> m;
+    // ft::map<int, std::string> ft_m;
+    // for (size_t i = 0; i < 1e6; ++i)
+    // {
+    //     m.insert(std::make_pair(i, "value"));
+    //     ft_m.insert(ft::make_pair(i, "value"));
+    // }
+    // res = m.lower_bound(1e5)->first;
+    // ft_res = ft_m.lower_bound(1e5)->first;
+	// std::cout << res << " - " << ft_res << std::endl;
+    // cond = ft_res == res;
+    // if (cond == true)
+    //     std::cout << "ok\n";
 
 	//* swap
 	// std::map<int, std::string> m1, m2;
@@ -555,5 +555,5 @@ int main(void){
 // }
 
 
-	return (0);
+
 }

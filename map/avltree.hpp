@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/23 17:48:41 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/24 11:49:58 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,7 @@ namespace ft{
 			//? the number of nodes in the tree
 			int size(void) const { return (_nbr_node); }
 
-			bool is_empty(void) const {
-				if (_nbr_node == 0)
-					return (true);
-				return (false);
-			}
+			bool is_empty(void) const { return (_nbr_node == 0); }
 
 			//* Operations ************************************************* //
 

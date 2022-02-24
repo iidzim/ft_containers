@@ -6,7 +6,7 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 20:57:22 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/23 18:19:06 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/24 12:33:38 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ namespace ft{
 					for (int i = 0; i < this->_size; i++)
 						this->_alloc.construct((this->_start + i), val);
 				}
-				else
-					this->_start = this->_end = 0;
+				// else
+				// 	this->_start = this->_end = 0;
 			}
 
 			//* enable_if -> Yields type T only if bool B is true
@@ -99,9 +99,9 @@ namespace ft{
 
 				for (int i = 0; i < _size; i++)
 					_alloc.destroy(_start + i);
-				_alloc.deallocate(_start, _capacity);//!!!! pointer being freed was not allocated
+				_alloc.deallocate(_start, _capacity);
 				_alloc = x._alloc;
-				if (_size < x._size)
+				if (_size < x._size) //?
 					_capacity = x._size;
 				_size = x._size;
 				_start = _alloc.allocate(_size);
@@ -150,15 +150,13 @@ namespace ft{
 				if (n > _size){
 					for (int i = _size; i < n; i++)
 						_alloc.construct(_start + i, val);
-					_size = n;
-					_end = _start + n;
 				}
 				else if (n < _size){
 					for (pointer it = _start + n; it < _end; it++)
 						_alloc.destroy(it);
-					_end = _start + n;
-					_size = n;
 				}
+				_end = _start + n;
+				_size = n;
 			}
 
 			//? Return size of allocated storage capacity
@@ -264,7 +262,7 @@ namespace ft{
 			//? Add element at the end
 			void push_back (const value_type& val){
 
-				if (_capacity == _size && _size == 0)
+				if (_capacity == 0)
 					reserve(_size + 1);
 				else if (_capacity == _size)
 					reserve(_size * 2);
@@ -306,7 +304,7 @@ namespace ft{
 
 			void insert (iterator position, size_type nn, const value_type& val){
 
-				int  n = static_cast<int>(nn);
+				int n = static_cast<int>(nn);
 				int pos = _end - &(*position);
 				if (_capacity == 0){
 					if (nn > max_size())
@@ -341,9 +339,8 @@ namespace ft{
 				if (_capacity == 0){
 					_start = _alloc.allocate(n);
 					_end = _start + n;
-					// std::copy(first, last, _start);
-					for (int i = 0; i < n; i++)						//!!!!!!!!!!
-						_alloc.construct(_start + i, *(first + i)); //!!!!!!!!!!
+					for (int i = 0; i < n; i++)
+						_alloc.construct(_start + i, *(first + i));
 					_size = _capacity = n;
 				}
 				else{
@@ -367,13 +364,11 @@ namespace ft{
 
 				pointer pos_ = &(*position);
 				if (position + 1 != _end){
-					// std::copy(pos_ + 1, _end, pos_);
-					for (int i = 0; i < _end - pos_ - 1; i++)		//!!!!!!!!!!!!
-						_alloc.construct(pos_ + i, *(pos_ + 1 + i));	//!!!!!!!!!!!!
+					_alloc.destroy(pos_);
+					for (int i = 0; i < _end - pos_ - 1; i++)
+						_alloc.construct(pos_ + i, *(pos_ + 1 + i));
 				}
-				_size -= 1;
-				_alloc.destroy(_end);
-				_end -= 1;
+				pop_back();
 				return (iterator(pos_));
 			}
 
@@ -382,10 +377,12 @@ namespace ft{
 				pointer pfirst= &(*first);
 				pointer plast= &(*last);
 				int len = plast - pfirst;
+				for (pointer it = pfirst; it < plast; it++)
+					_alloc.destroy(it);
 				for (int i = 0; i < _end - plast; i++)
 					_alloc.construct(pfirst + i, *(plast + i));
-				for (int i = _size - len; i < _size; i++)
-					_alloc.destroy(_start + i - 1);
+				for (int i = 0; i < _end - plast; i++)
+					_alloc.destroy(_start + i);
 				_size -= len;
 				_end -= len;
 				return (iterator(pfirst));
