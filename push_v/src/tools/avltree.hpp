@@ -6,19 +6,19 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 10:16:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/24 16:18:08 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/24 16:47:38 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AVLTREE_HPP
-# define AVLTREE_HPP
+#define AVLTREE_HPP
 
 #include <iostream>
 #include <functional>
 #include <memory>
 #include <stdexcept>
 #include <algorithm>
-#include "../tools/tools.hpp"
+#include "tools.hpp"
 
 namespace ft{
 
@@ -26,8 +26,8 @@ namespace ft{
 	struct node
 	{
 		T		data; //? pair<U, V>
-		int		bf; //? balance factor
-		int		height; //? height of this node in the tree
+		int		bf;
+		int		height;
 		node*	parent_node;
 		node*	left_node;
 		node*	right_node;

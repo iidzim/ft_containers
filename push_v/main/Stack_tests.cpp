@@ -11,9 +11,9 @@
 /* ************************************************************************************************ */
 
 // you should include your path to this files
-#include "../stack/stack.hpp"       // your stack path.
-#include "../vector/vector.hpp" // your Vector path.
-#include "../tools/tools.hpp"  // path to ft::pair.
+#include "../src/stack.hpp"       // your stack path.
+#include "../src/vector.hpp" // your Vector path.
+#include "../src/tools/tools.hpp"  // path to ft::pair.
 
 #include <vector>
 #include <stack>
@@ -345,6 +345,5 @@ int main()
 
     std::cout << YELLOW << "Testing relational operators;" << RESET << std::endl;
     TEST_CASE(testRelationalOperators);
-
 	return 0;
 }

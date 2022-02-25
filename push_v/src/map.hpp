@@ -6,18 +6,18 @@
 /*   By: iidzim <iidzim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:12:19 by iidzim            #+#    #+#             */
-/*   Updated: 2022/02/24 16:20:06 by iidzim           ###   ########.fr       */
+/*   Updated: 2022/02/25 12:59:26 by iidzim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
-# define MAP_HPP
+#define MAP_HPP
 
-#include "avltree.hpp"
-#include "../tools/tools.hpp"
-#include "../vector/vector.hpp"
-#include "../tools/biterator.hpp"
-#include "../tools/reverse_iterator.hpp"
+#include "vector.hpp"
+#include "./tools/avltree.hpp"
+#include "./tools/tools.hpp"
+#include "./tools/biterator.hpp"
+#include "./tools/reverse_iterator.hpp"
 
 namespace ft{
 
@@ -27,11 +27,11 @@ namespace ft{
 
 		public:
 
-			typedef size_t																		size_type;
-			typedef Key																			key_type;
-			typedef T																			mapped_type;
-			typedef ft::pair<const Key,T>														value_type;
-			typedef Compare																		key_compare;
+			typedef size_t																										size_type;
+			typedef Key																											key_type;
+			typedef T																											mapped_type;
+			typedef ft::pair<const Key,T>																						value_type;
+			typedef Compare																										key_compare;
 
 			typedef class value_compare : public std::binary_function<value_type, value_type, bool>{
 				friend class map;
@@ -45,8 +45,7 @@ namespace ft{
 					bool operator() (const value_type& x, const value_type& y) const{
 						return _comp(x.first, y.first);
 					}
-			}																					value_compare;
-
+			}																													value_compare;
 			typedef Alloc																										allocator_type;
 			typedef typename allocator_type::reference																			reference;
 			typedef typename allocator_type::const_reference																	const_reference;
@@ -93,24 +92,18 @@ namespace ft{
 			// ? Returns an iterator referring to the first element in the map container
 			biterator begin(){
 
-				if (_tree.size() != 0){
-					node_type* start = _tree._root;
-					while (start->left_node != NULL)
-						start = start->left_node;
-					return (biterator(start, &_tree));
-				}
-				return (biterator(NULL, &_tree));
+				node_type* start = _tree._root;
+				while (start != NULL && start->left_node != NULL)
+					start = start->left_node;
+				return (biterator(start, &_tree));
 			}
 
 			const_biterator begin() const {
 
-				if (_tree.size() != 0){
-					node_type* start = _tree._root;
-					while (start->left_node != NULL)
-						start = start->left_node;
-					return (const_biterator(start, &_tree));
-				}
-				return (const_biterator(NULL, &_tree));
+				node_type* start = _tree._root;
+				while (start != NULL && start->left_node != NULL)
+					start = start->left_node;
+				return (const_biterator(start, &_tree));
 			}
 
 			//? Returns an iterator referring to the past-the-end element in the map container
@@ -204,7 +197,7 @@ namespace ft{
 			//* Observers ************************************************* //
 
 			//? Return key comparison object
-			key_compare key_comp() const { return (this->_comp); }
+			key_compare key_comp() const { key_compare k(_comp); return k; }
 
 			//? Return value comparison object
 			value_compare value_comp() const{ return value_compare(_comp); }
@@ -223,16 +216,8 @@ namespace ft{
 
 			const_biterator find (const key_type& k) const{ return const_biterator(find(k)); }
 
-			//* Two keys are considered equivalent if the container's comparison object returns false reflexively
-			//* (i.e., no matter the order in which the elements are passed as arguments).
-
 			//? Searches the container for elements with a key equivalent to k and returns the number of matches
-			size_type count (const key_type& k) const{
-
-				if (_tree.exist(k))
-					return (1);
-				return (0);
-			}
+			size_type count (const key_type& k) const{ return (_tree.exist(k)); }
 
 			//? Return iterator to lower bound
 			biterator lower_bound (const key_type& k){
@@ -305,37 +290,14 @@ namespace ft{
 				}
 
 			//? Returns the bounds of a range that includes all the elements in the container which have a key equivalent to k
-			pair<biterator,biterator> equal_range (const key_type& k){
+			pair<biterator,biterator> equal_range (const key_type& k){ return ft::make_pair(lower_bound(k), upper_bound(k)); }
 
-				if (_tree.exist(k)){
-					biterator it(_tree.find_node(k), &_tree), ite = this->end();
-					if (it == --ite)
-						return ft::make_pair(it, biterator(0, NULL));
-					return ft::make_pair(it, ++it);
-				}
-				return ft::make_pair(upper_bound(k), upper_bound(k));
-			}
-
-			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{
-
-				if (_tree.exist(k)){
-					const_biterator it(_tree.find_node(k), &_tree);
-					if (it == --(this->end()))
-						return ft::make_pair(it, const_biterator(0, NULL));
-					return ft::make_pair(it, ++it);
-				}
-				return ft::make_pair(upper_bound(k), upper_bound(k));
-			}
+			pair<const_biterator,const_biterator> equal_range (const key_type& k) const{ return ft::make_pair(lower_bound(k), upper_bound(k)); }
 
 			//* Allocator ************************************************* //
 
 			//? Returns a copy of the allocator object associated with the map
-			allocator_type get_allocator() const { return _alloc; }
-
-			//************************************************************* //
-
-			// getter tree - used to display the avl tree (_tree private member)
-			tree_type& get_tree(void){ return _tree; }
+			allocator_type get_allocator() const { allocator_type al(_alloc); return al; }
 
 		private:
 			key_compare		_comp;
@@ -384,9 +346,3 @@ namespace ft{
 };
 
 #endif
-
-
-//todo
-
-//* test lower & upper bound
-//* write main with all tests
